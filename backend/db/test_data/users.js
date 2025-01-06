@@ -17,4 +17,16 @@ module.exports = [
     password: "password123",
     role: "user",
   },
+  {
+    username: "emily",
+    email: "emily@example.com",
+    password: "password123",
+    role: "user",
+  },
+  {
+    username: "alex",
+    email: "alex@example.com",
+    password: "password123",
+    role: "admin",
+  },
 ];
