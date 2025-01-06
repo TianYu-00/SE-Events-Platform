@@ -8,7 +8,7 @@ Project that allows community memebers to view, sign up for and add events to th
 
 [Prerequisites](https://github.com/TianYu-00/SE-Events-Platform?tab=readme-ov-file#prerequisites) | [Backend](https://github.com/TianYu-00/SE-Events-Platform?tab=readme-ov-file#backend) | [Frontend](https://github.com/TianYu-00/SE-Events-Platform?tab=readme-ov-file#frontend)
 
-[![CI](https://github.com/TianYu-00/SE-Events-Platform/actions/workflows/ci.yml/badge.svg)](https://github.com/TianYu-00/SE-Events-Platform/actions/workflows/ci.yml)
+[![CI](https://github.com/TianYu-00/SE-Events-Platform/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/TianYu-00/SE-Events-Platform/actions/workflows/ci.yml)
 
 ![Image](https://placehold.co/2560x1440?text=Demo_Image)
 </div>
