@@ -20,7 +20,7 @@ async function createUsersTable() {
   await db.query(`
     CREATE TABLE users (
       user_id SERIAL PRIMARY KEY,
-      user_name VARCHAR(255) NOT NULL,
+      user_username VARCHAR(255) NOT NULL,
       user_email VARCHAR(255) UNIQUE NOT NULL,
       user_password VARCHAR(255) NOT NULL,
       user_created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -55,7 +55,7 @@ async function createEventsTable() {
 //////////////////////////////////////////////////////// SEED DATA
 async function insertUsers(users) {
   const userValues = users.map((user) => [user.username, user.email, user.password, user.role]);
-  const query = format(`INSERT INTO users (user_name, user_email, user_password, user_role) VALUES %L`, userValues);
+  const query = format(`INSERT INTO users (user_username, user_email, user_password, user_role) VALUES %L`, userValues);
   await db.query(query);
 }
 
