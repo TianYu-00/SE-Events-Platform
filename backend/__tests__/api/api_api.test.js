@@ -1,4 +1,4 @@
-const { app, request } = require("../../../utils/test-utils/index");
+const { app, request } = require("../../utils/test-utils/index");
 // https://jestjs.io/docs/expect
 
 describe("GET api/", () => {

@@ -1,4 +1,4 @@
-const { app, request } = require("../../../utils/test-utils/index");
+const { app, request } = require("../../utils/test-utils/index");
 
 describe("GET api/test", () => {
   test("should return a 200 status code, indicating the endpoint is accessible", async () => {
