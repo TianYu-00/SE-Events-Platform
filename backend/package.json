@@ -4,7 +4,9 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --runInBand",
-    "start": "nodemon listen.js"
+    "start": "nodemon listen.js",
+    "setup-db": "psql -f ./db/create_database.sql",
+    "seed": "node db/run_seed.js"
   },
   "keywords": [],
   "author": "",
