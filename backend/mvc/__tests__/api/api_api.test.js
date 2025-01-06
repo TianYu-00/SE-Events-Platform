@@ -1,4 +1,5 @@
 const { app, request } = require("../../../utils/test-utils/index");
+// https://jestjs.io/docs/expect
 
 describe("GET api/", () => {
   test("should return 404, with message indicating the route is not found", async () => {
