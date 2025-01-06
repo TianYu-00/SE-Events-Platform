@@ -78,7 +78,7 @@ async function insertEvents(events) {
     event.thumbnail,
   ]);
 
-  console.log(eventValues);
+  // console.log(eventValues);
 
   const query = format(
     `INSERT INTO events (event_name, event_start_date, event_end_date, event_full_address, event_description, event_organizer, event_capacity, event_attendees, event_cost_in_pence, event_contact_email, event_contact_phone_prefix, event_contact_phone, event_website, event_tags, event_thumbnail) VALUES %L`,
