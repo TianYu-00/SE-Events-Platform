@@ -26,7 +26,7 @@ describe("GET /api/events", () => {
         event_end_date: expect.any(String),
         event_full_address: expect.any(String),
         event_description: expect.any(String),
-        event_organizer: expect.any(Number),
+        event_organizer_id: expect.any(String),
         event_capacity: expect.any(Number),
         event_attendees: expect.any(Number),
         event_cost_in_pence: expect.any(Number),
@@ -36,8 +36,6 @@ describe("GET /api/events", () => {
         event_website: expect.any(String),
         event_tags: expect.any(Array),
         event_thumbnail: expect.any(String),
-        event_organizer_username: expect.any(String),
-        event_organizer_company: expect.any(String),
       });
     }
   });
