@@ -23,6 +23,7 @@ describe("GET /api/users", () => {
       expect(user).toMatchObject({
         user_id: expect.any(Number),
         user_username: expect.any(String),
+        user_company_name: expect.any(String),
         user_email: expect.any(String),
         user_password: expect.any(String),
         user_created_at: expect.any(String),

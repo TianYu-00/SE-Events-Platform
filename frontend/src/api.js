@@ -16,3 +16,12 @@ export const testApi = async () => {
     throw error;
   }
 };
+
+export const getAllEvents = async () => {
+  try {
+    const response = await api.get(`/events`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};

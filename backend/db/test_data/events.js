@@ -14,7 +14,7 @@ module.exports = [
     contactPhone: "07131313131",
     website: "example.com",
     tags: ["AI", "Innovation", "Software Development", "Networking"],
-    thumbnail: "https://placehold.co/600x400",
+    thumbnail: "https://placehold.co/600x400?text=Temp_Image",
   },
   {
     eventName: "AI and Data Science Workshop",
@@ -31,7 +31,7 @@ module.exports = [
     contactPhone: "07987654321",
     website: "example.com",
     tags: ["AI", "Data Science", "Workshop", "Technology"],
-    thumbnail: "https://placehold.co/600x400",
+    thumbnail: "https://placehold.co/600x400?text=Temp_Image",
   },
   {
     eventName: "Blockchain for Business Summit",
@@ -48,7 +48,7 @@ module.exports = [
     contactPhone: "07411223344",
     website: "example.com",
     tags: ["Blockchain", "Business", "Technology", "Innovation"],
-    thumbnail: "https://placehold.co/600x400",
+    thumbnail: "https://placehold.co/600x400?text=Temp_Image",
   },
   {
     eventName: "Web Development Bootcamp",
@@ -65,7 +65,7 @@ module.exports = [
     contactPhone: "07865432100",
     website: "example.com",
     tags: ["Web Development", "Bootcamp", "Coding", "Technology"],
-    thumbnail: "https://placehold.co/600x400",
+    thumbnail: "https://placehold.co/600x400?text=Temp_Image",
   },
   {
     eventName: "Digital Marketing Conference",
@@ -76,12 +76,12 @@ module.exports = [
     organizerUserId: 5,
     capacity: 400,
     attendees: 180,
-    costInPence: 120,
+    costInPence: 0,
     contactEmail: "event5@example.com",
     contactPhonePrefix: "+44",
     contactPhone: "07911223345",
     website: "example.com",
     tags: ["Digital Marketing", "Marketing", "Business", "Technology"],
-    thumbnail: "https://placehold.co/600x400",
+    thumbnail: "https://placehold.co/600x400?text=Temp_Image",
   },
 ];
