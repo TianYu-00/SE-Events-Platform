@@ -12,11 +12,17 @@ export function dateFormatter(isoDateTime, format = 0) {
     case 0:
       return formatTime({ hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: true });
     case 1:
-      return formatDate({ year: "numeric", month: "long", day: "numeric" });
+      return formatDate({ year: "numeric", month: "long", day: "2-digit" });
     case 2:
-      return formatDate({ year: "numeric", month: "numeric", day: "numeric" });
+      return formatDate({ year: "numeric", month: "numeric", day: "2-digit" });
     case 3:
       return `${formatDate({ year: "numeric", month: "2-digit", day: "2-digit" })} ${formatTime({
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: true,
+      })}`;
+    case 4:
+      return `${formatDate({ year: "numeric", month: "long", day: "2-digit" })} ${formatTime({
         hour: "2-digit",
         minute: "2-digit",
         hour12: true,

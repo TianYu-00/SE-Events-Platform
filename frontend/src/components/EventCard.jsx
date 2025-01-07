@@ -1,19 +1,37 @@
 import React from "react";
 import { dateFormatter } from "./DateFormatter";
 import { moneyFormatter } from "./MoneyFormatter";
+// https://react-icons.github.io/react-icons/icons/tb/
+import { TbCalendar, TbCalendarTime, TbLocation } from "react-icons/tb";
 
 function EventCard({ event }) {
   return (
-    <div className="">
-      <div className="border border-yellow-500 w-full h-full">
-        <h3>{event.event_name}</h3>
+    <div>
+      <div className="w-full h-full bg-card rounded-t-lg border border-border shadow-lg">
+        <img src={`${event.event_thumbnail}`} className="rounded-t-lg"></img>
+        <div className="p-3">
+          <h3 className="truncate text-2xl font-medium">{event.event_name}</h3>
+          <p className="truncate text-sm text-copy-secondary flex">
+            <TbLocation className="mr-2" size={17} /> <span>{event.event_full_address}</span>
+          </p>
+          <p className="truncate text-sm text-copy-secondary mb-3 flex">
+            <TbCalendarTime className="mr-2" size={17} /> <span>{dateFormatter(event.event_start_date, 4)}</span>
+          </p>
 
-        <img src={`${event.event_thumbnail}`}></img>
-        <p>{event.event_description}</p>
-        <p>{event.event_full_address}</p>
-        <p>{dateFormatter(event.event_start_date, 3)}</p>
-        <p>{dateFormatter(event.event_end_date, 3)}</p>
-        <p>{event.event_cost_in_pence > 0 ? `£${moneyFormatter(event.event_cost_in_pence)}` : "Free"}</p>
+          <p className="mb-10">{event.event_description}</p>
+          <p className="font-bold mb-4">
+            {event.event_cost_in_pence > 0 ? `£${moneyFormatter(event.event_cost_in_pence)}` : "Free"}
+          </p>
+          <div className="flex h-10">
+            <button className="bg-cta hover:bg-cta-active p-2 rounded-md text-cta-text w-32 flex justify-center items-center">
+              {event.event_cost_in_pence > 0 ? "Purchase" : "Free"}
+            </button>
+            <button className="hover:bg-cta-active hover:text-cta-text p-2 rounded-md text-copy-primary border border-border w-40 ml-auto flex justify-center items-center hover:border-0">
+              <TbCalendar className="mr-2" size={17} />
+              <span>Add to calendar</span>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );
