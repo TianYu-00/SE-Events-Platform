@@ -76,7 +76,7 @@ module.exports = [
     organizerUserId: 5,
     capacity: 400,
     attendees: 180,
-    costInPence: 120,
+    costInPence: 0,
     contactEmail: "event5@example.com",
     contactPhonePrefix: "+44",
     contactPhone: "07911223345",
