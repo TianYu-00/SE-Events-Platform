@@ -4,7 +4,8 @@ const { clerkClient } = require("@clerk/express");
 exports.fetchAllUsers = async (req, res, next) => {
   try {
     const users = await clerkClient.users.getUserList();
-    res.status(200).json({ success: true, msg: "Users are fetched", data: users });
+    const data = users.data;
+    res.status(200).json({ success: true, msg: "Users are fetched", data: data });
   } catch (error) {
     next(error);
   }
