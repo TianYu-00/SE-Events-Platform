@@ -5,7 +5,8 @@ import { Link } from "react-router-dom";
 import { SignedIn, SignedOut, SignInButton, UserButton, useUser } from "@clerk/clerk-react";
 
 function Header({ toggleTheme, theme }) {
-  const { isSignedIn, user } = useUser();
+  const { user } = useUser();
+
   useEffect(() => {
     console.log(user);
   }, [user]);
@@ -38,14 +39,20 @@ function Header({ toggleTheme, theme }) {
           <div className="mx-2 hover:bg-background-opp/10 rounded flex">
             <ThemeSwitcher isToggled={theme === "light"} toggleSwitch={toggleTheme} />
           </div>
-          <button className="mx-2 p-2 hover:bg-background-opp/10 rounded" aria-label="User Menu">
-            <TbUser size={25} />
-          </button>
+
           <SignedOut>
-            <SignInButton />
+            <SignInButton>
+              <button className="mx-2 flex items-center p-2 hover:bg-background-opp/10 rounded cursor-pointer">
+                <TbUser size={25} />
+                <span className="pl-2">Sign In</span>
+              </button>
+            </SignInButton>
           </SignedOut>
+
           <SignedIn>
-            <UserButton />
+            <div className="mx-2 flex items-center p-2 rounded">
+              <UserButton />
+            </div>
           </SignedIn>
         </div>
       </div>
