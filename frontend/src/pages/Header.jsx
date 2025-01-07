@@ -1,11 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { TbUser, TbHome } from "react-icons/tb";
 import ThemeSwitcher from "../components/ThemeSwitcher";
 import { Link } from "react-router-dom";
+import { SignedIn, SignedOut, SignInButton, UserButton, useUser } from "@clerk/clerk-react";
 
 function Header({ toggleTheme, theme }) {
+  const { isSignedIn, user } = useUser();
+  useEffect(() => {
+    console.log(user);
+  }, [user]);
+
   return (
-    <div className="text-copy-primary h-20">
+    <header className="text-copy-primary h-20">
       <div className="flex flex-row h-full w-full p-4">
         <div className="flex justify-center">
           <ul className="flex flex-row justify-center items-center space-x-4 mr-10">
@@ -27,6 +33,7 @@ function Header({ toggleTheme, theme }) {
             </li>
           </ul>
         </div>
+
         <div className="flex flex-grow justify-end">
           <div className="mx-2 hover:bg-background-opp/10 rounded flex">
             <ThemeSwitcher isToggled={theme === "light"} toggleSwitch={toggleTheme} />
@@ -34,9 +41,15 @@ function Header({ toggleTheme, theme }) {
           <button className="mx-2 p-2 hover:bg-background-opp/10 rounded" aria-label="User Menu">
             <TbUser size={25} />
           </button>
+          <SignedOut>
+            <SignInButton />
+          </SignedOut>
+          <SignedIn>
+            <UserButton />
+          </SignedIn>
         </div>
       </div>
-    </div>
+    </header>
   );
 }
 
