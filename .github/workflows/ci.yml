@@ -1,4 +1,4 @@
-name: CI
+name: Tests
 
 on:
   pull_request:
@@ -19,6 +19,21 @@ jobs:
         with:
           node-version: "21"
 
+      - name: Set up environment variables
+        run: |
+          echo "PGUSER=${{ secrets.PGUSER }}" >> $GITHUB_ENV
+          echo "PGPASSWORD=${{ secrets.PGPASSWORD }}" >> $GITHUB_ENV
+          echo "PGDATABASE=${{ secrets.PGDATABASE }}" >> $GITHUB_ENV
+
+      - name: Start and wait for PostgreSQL container
+        run: |
+          docker run --name pg-docker -e POSTGRES_USER=${{ secrets.PGUSER }} -e POSTGRES_PASSWORD=${{ secrets.PGPASSWORD }} -e POSTGRES_DB=${{ secrets.PGDATABASE }} -p 5432:5432 -d postgres:latest
+          echo "Waiting for PostgreSQL to be ready..."
+          until docker exec pg-docker pg_isready -U ${{ secrets.PGUSER }} -d ${{ secrets.PGDATABASE }}; do
+            sleep 2
+          done
+          echo "PostgreSQL is ready!"
+
       - name: Install dependencies
         run: npm install
         working-directory: backend
@@ -26,3 +41,6 @@ jobs:
       - name: Run tests
         run: npm test
         working-directory: backend
+
+      - name: Stop and remove PostgreSQL container
+        run: docker rm -f pg-docker
