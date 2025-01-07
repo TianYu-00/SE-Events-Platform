@@ -2,7 +2,7 @@ import React from "react";
 import { dateFormatter } from "./DateFormatter";
 import { moneyFormatter } from "./MoneyFormatter";
 // https://react-icons.github.io/react-icons/icons/tb/
-import { TbCalendar, TbCalendarTime, TbLocation, TbBuildings } from "react-icons/tb";
+import { TbCalendar, TbCalendarTime, TbLocation, TbBuilding } from "react-icons/tb";
 
 function EventCard({ event }) {
   return (
@@ -19,7 +19,7 @@ function EventCard({ event }) {
               <TbCalendarTime className="mr-2" size={17} /> <span>{dateFormatter(event.event_start_date, 4)}</span>
             </p>
             <p className="truncate text-sm text-copy-secondary flex">
-              <TbBuildings className="mr-2" size={17} /> <span>{event.event_organizer_company}</span>
+              <TbBuilding className="mr-2" size={17} /> <span>{event.event_organizer_company}</span>
             </p>
           </div>
 
