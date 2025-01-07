@@ -1,5 +1,7 @@
 const express = require("express");
 const cors = require("cors");
+const { clerkMiddleware } = require("@clerk/express");
+
 const apiRouter = require("./routes/api-router");
 const errorHandler = require("./utils/middleware/errorHandler");
 
@@ -10,6 +12,7 @@ const corsConfigOptions = {
 };
 app.use(cors(corsConfigOptions));
 app.use(express.json());
+app.use(clerkMiddleware());
 
 app.use("/api", apiRouter);
 
