@@ -15,9 +15,11 @@ exports.fetchUser = async (req, res, next) => {
   try {
     const { user_id } = req.params;
 
-    if (!user_id) {
-      res.status(400).json({ error: "User ID is required" });
-    }
+    // if (!user_id) {
+    //   const error = new Error("Missing credentials");
+    //   error.code = "MISSING_CREDENTIALS";
+    //   return next(error);
+    // }
 
     const user = await clerkClient.users.getUser(user_id);
     res.status(200).json({ success: true, msg: "User is fetched", data: user });
