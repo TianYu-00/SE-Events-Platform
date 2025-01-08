@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { testApi, getAllEvents } from "../api";
+import { TbArrowNarrowRight } from "react-icons/tb";
 import EventCard from "../components/EventCard";
 import ImageScroller from "../components/ImageScroller";
 
@@ -22,11 +23,12 @@ function Landing_Home() {
     <div className="text-copy-primary">
       <div className="relative">
         <ImageScroller events={events} />
-        <div className="absolute inset-0 flex flex-col items-center justify-center bg-black opacity-85"></div>
+        <div className="absolute inset-0 flex flex-col items-center justify-center bg-black opacity-40"></div>
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <h2 className="text-white/70 font-bold text-2xl md:text-5xl mb-4">Lorem ipsum dolor sit amet.</h2>
-          <button className="text-cta-text bg-cta hover:bg-cta-active p-3 px-5 rounded-md font-semibold">
-            Explore Events
+          <h2 className="text-white font-bold text-2xl md:text-5xl mb-4">Lorem ipsum dolor sit amet.</h2>
+          <button className="text-cta-text bg-cta hover:bg-cta-active py-3 px-4 rounded-md font-semibold flex items-center space-x-2">
+            <span>Explore Events</span>
+            <TbArrowNarrowRight size={20} strokeWidth={3} />
           </button>
         </div>
       </div>
@@ -39,8 +41,9 @@ function Landing_Home() {
         </div>
 
         <div className="flex flex-row items-center justify-center p-10">
-          <button className="text-cta-text bg-cta hover:bg-cta-active p-2 px-4 rounded-md font-semibold">
-            Browse More
+          <button className="text-cta-text bg-cta hover:bg-cta-active py-3 px-4 rounded-md font-semibold flex items-center space-x-2">
+            <span>Browse More</span>
+            <TbArrowNarrowRight size={20} strokeWidth={3} />
           </button>
         </div>
       </div>
