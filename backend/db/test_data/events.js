@@ -14,7 +14,7 @@ module.exports = [
     contactPhone: "07131313131",
     website: "example.com",
     tags: ["AI", "Innovation", "Software Development", "Networking"],
-    thumbnail: "https://placehold.co/600x400?text=Temp_Image",
+    thumbnail: "https://res.cloudinary.com/dv3fz3nmg/image/upload/v1736162318/cld-sample-5.jpg",
   },
   {
     eventName: "AI and Data Science Workshop",
@@ -31,7 +31,7 @@ module.exports = [
     contactPhone: "07987654321",
     website: "example.com",
     tags: ["AI", "Data Science", "Workshop", "Technology"],
-    thumbnail: "https://placehold.co/600x400?text=Temp_Image",
+    thumbnail: "https://res.cloudinary.com/dv3fz3nmg/image/upload/v1736162315/samples/balloons.jpg",
   },
   {
     eventName: "Blockchain for Business Summit",
@@ -48,7 +48,7 @@ module.exports = [
     contactPhone: "07411223344",
     website: "example.com",
     tags: ["Blockchain", "Business", "Technology", "Innovation"],
-    thumbnail: "https://placehold.co/600x400?text=Temp_Image",
+    thumbnail: "https://res.cloudinary.com/dv3fz3nmg/image/upload/v1736162318/cld-sample-3.jpg",
   },
   {
     eventName: "Web Development Bootcamp",
@@ -65,7 +65,7 @@ module.exports = [
     contactPhone: "07865432100",
     website: "example.com",
     tags: ["Web Development", "Bootcamp", "Coding", "Technology"],
-    thumbnail: "https://placehold.co/600x400?text=Temp_Image",
+    thumbnail: "https://res.cloudinary.com/dv3fz3nmg/image/upload/v1736162318/cld-sample-4.jpg",
   },
   {
     eventName: "Digital Marketing Conference",
@@ -82,6 +82,6 @@ module.exports = [
     contactPhone: "07911223345",
     website: "example.com",
     tags: ["Digital Marketing", "Marketing", "Business", "Technology"],
-    thumbnail: "https://placehold.co/600x400?text=Temp_Image",
+    thumbnail: "https://res.cloudinary.com/dv3fz3nmg/image/upload/v1736162317/cld-sample.jpg",
   },
 ];
