@@ -1,5 +1,7 @@
 const express = require("express");
 const cors = require("cors");
+const { clerkMiddleware } = require("@clerk/express");
+const { rateLimit } = require("express-rate-limit");
 const apiRouter = require("./routes/api-router");
 const errorHandler = require("./utils/middleware/errorHandler");
 
@@ -8,8 +10,14 @@ const corsConfigOptions = {
   origin: "http://127.0.0.1:5173",
   credentials: true,
 };
+const globalLimiter = rateLimit({
+  windowMs: 5 * 60 * 1000,
+  limit: 100,
+});
 app.use(cors(corsConfigOptions));
 app.use(express.json());
+app.use(clerkMiddleware());
+app.use(globalLimiter);
 
 app.use("/api", apiRouter);
 

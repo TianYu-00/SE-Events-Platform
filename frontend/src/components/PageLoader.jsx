@@ -1,24 +1,33 @@
 import React, { useState, useEffect } from "react";
 import HashLoader from "react-spinners/HashLoader";
 
-const LazyPageLoader = ({ delay = 300, color = "#1764FF" }) => {
-  const [show, setShow] = useState(false);
+function PageLoader({ isLoading, timer = 2000, message = "", children }) {
+  const [shouldDisplayLoader, setShouldDisplayLoader] = useState(false);
 
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      setShow(true);
-    }, delay);
+    if (isLoading) {
+      setShouldDisplayLoader(true);
+    } else {
+      const timeoutId = setTimeout(() => {
+        setShouldDisplayLoader(false);
+      }, timer);
 
-    return () => {
-      clearTimeout(timeout);
-    };
-  }, [delay]);
+      return () => {
+        clearTimeout(timeoutId);
+      };
+    }
+  }, [isLoading, timer]);
 
-  return show ? (
-    <div className="fixed top-0 left-0 h-screen w-screen z-50 flex items-center justify-center bg-background overflow-hidden">
-      <HashLoader color={color} />
-    </div>
-  ) : null;
-};
+  if (shouldDisplayLoader || isLoading) {
+    return (
+      <div className="fixed top-0 left-0 h-screen w-screen z-50 flex items-center justify-center bg-background overflow-hidden flex flex-col">
+        <HashLoader color="#1764FF" />
+        <p className="text-copy-secondary pt-4 animate-pulse">{message}</p>
+      </div>
+    );
+  } else {
+    return <>{children}</>;
+  }
+}
 
-export default LazyPageLoader;
+export default PageLoader;

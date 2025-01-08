@@ -2,14 +2,14 @@ import React from "react";
 import { dateFormatter } from "./DateFormatter";
 import { moneyFormatter } from "./MoneyFormatter";
 // https://react-icons.github.io/react-icons/icons/tb/
-import { TbCalendar, TbCalendarTime, TbLocation, TbBuilding } from "react-icons/tb";
+import { TbCalendar, TbCalendarTime, TbLocation } from "react-icons/tb";
 
 function EventCard({ event }) {
   return (
     <div>
-      <div className="w-full h-full bg-card rounded-t-lg border border-border/40 shadow-lg">
+      <div className="w-full h-full bg-card rounded-t-lg border border-border/40 shadow-lg flex flex-col">
         <img src={`${event.event_thumbnail}`} className="rounded-t-lg w-full"></img>
-        <div className="p-3">
+        <div className="p-3 flex flex-col flex-grow">
           <div className="mb-3">
             <h3 className="truncate text-2xl font-medium">{event.event_name}</h3>
             <p className="truncate text-sm text-copy-secondary flex">
@@ -18,12 +18,10 @@ function EventCard({ event }) {
             <p className="truncate text-sm text-copy-secondary flex">
               <TbCalendarTime className="mr-2" size={17} /> <span>{dateFormatter(event.event_start_date, 4)}</span>
             </p>
-            <p className="truncate text-sm text-copy-secondary flex">
-              <TbBuilding className="mr-2" size={17} /> <span>{event.event_organizer_company}</span>
-            </p>
           </div>
+          <p className="mb-8 line-clamp-3">{event.event_description}</p>
+          <div className="flex-grow" />
 
-          <p className="mb-10">{event.event_description}</p>
           <p className="font-bold mb-4">
             {event.event_cost_in_pence > 0 ? `£${moneyFormatter(event.event_cost_in_pence)}` : "Free"}
           </p>

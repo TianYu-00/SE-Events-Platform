@@ -7,7 +7,6 @@ function Landing_Home() {
   useEffect(() => {
     const runFetchEvents = async () => {
       const response = await getAllEvents();
-      console.log(response.data);
       setEvents(response.data);
     };
 
@@ -15,7 +14,7 @@ function Landing_Home() {
   }, []);
 
   useEffect(() => {
-    console.log(events);
+    // console.log(events);
   }, [events]);
 
   return (

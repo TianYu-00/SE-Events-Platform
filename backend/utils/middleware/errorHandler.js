@@ -1,8 +1,15 @@
 const errorHandler = (err, req, res, next) => {
-  if (err.code === "ERROR") {
+  if (err.code === "MISSING_CREDENTIALS") {
     return res.status(400).send({
       success: false,
-      msg: err.message || "Error",
+      msg: err.message || "Missing Credentials",
+      data: null,
+      code: err.code,
+    });
+  } else if (err.code === "INITIALIZATION_NOT_REQUIRED") {
+    return res.status(400).send({
+      success: false,
+      msg: err.message || "No need to initialize",
       data: null,
       code: err.code,
     });

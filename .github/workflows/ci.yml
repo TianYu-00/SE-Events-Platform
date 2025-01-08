@@ -24,6 +24,8 @@ jobs:
           echo "PGUSER=${{ secrets.PGUSER }}" >> $GITHUB_ENV
           echo "PGPASSWORD=${{ secrets.PGPASSWORD }}" >> $GITHUB_ENV
           echo "PGDATABASE=${{ secrets.PGDATABASE }}" >> $GITHUB_ENV
+          echo "CLERK_PUBLISHABLE_KEY=${{ secrets.CLERK_PUBLISHABLE_KEY }}" >> $GITHUB_ENV
+          echo "CLERK_SECRET_KEY=${{ secrets.CLERK_SECRET_KEY }}" >> $GITHUB_ENV
 
       - name: Start and wait for PostgreSQL container
         run: |

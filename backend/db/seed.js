@@ -4,12 +4,9 @@ const format = require("pg-format");
 async function createTables({ users, events }) {
   try {
     await db.query("DROP TABLE IF EXISTS events CASCADE;");
-    await db.query("DROP TABLE IF EXISTS users CASCADE;");
 
-    await createUsersTable();
     await createEventsTable();
 
-    await insertUsers(users);
     await insertEvents(events);
   } catch (err) {
     console.error("Error creating tables:", err);
@@ -39,7 +36,7 @@ async function createEventsTable() {
       event_end_date TIMESTAMP NOT NULL,
       event_full_address VARCHAR(255) NOT NULL,
       event_description TEXT NOT NULL,
-      event_organizer INT REFERENCES users(user_id),
+      event_organizer_id VARCHAR(255) NOT NULL,
       event_capacity INT NOT NULL,
       event_attendees INT NOT NULL,
       event_cost_in_pence INT NOT NULL,
@@ -54,15 +51,6 @@ async function createEventsTable() {
 }
 
 //////////////////////////////////////////////////////// SEED DATA
-async function insertUsers(users) {
-  const userValues = users.map((user) => [user.username, user.company, user.email, user.password, user.role]);
-  const query = format(
-    `INSERT INTO users (user_username, user_company_name, user_email, user_password, user_role) VALUES %L`,
-    userValues
-  );
-  await db.query(query);
-}
-
 async function insertEvents(events) {
   const eventValues = events.map((event) => [
     event.eventName,
@@ -85,7 +73,7 @@ async function insertEvents(events) {
   // console.log(eventValues);
 
   const query = format(
-    `INSERT INTO events (event_name, event_start_date, event_end_date, event_full_address, event_description, event_organizer, event_capacity, event_attendees, event_cost_in_pence, event_contact_email, event_contact_phone_prefix, event_contact_phone, event_website, event_tags, event_thumbnail) VALUES %L`,
+    `INSERT INTO events (event_name, event_start_date, event_end_date, event_full_address, event_description, event_organizer_id, event_capacity, event_attendees, event_cost_in_pence, event_contact_email, event_contact_phone_prefix, event_contact_phone, event_website, event_tags, event_thumbnail) VALUES %L`,
     eventValues
   );
 

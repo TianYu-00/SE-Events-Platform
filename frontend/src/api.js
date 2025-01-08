@@ -25,3 +25,13 @@ export const getAllEvents = async () => {
     throw error;
   }
 };
+
+export const initializeUser = async (userId, publicMetadata) => {
+  const data = { user_id: userId, user_publicMetadata: publicMetadata };
+  try {
+    const response = await api.post(`/users/initialize`, data);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
