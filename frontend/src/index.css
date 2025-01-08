@@ -12,8 +12,8 @@
   --copy-primary: 23, 23, 23;
   --copy-secondary: 115, 115, 115;
   --copy-opp: 245, 245, 245;
-  --cta: 23, 100, 255;
-  --cta-active: 0, 75, 224;
+  --cta: 0, 0, 0;
+  --cta-active: 50, 50, 50;
   --cta-text: 255, 255, 255;
   background: rgba(var(--background));
 }
