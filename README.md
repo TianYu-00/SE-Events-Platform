@@ -10,7 +10,8 @@ Project that allows community memebers to view, sign up for and add events to th
 
 [![Tests](https://github.com/TianYu-00/SE-Events-Platform/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/TianYu-00/SE-Events-Platform/actions/workflows/ci.yml)
 
-![Image](https://placehold.co/2560x1440?text=Demo_Image)
+![Image](https://github.com/user-attachments/assets/e2e31252-3215-4acb-adc8-5e96ab9557b5)
+
 </div>
 
 # Prerequisites
