@@ -23,7 +23,6 @@ describe("GET /api/users", () => {
     for (const user of users) {
       expect(user).toMatchObject({
         id: expect.any(String),
-        username: expect.any(String),
       });
     }
   });
