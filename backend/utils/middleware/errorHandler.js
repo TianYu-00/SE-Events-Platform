@@ -6,6 +6,13 @@ const errorHandler = (err, req, res, next) => {
       data: null,
       code: err.code,
     });
+  } else if (err.code === "INITIALIZATION_NOT_REQUIRED") {
+    return res.status(400).send({
+      success: false,
+      msg: err.message || "No need to initialize",
+      data: null,
+      code: err.code,
+    });
   }
 
   next(err);

@@ -45,3 +45,25 @@ exports.updateRole = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.initializeUser = async (req, res, next) => {
+  try {
+    const { user_id, user_publicMetadata } = req.body;
+
+    if (user_publicMetadata && Object.keys(user_publicMetadata).length > 0) {
+      const error = new Error("No need to re-initialize");
+      error.code = "INITIALIZATION_NOT_REQUIRED";
+      return next(error);
+    }
+
+    await clerkClient.users.updateUserMetadata(user_id, {
+      publicMetadata: {
+        role: "user",
+      },
+    });
+
+    res.status(200).json({ success: true, msg: "Role updated", data: null });
+  } catch (error) {
+    next(error);
+  }
+};
