@@ -11,7 +11,7 @@ function EventCard({ event }) {
         <img src={`${event.event_thumbnail}`} className="rounded-t-lg w-full"></img>
         <div className="p-3 flex flex-col flex-grow">
           <div className="mb-3">
-            <h3 className="truncate text-2xl font-medium">{event.event_name}</h3>
+            <h3 className="truncate text-2xl font-medium mb-1">{event.event_name}</h3>
             <p className="truncate text-sm text-copy-secondary flex">
               <TbLocation className="mr-2" size={17} /> <span>{event.event_full_address}</span>
             </p>
@@ -19,7 +19,7 @@ function EventCard({ event }) {
               <TbCalendarTime className="mr-2" size={17} /> <span>{dateFormatter(event.event_start_date, 4)}</span>
             </p>
           </div>
-          <p className="mb-8 line-clamp-3">{event.event_description}</p>
+          <p className="mb-8 line-clamp-3 mt-3">{event.event_description}</p>
           <div className="flex-grow" />
 
           <p className="font-bold mb-4">
