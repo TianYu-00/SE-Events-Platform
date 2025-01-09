@@ -23,8 +23,8 @@ function Header({ toggleTheme, theme }) {
               </Link>
             </li>
             <li>
-              <Link to="/randompage" className="flex flex-row p-2">
-                <span className="font-medium text-sm pl-2">Nav2</span>
+              <Link to="/events" className="flex flex-row p-2">
+                <span className="font-medium text-sm pl-2">Events</span>
               </Link>
             </li>
           </ul>
