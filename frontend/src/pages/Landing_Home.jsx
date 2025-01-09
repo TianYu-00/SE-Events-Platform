@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { testApi, getAllEvents } from "../api";
-import { TbArrowNarrowRight } from "react-icons/tb";
+import { TbArrowNarrowRight, TbCornerRightDown } from "react-icons/tb";
 import EventCard from "../components/EventCard";
 import ImageScroller from "../components/ImageScroller";
 
 function Landing_Home() {
   const [events, setEvents] = useState([]);
+  const showingNewlyCreated = 3;
+  const showingEventsStartingFrom = 3;
+  const showingEventsEnding = 9;
+
   useEffect(() => {
     const runFetchEvents = async () => {
-      const response = await getAllEvents();
+      const response = await getAllEvents({ orderCreatedAt: "desc" });
       setEvents(response.data);
     };
 
@@ -21,6 +25,7 @@ function Landing_Home() {
 
   return (
     <div className="text-copy-primary">
+      {/* Event scroller */}
       <div className="relative">
         <ImageScroller events={events} />
         <div className="absolute inset-0 flex flex-col items-center justify-center bg-black opacity-40"></div>
@@ -33,11 +38,37 @@ function Landing_Home() {
         </div>
       </div>
 
-      <div className="max-w-screen-xl mx-auto mt-10">
+      {/* Latest created */}
+      <div className="max-w-screen-xl mx-auto mt-10 ">
+        <div className="flex items-center space-x-2 px-4">
+          <h3 className="font-semibold text-lg md:text-3xl">Latest Events Created</h3>
+          <TbCornerRightDown size={22} strokeWidth={3} />
+        </div>
+
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 p-4 ">
-          {events.map((event) => (
+          {events.slice(0, showingNewlyCreated).map((event) => (
             <EventCard event={event} key={event.event_id} />
           ))}
+        </div>
+      </div>
+
+      {/* Rest of some of the events */}
+      <div className="max-w-screen-xl mx-auto mt-10">
+        <div className="flex items-center space-x-2 px-4">
+          <h3 className="font-semibold text-lg md:text-3xl">Events</h3>
+          <TbCornerRightDown size={22} strokeWidth={3} />
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 p-4 ">
+          {events.slice(showingEventsStartingFrom, showingEventsEnding).map((event) => (
+            <EventCard event={event} key={event.event_id} />
+          ))}
+        </div>
+
+        <div className="flex justify-center items-center">
+          <p className="text-copy-secondary text-sm">
+            {showingEventsStartingFrom} - {showingEventsEnding} of {events.length} events
+          </p>
         </div>
 
         <div className="flex flex-row items-center justify-center p-10">

@@ -8,7 +8,7 @@ function EventCard({ event }) {
   return (
     <div>
       <div className="w-full h-full bg-card rounded-t-lg border border-border/40 shadow-lg flex flex-col">
-        <img src={`${event.event_thumbnail}`} className="rounded-t-lg w-full h-52 object-cover"></img>
+        <img src={`${event.event_thumbnail}`} className="rounded-t-lg w-full h-64 object-cover"></img>
         <div className="p-3 flex flex-col flex-grow">
           <div className="mb-3">
             <h3 className="truncate text-2xl font-medium mb-1">{event.event_name}</h3>
