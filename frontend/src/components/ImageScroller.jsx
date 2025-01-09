@@ -41,7 +41,7 @@ const ImageScroller = ({ events }) => {
       >
         {events.map((event, index) => (
           <div key={index}>
-            <img src={event.event_thumbnail} className="w-full h-auto" />
+            <img src={event.event_thumbnail} className="w-full h-96 object-cover" />
           </div>
         ))}
       </Carousel>
