@@ -15,6 +15,13 @@
 - Clerk - Account Auth ✅
 - Cloudinary - Image Hosting ✅
 
+# Test Clerk Accounts
+user+clerk_test@example.com
+user123
+
+admin+clerk_test@example.com
+admin123
+
 # Backend
 Main Tools to use:
 - Express
