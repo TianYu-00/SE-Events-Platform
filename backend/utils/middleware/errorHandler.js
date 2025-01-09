@@ -13,6 +13,13 @@ const errorHandler = (err, req, res, next) => {
       data: null,
       code: err.code,
     });
+  } else if (err.code === "INVALID_QUERY") {
+    return res.status(400).send({
+      success: false,
+      msg: err.message || "Invalid query has been provided",
+      data: null,
+      code: err.code,
+    });
   }
 
   next(err);
