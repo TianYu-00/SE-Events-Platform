@@ -43,8 +43,8 @@ async function createEventsTable() {
       event_contact_email VARCHAR(255) NOT NULL,
       event_contact_phone_prefix VARCHAR(5) NOT NULL,
       event_contact_phone VARCHAR(15) NOT NULL,
-      event_website VARCHAR(255) NOT NULL,
-      event_tags TEXT[] NOT NULL,
+      event_website VARCHAR(255),
+      event_tags TEXT[],
       event_thumbnail VARCHAR(255) NOT NULL,
       event_created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
       event_modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
