@@ -8,7 +8,7 @@ function Header({ toggleTheme, theme }) {
   const { user } = useUser();
 
   useEffect(() => {
-    console.log(user);
+    // console.log(user);
   }, [user]);
 
   return (

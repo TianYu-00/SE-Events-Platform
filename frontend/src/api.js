@@ -24,7 +24,6 @@ export const getAllEvents = async ({ orderCreatedAt = undefined }) => {
       params.append("order_created_at", orderCreatedAt);
     }
     const query = `/events${params.toString() ? `?${params.toString()}` : ""}`;
-    console.log(query);
     const response = await api.get(query);
     return response.data;
   } catch (error) {
