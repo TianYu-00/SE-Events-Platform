@@ -17,9 +17,14 @@ export const testApi = async () => {
   }
 };
 
-export const getAllEvents = async () => {
+export const getAllEvents = async ({ orderCreatedAt = undefined }) => {
   try {
-    const response = await api.get(`/events`);
+    const params = new URLSearchParams();
+    if (orderCreatedAt) {
+      params.append("order_created_at", orderCreatedAt);
+    }
+    const query = `/events${params.toString() ? `?${params.toString()}` : ""}`;
+    const response = await api.get(query);
     return response.data;
   } catch (error) {
     throw error;

@@ -1,8 +1,14 @@
 const db = require("../../db/connection");
 
-exports.getAllEvents = async () => {
+exports.getAllEvents = async ({ orderCreatedAt = undefined }) => {
   try {
-    const result = await db.query(`SELECT * FROM events`);
+    let query = "SELECT * FROM events";
+
+    if (orderCreatedAt) {
+      query += ` ORDER BY event_created_at ${orderCreatedAt}`;
+    }
+
+    const result = await db.query(query);
     return result.rows;
   } catch (err) {
     return Promise.reject(err);

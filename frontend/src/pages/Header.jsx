@@ -8,7 +8,7 @@ function Header({ toggleTheme, theme }) {
   const { user } = useUser();
 
   useEffect(() => {
-    console.log(user);
+    // console.log(user);
   }, [user]);
 
   return (
@@ -25,11 +25,6 @@ function Header({ toggleTheme, theme }) {
             <li>
               <Link to="/randompage" className="flex flex-row p-2">
                 <span className="font-medium text-sm pl-2">Nav2</span>
-              </Link>
-            </li>
-            <li>
-              <Link to="/randompage" className="flex flex-row p-2">
-                <span className="font-medium text-sm pl-2">Nav3</span>
               </Link>
             </li>
           </ul>

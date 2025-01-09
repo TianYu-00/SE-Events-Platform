@@ -1,4 +1,5 @@
 const { app, request, db, seed, data } = require("../../utils/test-utils/index");
+require("jest-sorted");
 afterAll(() => {
   return db.end();
 });
@@ -36,7 +37,27 @@ describe("GET /api/events", () => {
         event_website: expect.any(String),
         event_tags: expect.any(Array),
         event_thumbnail: expect.any(String),
+        event_created_at: expect.any(String),
+        event_modified_at: expect.any(String),
       });
     }
+  });
+
+  test("should return events ordered in ascending order by event_created_at", async () => {
+    const { body } = await request(app).get("/api/events?order_created_at=asc");
+    const eventDates = body.data.map((event) => new Date(event.event_created_at));
+    expect(eventDates).toBeSorted({ descending: false });
+  });
+
+  test("should return events ordered in descending order by event_created_at", async () => {
+    const { body } = await request(app).get("/api/events?order_created_at=desc");
+    const eventDates = body.data.map((event) => new Date(event.event_created_at));
+    expect(eventDates).toBeSorted({ descending: true });
+  });
+
+  test("should return a status code 400 and error if order query was not asc or desc", async () => {
+    const { body } = await request(app).get("/api/events?order_created_at=invalidOrder").expect(400);
+    expect(body.success).toBe(false);
+    expect(body.code).toBe("INVALID_QUERY");
   });
 });
