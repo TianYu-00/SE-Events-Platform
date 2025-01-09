@@ -15,6 +15,8 @@ module.exports = [
     website: "example.com",
     tags: ["AI", "Innovation", "Software Development", "Networking"],
     thumbnail: "https://res.cloudinary.com/dv3fz3nmg/image/upload/v1736162318/cld-sample-5.jpg",
+    createdAt: "2025-04-01T12:00:00Z",
+    modifiedAt: "2025-04-01T12:00:00Z",
   },
   {
     eventName: "AI and Data Science Workshop",
@@ -32,6 +34,8 @@ module.exports = [
     website: "example.com",
     tags: ["AI", "Data Science", "Workshop", "Technology"],
     thumbnail: "https://res.cloudinary.com/dv3fz3nmg/image/upload/v1736162315/samples/balloons.jpg",
+    createdAt: "2025-01-05T16:00:00Z",
+    modifiedAt: "2025-01-05T16:00:00Z",
   },
   {
     eventName: "Blockchain for Business Summit",
@@ -49,6 +53,8 @@ module.exports = [
     website: "example.com",
     tags: ["Blockchain", "Business", "Technology", "Innovation"],
     thumbnail: "https://res.cloudinary.com/dv3fz3nmg/image/upload/v1736162318/cld-sample-3.jpg",
+    createdAt: "2025-03-20T12:00:00Z",
+    modifiedAt: "2025-03-20T12:00:00Z",
   },
   {
     eventName: "Web Development Bootcamp",
@@ -66,6 +72,8 @@ module.exports = [
     website: "example.com",
     tags: ["Web Development", "Bootcamp", "Coding", "Technology"],
     thumbnail: "https://res.cloudinary.com/dv3fz3nmg/image/upload/v1736162318/cld-sample-4.jpg",
+    createdAt: "2025-02-22T10:00:00Z",
+    modifiedAt: "2025-02-22T10:00:00Z",
   },
   {
     eventName: "Digital Marketing Conference",
@@ -83,5 +91,7 @@ module.exports = [
     website: "example.com",
     tags: ["Digital Marketing", "Marketing", "Business", "Technology"],
     thumbnail: "https://res.cloudinary.com/dv3fz3nmg/image/upload/v1736162317/cld-sample.jpg",
+    createdAt: "2025-01-15T00:00:00Z",
+    modifiedAt: "2025-01-15T00:00:00Z",
   },
 ];

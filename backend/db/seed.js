@@ -45,7 +45,9 @@ async function createEventsTable() {
       event_contact_phone VARCHAR(15) NOT NULL,
       event_website VARCHAR(255) NOT NULL,
       event_tags TEXT[] NOT NULL,
-      event_thumbnail VARCHAR(255) NOT NULL
+      event_thumbnail VARCHAR(255) NOT NULL,
+      event_created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      event_modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
   `);
 }
@@ -68,12 +70,14 @@ async function insertEvents(events) {
     event.website,
     `{${event.tags.join(",")}}`,
     event.thumbnail,
+    event.createdAt,
+    event.modifiedAt,
   ]);
 
   // console.log(eventValues);
 
   const query = format(
-    `INSERT INTO events (event_name, event_start_date, event_end_date, event_full_address, event_description, event_organizer_id, event_capacity, event_attendees, event_cost_in_pence, event_contact_email, event_contact_phone_prefix, event_contact_phone, event_website, event_tags, event_thumbnail) VALUES %L`,
+    `INSERT INTO events (event_name, event_start_date, event_end_date, event_full_address, event_description, event_organizer_id, event_capacity, event_attendees, event_cost_in_pence, event_contact_email, event_contact_phone_prefix, event_contact_phone, event_website, event_tags, event_thumbnail, event_created_at, event_modified_at) VALUES %L`,
     eventValues
   );
 

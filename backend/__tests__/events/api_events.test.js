@@ -36,6 +36,8 @@ describe("GET /api/events", () => {
         event_website: expect.any(String),
         event_tags: expect.any(Array),
         event_thumbnail: expect.any(String),
+        event_created_at: expect.any(String),
+        event_modified_at: expect.any(String),
       });
     }
   });
