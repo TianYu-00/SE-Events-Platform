@@ -10,8 +10,8 @@ exports.getAllEvents = async ({ orderCreatedAt = undefined }) => {
 
     const result = await db.query(query);
     return result.rows;
-  } catch (err) {
-    return Promise.reject(err);
+  } catch (error) {
+    return Promise.reject(error);
   }
 };
 
@@ -60,7 +60,25 @@ exports.createEvent = async (eventData) => {
 
     const result = await db.query(query, values);
     return result.rows[0];
-  } catch (err) {
-    return Promise.reject(err);
+  } catch (error) {
+    return Promise.reject(error);
+  }
+};
+
+exports.removeEvents = async (eventIds) => {
+  try {
+    // loop through the event ids
+    // maybe use WHERE id = ANY($1) and then we pass the event ids in should be easier instead of looping creating multiple database queries
+    const query = `DELETE FROM events WHERE event_id = ANY($1) RETURNING *;`;
+    const result = await db.query(query, [eventIds]);
+    const deletedIds = result.rows.map((row) => row.event_id);
+    const failedToDeleteIds = eventIds.filter((id) => !deletedIds.includes(id));
+    if (deletedIds <= 0) {
+      return Promise.reject({ code: "NO_EVENT_DELETED", message: "No event was deleted" });
+    }
+    // Note: Still need to remove image from cloudinary.
+    return { deletedRows: result.rows, deletedIds, failedToDeleteIds, length: result.rows.length };
+  } catch (error) {
+    return Promise.reject(error);
   }
 };
