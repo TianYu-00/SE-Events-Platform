@@ -289,11 +289,10 @@ function Landing_CreateEvent() {
               <input
                 id="eventContactPhone"
                 type="tel"
-                pattern="[0-9]{5}-[0-9]{3}-[0-9]{3}"
                 value={eventData.eventContactPhone}
                 onChange={handleInputChange}
                 className="block w-full border-gray-300 rounded-md shadow-sm p-2 border focus:outline-none focus:border-border"
-                placeholder="07111-111-111"
+                placeholder="07101010101"
               />
             </div>
 
