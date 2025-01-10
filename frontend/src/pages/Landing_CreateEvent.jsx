@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useUser } from "@clerk/clerk-react";
 import CustomInputTag from "../components/CustomInputTag";
 import EventCard from "../components/EventCard";
+import { cloudinaryUploadImage } from "../api_cloudinary";
 
 function Landing_CreateEvent() {
   const { user } = useUser();
@@ -23,6 +24,7 @@ function Landing_CreateEvent() {
     eventContactPhone: "",
     eventTags: [],
   });
+  const [selectedImageFile, setSelectedImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
 
   useEffect(() => {
@@ -37,19 +39,11 @@ function Landing_CreateEvent() {
     }));
   };
 
-  const handle_createEvent = async (event) => {
-    event.preventDefault();
-    console.log(eventData);
-  };
-
   const handleFileChange = (e) => {
     const file = e.target.files[0];
 
     if (file) {
-      setEventData((prevData) => ({
-        ...prevData,
-        eventThumbnail: file,
-      }));
+      setSelectedImageFile(file);
 
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -57,6 +51,18 @@ function Landing_CreateEvent() {
       };
       reader.readAsDataURL(file);
     }
+  };
+
+  const handle_createEvent = async (event) => {
+    event.preventDefault();
+    // console.log(eventData);
+    if (!selectedImageFile) {
+      console.error("No image file selected.");
+      return;
+    }
+    console.log(selectedImageFile);
+    const response = await cloudinaryUploadImage({ file: selectedImageFile });
+    console.log("Upload response:", response);
   };
 
   return (
