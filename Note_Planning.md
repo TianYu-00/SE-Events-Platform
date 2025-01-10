@@ -33,3 +33,9 @@ Main Tools to use:
 - Vite.js
 - Tailwind
 - React-Icons
+
+# NOTE Cloudinary
+- https://api.cloudinary.com/v1_1/:cloudName/upload
+- need formData with
+    - file (image)
+    - upload_preset (preset name) for unsigned upload

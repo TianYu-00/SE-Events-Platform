@@ -22,6 +22,7 @@ function Landing_CreateEvent() {
     eventContactPhone: "",
     eventTags: [],
   });
+  const [imagePreview, setImagePreview] = useState(null);
 
   useEffect(() => {
     console.log(eventData.eventTags);
@@ -38,6 +39,23 @@ function Landing_CreateEvent() {
   const handle_createEvent = async (event) => {
     event.preventDefault();
     console.log(eventData);
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+
+    if (file) {
+      setEventData((prevData) => ({
+        ...prevData,
+        eventThumbnail: file,
+      }));
+
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   return (
@@ -234,14 +252,15 @@ function Landing_CreateEvent() {
               >
                 Event Thumbnail <span className="text-red-500">*</span>
               </label>
+
+              {imagePreview && <img src={imagePreview} className="mb-2" />}
+
               <input
                 id="eventThumbnail"
-                type="url"
-                value={eventData.eventThumbnail}
-                onChange={handleInputChange}
+                type="file"
+                onChange={handleFileChange}
                 className="block w-full border-gray-300 rounded-md shadow-sm p-2 border focus:outline-none focus:border-border"
                 required
-                placeholder="https://example.com/image.png"
               />
             </div>
 
