@@ -34,8 +34,6 @@ exports.postEvent = async (req, res, next) => {
       "attendees",
       "costInPence",
       "contactEmail",
-      "contactPhonePrefix",
-      "contactPhone",
       "thumbnail",
     ];
 
