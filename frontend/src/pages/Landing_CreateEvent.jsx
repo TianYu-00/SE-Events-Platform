@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useUser } from "@clerk/clerk-react";
+import CustomInputTag from "../components/CustomInputTag";
 
 function Landing_CreateEvent() {
   const { user } = useUser();
@@ -19,8 +20,12 @@ function Landing_CreateEvent() {
     eventWebsite: "",
     eventContactPhonePrefix: "+44",
     eventContactPhone: "",
-    eventTags: "",
+    eventTags: [],
   });
+
+  useEffect(() => {
+    console.log(eventData.eventTags);
+  }, [eventData]);
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
@@ -277,16 +282,9 @@ function Landing_CreateEvent() {
             </div>
 
             <div className="col-span-2">
-              <label className="block text-sm font-medium text-copy-primary/80 ml-1 text-nowrap" htmlFor="eventTags">
-                Event Tags
-              </label>
-              <input
-                id="eventTags"
-                type="text"
-                value={eventData.eventTags}
-                onChange={handleInputChange}
-                className="block w-full border-gray-300 rounded-md shadow-sm p-1 border focus:outline-none focus:border-border"
-                placeholder="Tag1, Tag2, Tag3"
+              <CustomInputTag
+                tags={eventData.eventTags || []}
+                setTags={(newTags) => setEventData({ ...eventData, eventTags: newTags })}
               />
             </div>
 
