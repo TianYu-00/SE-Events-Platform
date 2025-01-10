@@ -32,6 +32,11 @@ function Header({ toggleTheme, theme }) {
                 <span className="font-medium text-sm pl-2">Create Event</span>
               </Link>
             </li>
+            <li>
+              <Link to="/manage-events" className="flex flex-row p-2">
+                <span className="font-medium text-sm pl-2">Manage Events</span>
+              </Link>
+            </li>
           </ul>
         </div>
 
