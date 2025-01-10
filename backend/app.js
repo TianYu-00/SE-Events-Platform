@@ -11,7 +11,7 @@ const corsConfigOptions = {
   credentials: true,
 };
 const globalLimiter = rateLimit({
-  windowMs: 5 * 60 * 1000,
+  windowMs: 1 * 60 * 1000,
   limit: 100,
 });
 app.use(cors(corsConfigOptions));

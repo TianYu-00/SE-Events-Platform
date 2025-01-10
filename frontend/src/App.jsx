@@ -3,6 +3,7 @@ import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LazyPageLoader from "./components/LazyPageLoader";
 import { ClerkProvider } from "@clerk/clerk-react";
+import PrivateRoute from "./components/ProtectedRoute";
 
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
@@ -51,10 +52,10 @@ const App = () => {
                 <Route path="/" element={<Landing_Home />} />
                 <Route path="/home" element={<Landing_Home />} />
                 <Route path="/events" element={<Landing_Events />} />
-                <Route path="/create-event" element={<Landing_CreateEvent />} />
                 <Route path="/auth-signin" element={<Landing_Auth_SignIn />} />
                 <Route path="/auth-signup" element={<Landing_Auth_SignUp />} />
                 <Route path="/auth-signup/initialize" element={<Landing_Auth_Signup_Initialize />} />
+                <Route path="/create-event" element={<PrivateRoute element={<Landing_CreateEvent />} />} />
               </Routes>
             </Suspense>
           </div>
