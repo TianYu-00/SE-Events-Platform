@@ -41,8 +41,8 @@ function Landing_CreateEvent() {
   };
 
   return (
-    <div className="">
-      <div className="max-w-screen-xl flex justify-center">
+    <div className="flex justify-center">
+      <div className="max-w-screen-xl flex justify-center w-full">
         <div className="max-w-screen-md w-full p-4 border border-border bg-card/70 rounded-lg shadow-lg">
           <form onSubmit={handle_createEvent} className="grid gap-7 grid-cols-2 mt-6">
             <div className="col-span-2">
