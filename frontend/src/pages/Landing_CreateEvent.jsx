@@ -43,10 +43,17 @@ function Landing_CreateEvent() {
   return (
     <div className="">
       <div className="max-w-screen-xl flex justify-center">
-        <div className="max-w-screen-md w-full p-4">
-          <form onSubmit={handle_createEvent} className="grid gap-7 grid-cols-2 mt-10">
+        <div className="max-w-screen-md w-full p-4 border border-border bg-card/70 rounded-lg shadow-lg">
+          <form onSubmit={handle_createEvent} className="grid gap-7 grid-cols-2 mt-6">
+            <div className="col-span-2">
+              <h2 className="text-2xl font-semibold text-copy-primary">Create Event</h2>
+            </div>
+
             <div>
-              <label className="block text-sm font-medium text-copy-primary/80 ml-1 text-nowrap" htmlFor="eventName">
+              <label
+                className="block text-sm font-medium text-copy-primary/80 ml-1 text-nowrap mb-1"
+                htmlFor="eventName"
+              >
                 Event Name <span className="text-red-500">*</span>
               </label>
               <input
@@ -54,14 +61,14 @@ function Landing_CreateEvent() {
                 type="text"
                 value={eventData.eventName}
                 onChange={handleInputChange}
-                className="block w-full border-gray-300 rounded-md shadow-sm p-1 border focus:outline-none focus:border-border col-span-2"
+                className="block w-full border-gray-300 rounded-md shadow-sm p-2 border focus:outline-none focus:border-border col-span-2"
                 required
               />
             </div>
 
             <div>
               <label
-                className="block text-sm font-medium text-copy-primary/80 ml-1 text-nowrap"
+                className="block text-sm font-medium text-copy-primary/80 ml-1 text-nowrap mb-1"
                 htmlFor="eventOrganizerUserId"
               >
                 Event Organizer ID <span className="text-red-500">*</span>
@@ -71,14 +78,14 @@ function Landing_CreateEvent() {
                 type="text"
                 value={eventData.eventOrganizerUserId}
                 readOnly
-                className="block w-full border-gray-300 rounded-md shadow-sm p-1 border focus:outline-none focus:border-border"
+                className="block w-full border-gray-300 rounded-md shadow-sm p-2 border focus:outline-none focus:border-border"
                 required
               />
             </div>
 
             <div>
               <label
-                className="block text-sm font-medium text-copy-primary/80 ml-1 text-nowrap"
+                className="block text-sm font-medium text-copy-primary/80 ml-1 text-nowrap mb-1"
                 htmlFor="eventStartDate"
               >
                 Event Start Date <span className="text-red-500">*</span>
@@ -88,13 +95,16 @@ function Landing_CreateEvent() {
                 type="datetime-local"
                 value={eventData.eventStartDate}
                 onChange={handleInputChange}
-                className="block w-full border-gray-300 rounded-md shadow-sm p-1 border focus:outline-none focus:border-border"
+                className="block w-full border-gray-300 rounded-md shadow-sm p-2 border focus:outline-none focus:border-border"
                 required
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-copy-primary/80 ml-1 text-nowrap" htmlFor="eventEndDate">
+              <label
+                className="block text-sm font-medium text-copy-primary/80 ml-1 text-nowrap mb-1"
+                htmlFor="eventEndDate"
+              >
                 Event End Date <span className="text-red-500">*</span>
               </label>
               <input
@@ -102,13 +112,16 @@ function Landing_CreateEvent() {
                 type="datetime-local"
                 value={eventData.eventEndDate}
                 onChange={handleInputChange}
-                className="block w-full border-gray-300 rounded-md shadow-sm p-1 border focus:outline-none focus:border-border"
+                className="block w-full border-gray-300 rounded-md shadow-sm p-2 border focus:outline-none focus:border-border"
                 required
               />
             </div>
 
             <div className="col-span-2">
-              <label className="block text-sm font-medium text-copy-primary/80 ml-1 text-nowrap" htmlFor="eventAddress">
+              <label
+                className="block text-sm font-medium text-copy-primary/80 ml-1 text-nowrap mb-1"
+                htmlFor="eventAddress"
+              >
                 Event Full Address <span className="text-red-500">*</span>
               </label>
               <input
@@ -116,7 +129,7 @@ function Landing_CreateEvent() {
                 type="text"
                 value={eventData.eventAddress}
                 onChange={handleInputChange}
-                className="block w-full border-gray-300 rounded-md shadow-sm p-1 border focus:outline-none focus:border-border"
+                className="block w-full border-gray-300 rounded-md shadow-sm p-2 border focus:outline-none focus:border-border"
                 required
                 placeholder="04 Placeholder Street Manchester UK M14 TES"
               />
@@ -124,24 +137,24 @@ function Landing_CreateEvent() {
 
             <div className="col-span-2">
               <label
-                className="block text-sm font-medium text-copy-primary/80 ml-1 text-nowrap"
+                className="block text-sm font-medium text-copy-primary/80 ml-1 text-nowrap mb-1"
                 htmlFor="eventDescription"
               >
                 Event Description <span className="text-red-500">*</span>
               </label>
-              <input
+              <textarea
                 id="eventDescription"
                 type="text"
                 value={eventData.eventDescription}
                 onChange={handleInputChange}
-                className="block w-full border-gray-300 rounded-md shadow-sm p-1 border focus:outline-none focus:border-border"
+                className="block w-full border-gray-300 rounded-md shadow-sm p-2 border focus:outline-none focus:border-border min-h-[84px]"
                 required
               />
             </div>
 
             <div>
               <label
-                className="block text-sm font-medium text-copy-primary/80 ml-1 text-nowrap"
+                className="block text-sm font-medium text-copy-primary/80 ml-1 text-nowrap mb-1"
                 htmlFor="eventCapacity"
               >
                 Event Capacity <span className="text-red-500">*</span>
@@ -151,7 +164,7 @@ function Landing_CreateEvent() {
                 type="number"
                 value={eventData.eventCapacity}
                 onChange={handleInputChange}
-                className="block w-full border-gray-300 rounded-md shadow-sm p-1 border focus:outline-none focus:border-border"
+                className="block w-full border-gray-300 rounded-md shadow-sm p-2 border focus:outline-none focus:border-border"
                 min="1"
                 required
                 placeholder="1"
@@ -160,7 +173,7 @@ function Landing_CreateEvent() {
 
             <div>
               <label
-                className="block text-sm font-medium text-copy-primary/80 ml-1 text-nowrap"
+                className="block text-sm font-medium text-copy-primary/80 ml-1 text-nowrap mb-1"
                 htmlFor="eventAttendees"
               >
                 Event Attendees <span className="text-red-500">*</span>
@@ -170,7 +183,7 @@ function Landing_CreateEvent() {
                 type="number"
                 value={eventData.eventAttendees}
                 onChange={handleInputChange}
-                className="block w-full border-gray-300 rounded-md shadow-sm p-1 border focus:outline-none focus:border-border"
+                className="block w-full border-gray-300 rounded-md shadow-sm p-2 border focus:outline-none focus:border-border"
                 min="0"
                 required
                 placeholder="0"
@@ -179,7 +192,7 @@ function Landing_CreateEvent() {
 
             <div>
               <label
-                className="block text-sm font-medium text-copy-primary/80 ml-1 text-nowrap"
+                className="block text-sm font-medium text-copy-primary/80 ml-1 text-nowrap mb-1"
                 htmlFor="eventCostInPence"
               >
                 Event Cost In Pence <span className="text-red-500">*</span>
@@ -189,7 +202,7 @@ function Landing_CreateEvent() {
                 type="number"
                 value={eventData.eventCostInPence}
                 onChange={handleInputChange}
-                className="block w-full border-gray-300 rounded-md shadow-sm p-1 border focus:outline-none focus:border-border"
+                className="block w-full border-gray-300 rounded-md shadow-sm p-2 border focus:outline-none focus:border-border"
                 min="0"
                 required
                 placeholder="100"
@@ -198,7 +211,7 @@ function Landing_CreateEvent() {
 
             <div>
               <label
-                className="block text-sm font-medium text-copy-primary/80 ml-1 text-nowrap"
+                className="block text-sm font-medium text-copy-primary/80 ml-1 text-nowrap mb-1"
                 htmlFor="eventContactEmail"
               >
                 Event Contact Email <span className="text-red-500">*</span>
@@ -208,7 +221,7 @@ function Landing_CreateEvent() {
                 type="email"
                 value={eventData.eventContactEmail}
                 onChange={handleInputChange}
-                className="block w-full border-gray-300 rounded-md shadow-sm p-1 border focus:outline-none focus:border-border"
+                className="block w-full border-gray-300 rounded-md shadow-sm p-2 border focus:outline-none focus:border-border"
                 required
                 placeholder="tian@example.com"
               />
@@ -216,7 +229,7 @@ function Landing_CreateEvent() {
 
             <div className="col-span-2">
               <label
-                className="block text-sm font-medium text-copy-primary/80 ml-1 text-nowrap"
+                className="block text-sm font-medium text-copy-primary/80 ml-1 text-nowrap mb-1"
                 htmlFor="eventThumbnail"
               >
                 Event Thumbnail <span className="text-red-500">*</span>
@@ -226,14 +239,17 @@ function Landing_CreateEvent() {
                 type="url"
                 value={eventData.eventThumbnail}
                 onChange={handleInputChange}
-                className="block w-full border-gray-300 rounded-md shadow-sm p-1 border focus:outline-none focus:border-border"
+                className="block w-full border-gray-300 rounded-md shadow-sm p-2 border focus:outline-none focus:border-border"
                 required
                 placeholder="https://example.com/image.png"
               />
             </div>
 
             <div className="col-span-2">
-              <label className="block text-sm font-medium text-copy-primary/80 ml-1 text-nowrap" htmlFor="eventWebsite">
+              <label
+                className="block text-sm font-medium text-copy-primary/80 ml-1 text-nowrap mb-1"
+                htmlFor="eventWebsite"
+              >
                 Event Website
               </label>
               <input
@@ -241,14 +257,14 @@ function Landing_CreateEvent() {
                 type="url"
                 value={eventData.eventWebsite}
                 onChange={handleInputChange}
-                className="block w-full border-gray-300 rounded-md shadow-sm p-1 border focus:outline-none focus:border-border"
+                className="block w-full border-gray-300 rounded-md shadow-sm p-2 border focus:outline-none focus:border-border"
                 placeholder="https://example.com"
               />
             </div>
 
             <div>
               <label
-                className="block text-sm font-medium text-copy-primary/80 ml-1 text-nowrap"
+                className="block text-sm font-medium text-copy-primary/80 ml-1 text-nowrap mb-1"
                 htmlFor="eventContactPhonePrefix"
               >
                 Event Contact Phone Prefix
@@ -257,7 +273,7 @@ function Landing_CreateEvent() {
                 id="eventContactPhonePrefix"
                 value={eventData.eventContactPhonePrefix}
                 onChange={handleInputChange}
-                className="block w-full border-gray-300 rounded-md shadow-sm p-1 border focus:outline-none focus:border-border"
+                className="block w-full border-gray-300 rounded-md shadow-sm p-2 border focus:outline-none focus:border-border"
               >
                 <option value="+44">+44 (UK)</option>
               </select>
@@ -265,7 +281,7 @@ function Landing_CreateEvent() {
 
             <div>
               <label
-                className="block text-sm font-medium text-copy-primary/80 ml-1 text-nowrap"
+                className="block text-sm font-medium text-copy-primary/80 ml-1 text-nowrap mb-1"
                 htmlFor="eventContactPhone"
               >
                 Event Contact Phone
@@ -276,12 +292,13 @@ function Landing_CreateEvent() {
                 pattern="[0-9]{5}-[0-9]{3}-[0-9]{3}"
                 value={eventData.eventContactPhone}
                 onChange={handleInputChange}
-                className="block w-full border-gray-300 rounded-md shadow-sm p-1 border focus:outline-none focus:border-border"
+                className="block w-full border-gray-300 rounded-md shadow-sm p-2 border focus:outline-none focus:border-border"
                 placeholder="07111-111-111"
               />
             </div>
 
             <div className="col-span-2">
+              <label className="block text-sm font-medium text-copy-primary/80 ml-1 text-nowrap mb-1">Event Tags</label>
               <CustomInputTag
                 tags={eventData.eventTags || []}
                 setTags={(newTags) => setEventData({ ...eventData, eventTags: newTags })}

@@ -15,7 +15,7 @@ function Header({ toggleTheme, theme }) {
     <header className="text-copy-primary h-20">
       <div className="flex flex-row h-full w-full p-4">
         <div className="flex justify-center">
-          <ul className="flex flex-row justify-center items-center space-x-4 mr-10">
+          <ul className="flex flex-row justify-center items-center space-x-4">
             <li>
               <Link to="/" className="flex flex-row p-2">
                 <TbHome size={17} />
