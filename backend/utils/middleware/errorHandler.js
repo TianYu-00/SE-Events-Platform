@@ -20,6 +20,13 @@ const errorHandler = (err, req, res, next) => {
       data: null,
       code: err.code,
     });
+  } else if (err.code === "BODY_CONTENT_INCOMPLETE") {
+    return res.status(400).send({
+      success: false,
+      msg: err.message || "Request body is incomplete",
+      data: null,
+      code: err.code,
+    });
   }
 
   next(err);

@@ -40,3 +40,45 @@ export const initializeUser = async (userId, publicMetadata) => {
     throw error;
   }
 };
+
+export const createEvent = async ({
+  eventName,
+  eventStartDate,
+  eventEndDate,
+  eventAddress,
+  eventDescription,
+  eventOrganizerUserId,
+  eventCapacity,
+  eventAttendees,
+  eventCostInPence,
+  eventContactEmail,
+  eventThumbnail,
+  eventWebsite,
+  eventContactPhonePrefix,
+  eventContactPhone,
+  eventTags,
+}) => {
+  const data = {
+    eventName: eventName,
+    startDate: eventStartDate,
+    endDate: eventEndDate,
+    fullAddress: eventAddress,
+    description: eventDescription,
+    organizerUserId: eventOrganizerUserId,
+    capacity: eventCapacity,
+    attendees: eventAttendees,
+    costInPence: eventCostInPence,
+    contactEmail: eventContactEmail,
+    contactPhonePrefix: eventContactPhonePrefix,
+    contactPhone: eventContactPhone,
+    website: eventWebsite,
+    tags: eventTags,
+    thumbnail: eventThumbnail,
+  };
+  try {
+    const response = await api.post(`/events/create-event`, data);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};

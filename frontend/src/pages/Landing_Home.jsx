@@ -3,12 +3,14 @@ import { testApi, getAllEvents } from "../api";
 import { TbArrowNarrowRight, TbCornerRightDown } from "react-icons/tb";
 import EventCard from "../components/EventCard";
 import ImageScroller from "../components/ImageScroller";
+import { useNavigate } from "react-router-dom";
 
 function Landing_Home() {
   const [events, setEvents] = useState([]);
   const showingNewlyCreated = 3;
   const showingEventsStartingFrom = 3;
   const showingEventsEnding = 9;
+  const navigate = useNavigate();
 
   useEffect(() => {
     const runFetchEvents = async () => {
@@ -31,7 +33,10 @@ function Landing_Home() {
         <div className="absolute inset-0 flex flex-col items-center justify-center bg-black opacity-40"></div>
         <div className="absolute inset-0 flex flex-col items-center justify-center">
           <h2 className="text-white font-bold text-2xl md:text-5xl mb-4">Lorem ipsum dolor sit amet.</h2>
-          <button className="text-cta-text bg-cta hover:bg-cta-active py-3 px-4 rounded-md font-semibold flex items-center space-x-2">
+          <button
+            className="text-cta-text bg-cta hover:bg-cta-active py-3 px-4 rounded-md font-semibold flex items-center space-x-2"
+            onClick={() => navigate("/events")}
+          >
             <span>Explore Events</span>
             <TbArrowNarrowRight size={20} strokeWidth={3} />
           </button>
@@ -72,7 +77,10 @@ function Landing_Home() {
         </div>
 
         <div className="flex flex-row items-center justify-center p-10">
-          <button className="text-cta-text bg-cta hover:bg-cta-active py-3 px-4 rounded-md font-semibold flex items-center space-x-2">
+          <button
+            className="text-cta-text bg-cta hover:bg-cta-active py-3 px-4 rounded-md font-semibold flex items-center space-x-2"
+            onClick={() => navigate("/events")}
+          >
             <span>Browse More</span>
             <TbArrowNarrowRight size={20} strokeWidth={3} />
           </button>

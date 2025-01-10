@@ -15,6 +15,13 @@
 - Clerk - Account Auth ✅
 - Cloudinary - Image Hosting ✅
 
+# Test Clerk Accounts
+user+clerk_test@example.com
+user123
+
+admin+clerk_test@example.com
+admin123
+
 # Backend
 Main Tools to use:
 - Express
@@ -26,3 +33,9 @@ Main Tools to use:
 - Vite.js
 - Tailwind
 - React-Icons
+
+# NOTE Cloudinary
+- https://api.cloudinary.com/v1_1/:cloudName/upload
+- need formData with
+    - file (image)
+    - upload_preset (preset name) for unsigned upload

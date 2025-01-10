@@ -15,7 +15,7 @@ function Header({ toggleTheme, theme }) {
     <header className="text-copy-primary h-20">
       <div className="flex flex-row h-full w-full p-4">
         <div className="flex justify-center">
-          <ul className="flex flex-row justify-center items-center space-x-4 mr-10">
+          <ul className="flex flex-row justify-center items-center space-x-4">
             <li>
               <Link to="/" className="flex flex-row p-2">
                 <TbHome size={17} />
@@ -23,8 +23,13 @@ function Header({ toggleTheme, theme }) {
               </Link>
             </li>
             <li>
-              <Link to="/randompage" className="flex flex-row p-2">
-                <span className="font-medium text-sm pl-2">Nav2</span>
+              <Link to="/events" className="flex flex-row p-2">
+                <span className="font-medium text-sm pl-2">Events</span>
+              </Link>
+            </li>
+            <li>
+              <Link to="/create-event" className="flex flex-row p-2">
+                <span className="font-medium text-sm pl-2">Create Event</span>
               </Link>
             </li>
           </ul>
