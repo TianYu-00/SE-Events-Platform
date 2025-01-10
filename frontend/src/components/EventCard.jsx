@@ -6,7 +6,7 @@ import { TbCalendar, TbCalendarTime, TbLocation } from "react-icons/tb";
 
 function EventCard({ event }) {
   return (
-    <div>
+    <div className="text-copy-primary">
       <div className="w-full h-full bg-card rounded-t-lg border border-border/40 shadow-lg flex flex-col">
         <img src={`${event.event_thumbnail}`} className="rounded-t-lg w-full h-64 object-cover"></img>
         <div className="p-3 flex flex-col flex-grow">

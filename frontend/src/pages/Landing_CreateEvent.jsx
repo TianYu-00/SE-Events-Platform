@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useUser } from "@clerk/clerk-react";
 import CustomInputTag from "../components/CustomInputTag";
+import EventCard from "../components/EventCard";
 
 function Landing_CreateEvent() {
   const { user } = useUser();
@@ -60,8 +61,20 @@ function Landing_CreateEvent() {
 
   return (
     <div className="flex justify-center">
-      <div className="max-w-screen-xl flex justify-center w-full">
-        <div className="max-w-screen-md w-full p-4 border border-border bg-card/70 rounded-lg shadow-lg">
+      <div className="hidden md:block w-[450px] mr-10">
+        <EventCard
+          event={{
+            event_name: eventData.eventName,
+            event_thumbnail: imagePreview || eventData.eventThumbnail,
+            event_full_address: eventData.eventAddress,
+            event_start_date: eventData.eventStartDate,
+            event_description: eventData.eventDescription,
+            event_cost_in_pence: eventData.eventCostInPence,
+          }}
+        />
+      </div>
+      <div className="max-w-screen-md flex justify-center w-full">
+        <div className="w-full p-4 border border-border bg-card/70 rounded-lg shadow-lg">
           <form onSubmit={handle_createEvent} className="grid gap-7 grid-cols-2 mt-6">
             <div className="col-span-2">
               <h2 className="text-2xl font-semibold text-copy-primary">Create Event</h2>
@@ -253,13 +266,13 @@ function Landing_CreateEvent() {
                 Event Thumbnail <span className="text-red-500">*</span>
               </label>
 
-              {imagePreview && <img src={imagePreview} className="mb-2" />}
+              {/* {imagePreview && <img src={imagePreview} className="mb-2" />} */}
 
               <input
                 id="eventThumbnail"
                 type="file"
                 onChange={handleFileChange}
-                className="block w-full border-gray-300 rounded-md shadow-sm p-2 border focus:outline-none focus:border-border"
+                className="block w-full border-gray-300 rounded-md shadow-sm p-2 border focus:outline-none focus:border-border text-copy-primary"
                 required
               />
             </div>
