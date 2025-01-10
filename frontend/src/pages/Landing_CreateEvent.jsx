@@ -3,17 +3,17 @@ import { useUser } from "@clerk/clerk-react";
 import CustomInputTag from "../components/CustomInputTag";
 import EventCard from "../components/EventCard";
 import { cloudinaryUploadImage } from "../api_cloudinary";
+import { createEvent } from "../api";
 
 function Landing_CreateEvent() {
   const { user } = useUser();
-
-  const [eventData, setEventData] = useState({
+  const eventDataTemplate = {
     eventName: "",
-    eventOrganizerUserId: user?.id || "",
     eventStartDate: "",
     eventEndDate: "",
     eventAddress: "",
     eventDescription: "",
+    eventOrganizerUserId: user?.id || 1,
     eventCapacity: "",
     eventAttendees: "0",
     eventCostInPence: "0",
@@ -23,12 +23,14 @@ function Landing_CreateEvent() {
     eventContactPhonePrefix: "+44",
     eventContactPhone: "",
     eventTags: [],
-  });
+  };
+
+  const [eventData, setEventData] = useState(eventDataTemplate);
   const [selectedImageFile, setSelectedImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
 
   useEffect(() => {
-    console.log(eventData.eventTags);
+    // console.log(eventData.eventTags);
   }, [eventData]);
 
   const handleInputChange = (e) => {
@@ -56,13 +58,24 @@ function Landing_CreateEvent() {
   const handle_createEvent = async (event) => {
     event.preventDefault();
     // console.log(eventData);
-    if (!selectedImageFile) {
-      console.error("No image file selected.");
-      return;
+    try {
+      if (!selectedImageFile) {
+        console.error("No image file selected.");
+        return;
+      }
+      // console.log(selectedImageFile);
+      const uploadImageResponse = await cloudinaryUploadImage({ file: selectedImageFile });
+      console.log("Upload response:", uploadImageResponse);
+      if (uploadImageResponse.secure_url) {
+        eventData.eventThumbnail = uploadImageResponse.secure_url;
+        const createEventResponse = await createEvent(eventData);
+        console.log(createEventResponse);
+      } else {
+        console.log("secure url missing");
+      }
+    } catch (error) {
+      console.error(error);
     }
-    console.log(selectedImageFile);
-    const response = await cloudinaryUploadImage({ file: selectedImageFile });
-    console.log("Upload response:", response);
   };
 
   return (
