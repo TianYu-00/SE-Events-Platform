@@ -67,8 +67,6 @@ exports.createEvent = async (eventData) => {
 
 exports.removeEvents = async (eventIds) => {
   try {
-    // loop through the event ids
-    // maybe use WHERE id = ANY($1) and then we pass the event ids in should be easier instead of looping creating multiple database queries
     const query = `DELETE FROM events WHERE event_id = ANY($1) RETURNING *;`;
     const result = await db.query(query, [eventIds]);
     const deletedIds = result.rows.map((row) => row.event_id);
