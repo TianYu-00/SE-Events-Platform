@@ -182,11 +182,11 @@ function Landing_Playground() {
       </div>
 
       <div className="px-4">
-        <table className="w-full">
+        <table className="w-full table-fixed border-collapse bg-card rounded-md">
           {/* Table Header */}
           <thead>
             {table.getHeaderGroups().map((headerGroup) => (
-              <tr key={headerGroup.id} className="text-copy-primary">
+              <tr key={headerGroup.id} className="text-copy-primary h-20">
                 {headerGroup.headers.map((header) => (
                   <th key={header.id} className={header.column.columnDef.meta?.className}>
                     <div
@@ -207,7 +207,7 @@ function Landing_Playground() {
           <tbody>
             {table.getRowModel().rows.length > 0 &&
               table.getRowModel().rows.map((row) => (
-                <tr key={row.id} className="border-t text-copy-primary/65 hover:bg-background-opp/10">
+                <tr key={row.id} className="border-t text-copy-primary/65 hover:bg-background-opp/10 h-14">
                   {row.getVisibleCells().map((cell) => (
                     <td key={cell.id} className={cell.column.columnDef.meta?.className}>
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
@@ -219,9 +219,9 @@ function Landing_Playground() {
         </table>
       </div>
 
-      <div className="flex flex-col sm:flex-row justify-between items-center mt-4 text-sm text-gray-700 p-4">
+      <div className="flex flex-col sm:flex-row justify-between items-center mt-4 text-sm p-4">
         <div className="flex items-center mb-4 sm:mb-0">
-          <span className="mr-2">Events per page</span>
+          <span className="mr-2 text-copy-primary/70">Events per page</span>
           <select
             className="border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 p-2"
             value={table.getState().pagination.pageSize}
@@ -266,7 +266,7 @@ function Landing_Playground() {
               }}
               className="w-16 p-2 rounded-md border border-gray-300 text-center"
             />
-            <span className="ml-1">of {table.getPageCount()}</span>
+            <span className="ml-1 text-copy-primary/70">of {table.getPageCount()}</span>
           </span>
 
           <button
