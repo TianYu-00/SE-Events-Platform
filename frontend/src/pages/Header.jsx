@@ -28,6 +28,11 @@ function Header({ toggleTheme, theme }) {
               </Link>
             </li>
             <li>
+              <Link to="/playground" className="flex flex-row p-2">
+                <span className="font-medium text-sm pl-2">Playground</span>
+              </Link>
+            </li>
+            <li>
               <Link to="/create-event" className="flex flex-row p-2">
                 <span className="font-medium text-sm pl-2">Create Event</span>
               </Link>
