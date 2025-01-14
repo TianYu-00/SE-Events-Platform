@@ -38,6 +38,7 @@ const ImageScroller = ({ events }) => {
         swipeable={false}
         draggable={false}
         pauseOnHover={false}
+        arrows={false}
       >
         {events.map((event, index) => (
           <div key={index}>
