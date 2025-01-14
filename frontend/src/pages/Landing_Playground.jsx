@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { getAllEvents } from "../api";
 import {
-  createColumnHelper,
   flexRender,
   useReactTable,
   getCoreRowModel,
@@ -9,120 +8,8 @@ import {
   getFilteredRowModel,
   getPaginationRowModel,
 } from "@tanstack/react-table";
-import { dateFormatter } from "../components/DateFormatter";
-import { moneyFormatter } from "../components/MoneyFormatter";
-import {
-  TbSearch,
-  TbArrowsSort,
-  TbCaretLeft,
-  TbCaretLeftFilled,
-  TbCaretRight,
-  TbCaretRightFilled,
-} from "react-icons/tb";
-
-const columnHelper = createColumnHelper();
-
-const columns = [
-  columnHelper.accessor("event_id", {
-    cell: (info) => <span>{info.getValue()}</span>,
-    header: () => (
-      <div className="flex space-x-2 justify-center items-center">
-        <span>ID</span> <TbArrowsSort size={15} />
-      </div>
-    ),
-    meta: {
-      className: "px-4 py-2 text-left",
-    },
-  }),
-
-  columnHelper.accessor("event_name", {
-    cell: (info) => <span>{info.getValue()}</span>,
-    header: () => (
-      <div className="flex space-x-2 justify-center items-center">
-        <span>Name</span> <TbArrowsSort size={15} />
-      </div>
-    ),
-    meta: {
-      className: "px-4 py-2 text-left",
-    },
-  }),
-
-  columnHelper.accessor("event_start_date", {
-    cell: (info) => <span>{dateFormatter(info.getValue(), 3)}</span>,
-    header: () => (
-      <div className="flex space-x-2 justify-center items-center">
-        <span>Start Date</span> <TbArrowsSort size={15} />
-      </div>
-    ),
-    meta: {
-      className: "px-4 py-2 text-left hidden md:table-cell",
-    },
-  }),
-
-  columnHelper.accessor("event_end_date", {
-    cell: (info) => <span>{dateFormatter(info.getValue(), 3)}</span>,
-    header: () => (
-      <div className="flex space-x-2 justify-center items-center">
-        <span>End Date</span> <TbArrowsSort size={15} />
-      </div>
-    ),
-    meta: {
-      className: "px-4 py-2 text-left hidden md:table-cell",
-    },
-  }),
-
-  columnHelper.accessor("event_created_at", {
-    cell: (info) => <span>{dateFormatter(info.getValue(), 3)}</span>,
-    header: () => (
-      <div className="flex space-x-2 justify-center items-center">
-        <span>Created At</span> <TbArrowsSort size={15} />
-      </div>
-    ),
-    meta: {
-      className: "px-4 py-2 text-left hidden md:table-cell",
-    },
-  }),
-
-  columnHelper.accessor("event_modified_at", {
-    cell: (info) => <span>{dateFormatter(info.getValue(), 3)}</span>,
-    header: () => (
-      <div className="flex space-x-2 justify-center items-center">
-        <span>Modified At</span> <TbArrowsSort size={15} />
-      </div>
-    ),
-    meta: {
-      className: "px-4 py-2 text-left hidden md:table-cell",
-    },
-  }),
-
-  columnHelper.accessor("event_cost_in_pence", {
-    cell: (info) => <span>£{moneyFormatter(info.getValue())}</span>,
-    header: () => (
-      <div className="flex space-x-2 justify-center items-center">
-        <span>Cost</span> <TbArrowsSort size={15} />
-      </div>
-    ),
-    meta: {
-      className: "px-4 py-2 text-left hidden md:table-cell",
-    },
-  }),
-
-  columnHelper.accessor("event_attendees", {
-    cell: (info) => (
-      <span>
-        {info.getValue()}/{info.row.original.event_capacity}
-      </span>
-    ),
-    header: () => (
-      <div className="flex space-x-2 justify-center items-center">
-        <span>Attendees</span> <TbArrowsSort size={15} />
-      </div>
-    ),
-    meta: {
-      className: "px-4 py-2 text-left hidden md:table-cell",
-    },
-  }),
-];
+import { TbSearch, TbCaretLeft, TbCaretLeftFilled, TbCaretRight, TbCaretRightFilled } from "react-icons/tb";
+import { eventColumns } from "../components/EventColumns";
 
 function Landing_Playground() {
   const [events, setEvents] = useState([]);
@@ -141,7 +28,7 @@ function Landing_Playground() {
 
   const table = useReactTable({
     data: events,
-    columns,
+    columns: eventColumns,
     state: {
       sorting,
       globalFilter,
@@ -160,11 +47,18 @@ function Landing_Playground() {
     getFilteredRowModel: getFilteredRowModel(),
 
     getPaginationRowModel: getPaginationRowModel(),
+
+    enableRowSelection: true,
   });
 
   useEffect(() => {
     // console.log("Table Row Model:", table.getRowModel());
   }, [events, table]);
+
+  const handle_LogSelectedRows = () => {
+    const selectedRows = table.getSelectedRowModel().rows;
+    console.log(selectedRows.map((row) => row.original));
+  };
 
   return (
     <div>
@@ -217,6 +111,12 @@ function Landing_Playground() {
               ))}
           </tbody>
         </table>
+        <button
+          onClick={handle_LogSelectedRows}
+          className="mt-4 px-4 py-2 bg-cta text-cta-text rounded hover:bg-cta-active"
+        >
+          Log Selected Rows
+        </button>
       </div>
 
       <div className="flex flex-col sm:flex-row justify-between items-center mt-4 text-sm p-4">
@@ -245,7 +145,6 @@ function Landing_Playground() {
           >
             <TbCaretLeftFilled size={17} />
           </button>
-
           <button
             className="p-2 rounded-md bg-gray-100 text-gray-600 hover:bg-gray-200 disabled:opacity-50"
             onClick={() => table.previousPage()}
@@ -253,7 +152,6 @@ function Landing_Playground() {
           >
             <TbCaretLeft size={17} />
           </button>
-
           <span className="flex items-center">
             <input
               min={1}
@@ -268,7 +166,6 @@ function Landing_Playground() {
             />
             <span className="ml-1 text-copy-primary/70">of {table.getPageCount()}</span>
           </span>
-
           <button
             className="p-2 rounded-md bg-gray-100 text-gray-600 hover:bg-gray-200 disabled:opacity-50"
             onClick={() => table.nextPage()}
@@ -277,6 +174,7 @@ function Landing_Playground() {
             <TbCaretRight size={17} />
           </button>
 
+          {/* For Debug */}
           <button
             className="p-2 rounded-md bg-gray-100 text-gray-600 hover:bg-gray-200 disabled:opacity-50"
             onClick={() => table.setPageIndex(table.getPageCount() - 1)}
