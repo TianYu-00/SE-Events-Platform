@@ -1,4 +1,4 @@
-const { getAllEvents, createEvent } = require("../models/events.models");
+const { getAllEvents, createEvent, removeEvents } = require("../models/events.models");
 
 exports.fetchAllEvents = async (req, res, next) => {
   try {
@@ -51,5 +51,21 @@ exports.postEvent = async (req, res, next) => {
     res.json({ success: true, msg: "Event posted", data: data });
   } catch (err) {
     next(err);
+  }
+};
+
+exports.deleteEvents = async (req, res, next) => {
+  try {
+    const { eventIds } = req.body;
+    if (!eventIds || eventIds.length <= 0) {
+      const error = new Error("Some fields are missing");
+      error.code = "BODY_CONTENT_INCOMPLETE";
+      return next(error);
+    }
+
+    const data = await removeEvents(eventIds);
+    res.json({ success: true, msg: "List of events has been removed", data: data });
+  } catch (error) {
+    next(error);
   }
 };

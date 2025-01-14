@@ -27,6 +27,13 @@ const errorHandler = (err, req, res, next) => {
       data: null,
       code: err.code,
     });
+  } else if (err.code === "NO_EVENT_DELETED") {
+    return res.status(400).send({
+      success: false,
+      msg: err.message || "No event was deleted",
+      data: null,
+      code: err.code,
+    });
   }
 
   next(err);
