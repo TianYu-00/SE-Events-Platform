@@ -19,7 +19,7 @@ function Landing_Playground() {
   useEffect(() => {
     const runFetchEvents = async () => {
       const response = await getAllEvents({});
-      //   console.log("Events response:", response.data);
+      console.log("Events response:", response.data);
       setEvents(response.data);
     };
 

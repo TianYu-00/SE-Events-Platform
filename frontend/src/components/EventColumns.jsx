@@ -29,7 +29,7 @@ export const eventColumns = [
     cell: (info) => <span>{info.getValue()}</span>,
     header: () => (
       <div className="flex space-x-2 justify-center items-center">
-        <span>ID</span> <TbArrowsSort size={15} />
+        <span>Event ID</span> <TbArrowsSort size={15} />
       </div>
     ),
     meta: {
@@ -110,11 +110,7 @@ export const eventColumns = [
   }),
 
   columnHelper.accessor("event_attendees", {
-    cell: (info) => (
-      <span>
-        {info.getValue()}/{info.row.original.event_capacity}
-      </span>
-    ),
+    cell: (info) => <span>{info.getValue()}</span>,
     header: () => (
       <div className="flex space-x-2 justify-center items-center">
         <span>Attendees</span> <TbArrowsSort size={15} />
@@ -122,6 +118,30 @@ export const eventColumns = [
     ),
     meta: {
       className: "px-4 py-2 text-left hidden md:table-cell",
+    },
+  }),
+
+  columnHelper.accessor("event_capacity", {
+    cell: (info) => <span>{info.getValue()}</span>,
+    header: () => (
+      <div className="flex space-x-2 justify-center items-center">
+        <span>Capacity</span> <TbArrowsSort size={15} />
+      </div>
+    ),
+    meta: {
+      className: "px-4 py-2 text-left hidden md:table-cell",
+    },
+  }),
+
+  columnHelper.accessor("event_organizer_id", {
+    cell: (info) => <span>{info.getValue()}</span>,
+    header: () => (
+      <div className="flex space-x-2 justify-center items-center">
+        <span>Organizer ID</span> <TbArrowsSort size={15} />
+      </div>
+    ),
+    meta: {
+      className: "px-4 py-2 text-left hidden md:table-cell truncate",
     },
   }),
 ];
