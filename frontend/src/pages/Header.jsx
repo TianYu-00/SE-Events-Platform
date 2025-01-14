@@ -121,17 +121,29 @@ function MenuNav() {
 
               <div className={`${user?.publicMetadata?.role === "admin" ? "" : "hidden"}`}>
                 <li>
-                  <Link to="/playground" className="flex flex-row p-4 rounded-md hover:bg-white hover:text-black">
+                  <Link
+                    to="/playground"
+                    className="flex flex-col items-start p-4 rounded-md hover:bg-white hover:text-black"
+                  >
+                    <span className="text-xs text-white/45">Admin</span>
                     <span className="font-medium">Playground</span>
                   </Link>
                 </li>
                 <li>
-                  <Link to="/create-event" className="flex flex-row p-4 rounded-md hover:bg-white hover:text-black">
+                  <Link
+                    to="/create-event"
+                    className="flex flex-col items-start p-4 rounded-md hover:bg-white hover:text-black"
+                  >
+                    <span className="text-xs text-white/45">Admin</span>
                     <span className="font-medium">Create Event</span>
                   </Link>
                 </li>
                 <li>
-                  <Link to="/manage-events" className="flex flex-row p-4 rounded-md hover:bg-white hover:text-black">
+                  <Link
+                    to="/manage-events"
+                    className="flex flex-col items-start p-4 rounded-md hover:bg-white hover:text-black"
+                  >
+                    <span className="text-xs text-white/45">Admin</span>
                     <span className="font-medium">Manage Events</span>
                   </Link>
                 </li>
