@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getAllEvents } from "../api";
+import { getAllEvents, deleteEvents } from "../api";
 import {
   flexRender,
   useReactTable,
@@ -19,7 +19,7 @@ function Landing_Playground() {
   useEffect(() => {
     const runFetchEvents = async () => {
       const response = await getAllEvents({});
-      console.log("Events response:", response.data);
+      // console.log("Events response:", response.data);
       setEvents(response.data);
     };
 
@@ -60,9 +60,28 @@ function Landing_Playground() {
     console.log(selectedRows.map((row) => row.original));
   };
 
+  const handle_DeleteEvents = async () => {
+    try {
+      const listOfEventIds = table.getSelectedRowModel().rows.map((row) => row.original.event_id);
+      if (listOfEventIds <= 0) {
+        console.error("Delete rejected, no row selected");
+        return;
+      }
+      const response = await deleteEvents({ listOfEventIds: listOfEventIds });
+      // console.log(response);
+      if (response.success) {
+        setEvents((prevEvents) => prevEvents.filter((event) => !listOfEventIds.includes(event.event_id)));
+        table.resetRowSelection();
+        // console.log(`${response.data.deletedRows.length} event's deleted`);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div>
-      <div className="p-4">
+      <div className="px-4">
         <div className="relative">
           <input
             type="text"
@@ -73,6 +92,22 @@ function Landing_Playground() {
           />
           <TbSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
         </div>
+      </div>
+
+      <div className="flex space-x-4 px-4 pb-4">
+        <button
+          onClick={handle_LogSelectedRows}
+          className="mt-4 px-4 py-2 bg-cta text-cta-text rounded hover:bg-cta-active"
+        >
+          Log Selected Rows
+        </button>
+
+        <button
+          onClick={handle_DeleteEvents}
+          className="mt-4 px-4 py-2 bg-cta text-cta-text rounded hover:bg-cta-active"
+        >
+          Delete
+        </button>
       </div>
 
       <div className="px-4">
@@ -111,12 +146,6 @@ function Landing_Playground() {
               ))}
           </tbody>
         </table>
-        <button
-          onClick={handle_LogSelectedRows}
-          className="mt-4 px-4 py-2 bg-cta text-cta-text rounded hover:bg-cta-active"
-        >
-          Log Selected Rows
-        </button>
       </div>
 
       <div className="flex flex-col sm:flex-row justify-between items-center mt-4 text-sm p-4">
