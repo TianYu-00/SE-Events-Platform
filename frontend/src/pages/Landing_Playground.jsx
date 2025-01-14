@@ -8,7 +8,7 @@ import {
   getFilteredRowModel,
   getPaginationRowModel,
 } from "@tanstack/react-table";
-import { TbSearch, TbCaretLeft, TbCaretLeftFilled, TbCaretRight, TbCaretRightFilled } from "react-icons/tb";
+import { TbSearch, TbCaretLeft, TbCaretLeftFilled, TbCaretRight, TbCaretRightFilled, TbTrash } from "react-icons/tb";
 import { eventColumns } from "../components/EventColumns";
 
 function Landing_Playground() {
@@ -104,9 +104,10 @@ function Landing_Playground() {
 
         <button
           onClick={handle_DeleteEvents}
-          className="mt-4 px-4 py-2 bg-cta text-cta-text rounded hover:bg-cta-active"
+          className="mt-4 px-4 py-2 bg-cta text-cta-text rounded hover:bg-cta-active flex justify-center items-center space-x-2"
         >
-          Delete
+          <TbTrash size={17} />
+          <span>Delete</span>
         </button>
       </div>
 
