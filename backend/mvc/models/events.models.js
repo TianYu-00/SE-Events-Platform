@@ -1,4 +1,5 @@
 const db = require("../../db/connection");
+const { deleteImage, deleteMultipleImages } = require("../../utils/cloudinaryHandler");
 
 exports.getAllEvents = async ({ orderCreatedAt = undefined }) => {
   try {
@@ -10,6 +11,20 @@ exports.getAllEvents = async ({ orderCreatedAt = undefined }) => {
 
     const result = await db.query(query);
     return result.rows;
+  } catch (error) {
+    return Promise.reject(error);
+  }
+};
+
+exports.getEventById = async (eventId) => {
+  try {
+    let query = "SELECT * FROM events WHERE event_id = $1;";
+
+    const result = await db.query(query, [eventId]);
+    if (result.rows <= 0) {
+      return Promise.reject({ code: "EVENT_NOT_FOUND", message: "Event not found" });
+    }
+    return result.rows[0];
   } catch (error) {
     return Promise.reject(error);
   }
@@ -41,21 +56,21 @@ exports.createEvent = async (eventData) => {
     `;
 
     const values = [
-      eventData.eventName,
-      eventData.startDate,
-      eventData.endDate,
-      eventData.fullAddress,
-      eventData.description,
-      eventData.organizerUserId,
-      eventData.capacity,
-      eventData.attendees,
-      eventData.costInPence,
-      eventData.contactEmail,
-      eventData.contactPhonePrefix,
-      eventData.contactPhone,
-      eventData.website,
-      eventData.tags,
-      eventData.thumbnail,
+      eventData.event_name,
+      eventData.event_start_date,
+      eventData.event_end_date,
+      eventData.event_full_address,
+      eventData.event_description,
+      eventData.event_organizer_id,
+      eventData.event_capacity,
+      eventData.event_attendees,
+      eventData.event_cost_in_pence,
+      eventData.event_contact_email,
+      eventData.event_contact_phone_prefix,
+      eventData.event_contact_phone,
+      eventData.event_website,
+      eventData.event_tags,
+      eventData.event_thumbnail,
     ];
 
     const result = await db.query(query, values);
@@ -69,13 +84,82 @@ exports.removeEvents = async (eventIds) => {
   try {
     const query = `DELETE FROM events WHERE event_id = ANY($1) RETURNING *;`;
     const result = await db.query(query, [eventIds]);
+
     const deletedIds = result.rows.map((row) => row.event_id);
-    const failedToDeleteIds = eventIds.filter((id) => !deletedIds.includes(id));
-    if (deletedIds <= 0) {
+
+    if (deletedIds.length === 0) {
       return Promise.reject({ code: "NO_EVENT_DELETED", message: "No event was deleted" });
     }
-    // Note: Still need to remove image from cloudinary.
-    return { deletedRows: result.rows, deletedIds, failedToDeleteIds, length: result.rows.length };
+
+    const failedToDeleteIds = eventIds.filter((id) => !deletedIds.includes(id));
+
+    if (process.env.NODE_ENV !== "test") {
+      const listOfImageSecureURLs = result.rows.map((row) => row.event_thumbnail);
+      try {
+        const deleteImagesResponse = await deleteMultipleImages(listOfImageSecureURLs);
+        if (deleteImagesResponse?.deleted) {
+          if (deleteImagesResponse.partial) {
+            console.warn("Some images might not have been deleted.");
+          } else {
+            console.log("All images deleted successfully.");
+          }
+        } else {
+          console.error("Failed to delete images from Cloudinary.");
+        }
+      } catch (imageError) {
+        console.error("Error during image deletion", imageError);
+      }
+    }
+
+    return {
+      deletedRows: result.rows,
+      deletedIds,
+      failedToDeleteIds,
+      length: result.rows.length,
+    };
+  } catch (error) {
+    return Promise.reject(error);
+  }
+};
+
+exports.patchEvent = async (eventId, eventData) => {
+  try {
+    const fetchedEventResponse = await exports.getEventById(eventId);
+
+    const fields = [];
+    const values = [];
+    let counter = 1;
+
+    for (const [key, value] of Object.entries(eventData)) {
+      fields.push(`${key} = $${counter++}`);
+      values.push(value);
+    }
+
+    fields.push(`event_modified_at = CURRENT_TIMESTAMP`);
+
+    values.push(eventId);
+
+    const query = `
+      UPDATE events
+      SET ${fields.join(", ")}
+      WHERE event_id = $${counter}
+      RETURNING *;
+    `;
+
+    const result = await db.query(query, values);
+
+    if (process.env.NODE_ENV !== "test") {
+      if (fetchedEventResponse.event_thumbnail !== result.rows[0].event_thumbnail) {
+        const deleteImageResponse = await deleteImage(fetchedEventResponse.event_thumbnail);
+        if (deleteImageResponse?.result === "ok") {
+          console.log("image deleted successfully");
+        } else {
+          console.error("Failed to delete image");
+        }
+      }
+    }
+
+    return result.rows[0];
   } catch (error) {
     return Promise.reject(error);
   }

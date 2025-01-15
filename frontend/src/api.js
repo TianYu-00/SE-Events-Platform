@@ -41,42 +41,26 @@ export const initializeUser = async (userId, publicMetadata) => {
   }
 };
 
-export const createEvent = async ({
-  eventName,
-  eventStartDate,
-  eventEndDate,
-  eventAddress,
-  eventDescription,
-  eventOrganizerUserId,
-  eventCapacity,
-  eventAttendees,
-  eventCostInPence,
-  eventContactEmail,
-  eventThumbnail,
-  eventWebsite,
-  eventContactPhonePrefix,
-  eventContactPhone,
-  eventTags,
-}) => {
+export const createEvent = async (eventData) => {
   const data = {
-    eventName: eventName,
-    startDate: eventStartDate,
-    endDate: eventEndDate,
-    fullAddress: eventAddress,
-    description: eventDescription,
-    organizerUserId: eventOrganizerUserId,
-    capacity: eventCapacity,
-    attendees: eventAttendees,
-    costInPence: eventCostInPence,
-    contactEmail: eventContactEmail,
-    contactPhonePrefix: eventContactPhonePrefix,
-    contactPhone: eventContactPhone,
-    website: eventWebsite,
-    tags: eventTags,
-    thumbnail: eventThumbnail,
+    event_name: eventData.event_name,
+    event_start_date: eventData.event_start_date,
+    event_end_date: eventData.event_end_date,
+    event_full_address: eventData.event_full_address,
+    event_description: eventData.event_description,
+    event_organizer_id: eventData.event_organizer_id,
+    event_capacity: eventData.event_capacity,
+    event_attendees: eventData.event_attendees,
+    event_cost_in_pence: eventData.event_cost_in_pence,
+    event_contact_email: eventData.event_contact_email,
+    event_contact_phone_prefix: eventData.event_contact_phone_prefix,
+    event_contact_phone: eventData.event_contact_phone,
+    event_website: eventData.event_website,
+    event_tags: eventData.event_tags,
+    event_thumbnail: eventData.event_thumbnail,
   };
   try {
-    const response = await api.post(`/events/create-event`, data);
+    const response = await api.post(`/events`, data);
     return response.data;
   } catch (error) {
     throw error;
@@ -85,8 +69,33 @@ export const createEvent = async ({
 
 export const deleteEvents = async ({ listOfEventIds }) => {
   try {
-    const data = { eventIds: listOfEventIds };
-    const response = await api.delete(`/events/delete-events`, { data });
+    const data = { event_id: listOfEventIds };
+    const response = await api.delete(`/events`, { data });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const updateEvent = async (eventId, eventData) => {
+  const data = {
+    event_name: eventData.event_name,
+    event_start_date: eventData.event_start_date,
+    event_end_date: eventData.event_end_date,
+    event_full_address: eventData.event_full_address,
+    event_description: eventData.event_description,
+    event_capacity: eventData.event_capacity,
+    event_attendees: eventData.event_attendees,
+    event_cost_in_pence: eventData.event_cost_in_pence,
+    event_contact_email: eventData.event_contact_email,
+    event_contact_phone_prefix: eventData.event_contact_phone_prefix,
+    event_contact_phone: eventData.event_contact_phone,
+    event_website: eventData.event_website,
+    event_tags: eventData.event_tags,
+    event_thumbnail: eventData.event_thumbnail,
+  };
+  try {
+    const response = await api.patch(`/events/${eventId}`, data);
     return response.data;
   } catch (error) {
     throw error;

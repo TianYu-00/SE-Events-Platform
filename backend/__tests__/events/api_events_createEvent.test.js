@@ -7,44 +7,46 @@ beforeEach(async () => {
   await seed(data);
 });
 
-describe("POST /api/events/create-event", () => {
+describe("POST /api/events", () => {
   const validEventData = {
-    eventName: "Test Event",
-    startDate: "2025-01-15T10:00:00Z",
-    endDate: "2025-01-15T12:00:00Z",
-    fullAddress: "123 Test Street, Test City",
-    description: "This is a test event.",
-    organizerUserId: "user123",
-    capacity: 100,
-    attendees: 0,
-    costInPence: 1000,
-    contactEmail: "test@example.com",
-    contactPhonePrefix: "+44",
-    contactPhone: "1234567890",
-    thumbnail: "https://example.com/thumbnail.jpg",
+    event_name: "Test Event",
+    event_start_date: "2025-01-15T10:00:00Z",
+    event_end_date: "2025-01-15T12:00:00Z",
+    event_full_address: "123 Test Street, Test City",
+    event_description: "This is a test event.",
+    event_organizer_id: "user123",
+    event_capacity: 100,
+    event_attendees: 0,
+    event_cost_in_pence: 1000,
+    event_contact_email: "test@example.com",
+    event_contact_phone_prefix: "+44",
+    event_contact_phone: "1234567890",
+    event_thumbnail: "https://example.com/thumbnail.jpg",
+    event_website: "https://example.com",
+    event_tags: ["test", "123"],
   };
 
   test("should return 200 and success message when valid event data is provided", async () => {
-    const { body } = await request(app).post("/api/events/create-event").send(validEventData).expect(200);
+    const { body } = await request(app).post("/api/events").send(validEventData).expect(200);
 
     expect(body.success).toBe(true);
-    expect(body.data).toHaveProperty("event_name", validEventData.eventName);
+    expect(body.data).toHaveProperty("event_name", validEventData.event_name);
   });
 
   test("should return 400 and error message when some required fields are missing", async () => {
     const incompleteEventData = {
       ...validEventData,
-      eventName: undefined,
-      startDate: null,
+      event_name: undefined,
+      event_start_date: null,
     };
 
-    const { body } = await request(app).post("/api/events/create-event").send(incompleteEventData).expect(400);
+    const { body } = await request(app).post("/api/events").send(incompleteEventData).expect(400);
     expect(body.success).toBe(false);
     expect(body.code).toBe("BODY_CONTENT_INCOMPLETE");
   });
 
   test("should return 400 and error message when request body is empty", async () => {
-    const { body } = await request(app).post("/api/events/create-event").send({}).expect(400);
+    const { body } = await request(app).post("/api/events").send({}).expect(400);
     expect(body.success).toBe(false);
     expect(body.code).toBe("BODY_CONTENT_INCOMPLETE");
   });

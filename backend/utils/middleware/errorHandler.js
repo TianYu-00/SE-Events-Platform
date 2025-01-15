@@ -34,6 +34,27 @@ const errorHandler = (err, req, res, next) => {
       data: null,
       code: err.code,
     });
+  } else if (err.code === "BODY_CONTENT_INVALID") {
+    return res.status(400).send({
+      success: false,
+      msg: err.message || "Body content invalid",
+      data: null,
+      code: err.code,
+    });
+  } else if (err.code === "EVENT_NOT_FOUND") {
+    return res.status(404).send({
+      success: false,
+      msg: err.message || "Event not found",
+      data: null,
+      code: err.code,
+    });
+  } else if (err.code === "INVALID_PARAMS") {
+    return res.status(400).send({
+      success: false,
+      msg: err.message || "Invalid params",
+      data: null,
+      code: err.code,
+    });
   }
 
   next(err);
