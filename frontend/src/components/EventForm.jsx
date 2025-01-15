@@ -150,7 +150,7 @@ function EventForm({ initialEventData = null, isCreate = true }) {
                 className="block text-sm font-medium text-copy-primary/80 ml-1 text-nowrap mb-1"
                 htmlFor="event_organizer_id"
               >
-                Event Organizer ID <span className="text-red-500">*</span>
+                Organizer ID <span className="text-red-500">*</span>
               </label>
               <input
                 id="event_organizer_id"
@@ -167,7 +167,7 @@ function EventForm({ initialEventData = null, isCreate = true }) {
                 className="block text-sm font-medium text-copy-primary/80 ml-1 text-nowrap mb-1"
                 htmlFor="event_start_date"
               >
-                Event Start Date <span className="text-red-500">*</span>
+                Start Date <span className="text-red-500">*</span>
               </label>
               <input
                 id="event_start_date"
@@ -186,7 +186,7 @@ function EventForm({ initialEventData = null, isCreate = true }) {
                 className="block text-sm font-medium text-copy-primary/80 ml-1 text-nowrap mb-1"
                 htmlFor="event_end_date"
               >
-                Event End Date <span className="text-red-500">*</span>
+                End Date <span className="text-red-500">*</span>
               </label>
               <input
                 id="event_end_date"
@@ -203,7 +203,7 @@ function EventForm({ initialEventData = null, isCreate = true }) {
                 className="block text-sm font-medium text-copy-primary/80 ml-1 text-nowrap mb-1"
                 htmlFor="event_full_address"
               >
-                Event Full Address <span className="text-red-500">*</span>
+                Full Address <span className="text-red-500">*</span>
               </label>
               <input
                 id="event_full_address"
@@ -221,7 +221,7 @@ function EventForm({ initialEventData = null, isCreate = true }) {
                 className="block text-sm font-medium text-copy-primary/80 ml-1 text-nowrap mb-1"
                 htmlFor="event_description"
               >
-                Event Description <span className="text-red-500">*</span>
+                Description <span className="text-red-500">*</span>
               </label>
               <textarea
                 id="event_description"
@@ -238,7 +238,7 @@ function EventForm({ initialEventData = null, isCreate = true }) {
                 className="block text-sm font-medium text-copy-primary/80 ml-1 text-nowrap mb-1"
                 htmlFor="event_capacity"
               >
-                Event Capacity <span className="text-red-500">*</span>
+                Capacity <span className="text-red-500">*</span>
               </label>
               <input
                 id="event_capacity"
@@ -257,7 +257,7 @@ function EventForm({ initialEventData = null, isCreate = true }) {
                 className="block text-sm font-medium text-copy-primary/80 ml-1 text-nowrap mb-1"
                 htmlFor="event_attendees"
               >
-                Event Attendees <span className="text-red-500">*</span>
+                Attendees <span className="text-red-500">*</span>
               </label>
               <input
                 id="event_attendees"
@@ -276,7 +276,7 @@ function EventForm({ initialEventData = null, isCreate = true }) {
                 className="block text-sm font-medium text-copy-primary/80 ml-1 text-nowrap mb-1"
                 htmlFor="event_cost_in_pence"
               >
-                Event Cost In Pence <span className="text-red-500">*</span>
+                Cost In Pence <span className="text-red-500">*</span>
               </label>
               <input
                 id="event_cost_in_pence"
@@ -295,7 +295,7 @@ function EventForm({ initialEventData = null, isCreate = true }) {
                 className="block text-sm font-medium text-copy-primary/80 ml-1 text-nowrap mb-1"
                 htmlFor="event_contact_email"
               >
-                Event Contact Email <span className="text-red-500">*</span>
+                Contact Email <span className="text-red-500">*</span>
               </label>
               <input
                 id="event_contact_email"
@@ -313,7 +313,7 @@ function EventForm({ initialEventData = null, isCreate = true }) {
                 className="block text-sm font-medium text-copy-primary/80 ml-1 text-nowrap mb-1"
                 htmlFor="event_thumbnail"
               >
-                Event Thumbnail {isCreate ? `${(<span className="text-red-500">*</span>)}` : ""}
+                Thumbnail {isCreate ? `${(<span className="text-red-500">*</span>)}` : ""}
               </label>
 
               {/* {imagePreview && <img src={imagePreview} className="mb-2" />} */}
@@ -332,7 +332,7 @@ function EventForm({ initialEventData = null, isCreate = true }) {
                 className="block text-sm font-medium text-copy-primary/80 ml-1 text-nowrap mb-1"
                 htmlFor="event_website"
               >
-                Event Website
+                Website
               </label>
               <input
                 id="event_website"
@@ -349,7 +349,7 @@ function EventForm({ initialEventData = null, isCreate = true }) {
                 className="block text-sm font-medium text-copy-primary/80 ml-1 text-nowrap mb-1"
                 htmlFor="event_contact_phone_prefix"
               >
-                Event Contact Phone Prefix
+                Country Code
               </label>
               <select
                 id="event_contact_phone_prefix"
@@ -366,7 +366,7 @@ function EventForm({ initialEventData = null, isCreate = true }) {
                 className="block text-sm font-medium text-copy-primary/80 ml-1 text-nowrap mb-1"
                 htmlFor="event_contact_phone"
               >
-                Event Contact Phone
+                Phone
               </label>
               <input
                 id="event_contact_phone"
@@ -379,7 +379,7 @@ function EventForm({ initialEventData = null, isCreate = true }) {
             </div>
 
             <div className="col-span-2">
-              <label className="block text-sm font-medium text-copy-primary/80 ml-1 text-nowrap mb-1">Event Tags</label>
+              <label className="block text-sm font-medium text-copy-primary/80 ml-1 text-nowrap mb-1">Tags</label>
               <CustomInputTag
                 tags={eventData.event_tags || []}
                 setTags={(newTags) => setEventData({ ...eventData, event_tags: newTags })}

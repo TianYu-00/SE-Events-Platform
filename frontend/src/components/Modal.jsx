@@ -6,7 +6,7 @@ const Modal = ({ isOpen, onClose, children, modalTitle }) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-80 flex justify-center items-center z-50">
-      <div className="bg-card rounded-lg shadow-lg p-6 overflow-hidden h-full w-full">
+      <div className="bg-card rounded-lg max-w-full p-6 overflow-hidden max-h-full">
         {/* Header */}
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-lg font-bold text-copy-primary whitespace-nowrap overflow-hidden truncate ">
@@ -18,7 +18,7 @@ const Modal = ({ isOpen, onClose, children, modalTitle }) => {
         </div>
 
         {/* Content */}
-        <div className="overflow-y-auto h-full">{children}</div>
+        <div className="overflow-y-auto max-h-[88vh]">{children}</div>
       </div>
     </div>
   );

@@ -45,7 +45,7 @@ export const eventColumns = [
       </div>
     ),
     meta: {
-      className: "px-4 py-2 text-left",
+      className: "px-4 py-2 text-left truncate",
     },
   }),
 
