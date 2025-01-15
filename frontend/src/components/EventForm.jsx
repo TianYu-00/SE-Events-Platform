@@ -30,7 +30,7 @@ function EventForm({ initialEventData = null, isCreate = true }) {
   const [imagePreview, setImagePreview] = useState(null);
 
   useEffect(() => {
-    console.log(eventData);
+    // console.log(eventData);
   }, [eventData]);
 
   const handleInputChange = (e) => {
@@ -63,6 +63,11 @@ function EventForm({ initialEventData = null, isCreate = true }) {
         console.error("No image file selected.");
         return;
       }
+
+      if (selectedImageFile.size > 10 * 1024 * 1024) {
+        throw new Error("File size exceeds 10MB.");
+      }
+
       // console.log(selectedImageFile);
       const uploadImageResponse = await cloudinaryUploadImage({ file: selectedImageFile });
       console.log("Upload response:", uploadImageResponse);
@@ -79,10 +84,22 @@ function EventForm({ initialEventData = null, isCreate = true }) {
   };
 
   const handle_editEvent = async (event) => {
-    // NOTE: LOTS MORE TO DO HERE
     event.preventDefault();
-    // console.log(eventData);
     try {
+      if (selectedImageFile) {
+        if (selectedImageFile.size > 10 * 1024 * 1024) {
+          throw new Error("File size exceeds 10MB.");
+        }
+
+        const uploadImageResponse = await cloudinaryUploadImage({ file: selectedImageFile });
+
+        if (uploadImageResponse.secure_url) {
+          eventData.event_thumbnail = uploadImageResponse.secure_url;
+        } else {
+          throw new Error("Missing secure url from image upload.");
+        }
+      }
+
       const editEventResponse = await updateEvent(eventData.event_id, eventData);
       console.log(editEventResponse);
     } catch (error) {
