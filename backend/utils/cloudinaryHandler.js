@@ -1,4 +1,5 @@
 const cloudinary = require("cloudinary").v2;
+// https://cloudinary.com/documentation/node_integration
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
