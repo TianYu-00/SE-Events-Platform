@@ -24,17 +24,17 @@ exports.postEvent = async (req, res, next) => {
   try {
     const eventData = req.body;
     const requiredFields = [
-      "eventName",
-      "startDate",
-      "endDate",
-      "fullAddress",
-      "description",
-      "organizerUserId",
-      "capacity",
-      "attendees",
-      "costInPence",
-      "contactEmail",
-      "thumbnail",
+      "event_name",
+      "event_start_date",
+      "event_end_date",
+      "event_full_address",
+      "event_description",
+      "event_organizer_id",
+      "event_capacity",
+      "event_attendees",
+      "event_cost_in_pence",
+      "event_contact_email",
+      "event_thumbnail",
     ];
 
     const missingFields = requiredFields.filter(

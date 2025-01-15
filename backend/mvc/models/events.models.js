@@ -55,21 +55,21 @@ exports.createEvent = async (eventData) => {
     `;
 
     const values = [
-      eventData.eventName,
-      eventData.startDate,
-      eventData.endDate,
-      eventData.fullAddress,
-      eventData.description,
-      eventData.organizerUserId,
-      eventData.capacity,
-      eventData.attendees,
-      eventData.costInPence,
-      eventData.contactEmail,
-      eventData.contactPhonePrefix,
-      eventData.contactPhone,
-      eventData.website,
-      eventData.tags,
-      eventData.thumbnail,
+      eventData.event_name,
+      eventData.event_start_date,
+      eventData.event_end_date,
+      eventData.event_full_address,
+      eventData.event_description,
+      eventData.event_organizer_id,
+      eventData.event_capacity,
+      eventData.event_attendees,
+      eventData.event_cost_in_pence,
+      eventData.event_contact_email,
+      eventData.event_contact_phone_prefix,
+      eventData.event_contact_phone,
+      eventData.event_website,
+      eventData.event_tags,
+      eventData.event_thumbnail,
     ];
 
     const result = await db.query(query, values);
