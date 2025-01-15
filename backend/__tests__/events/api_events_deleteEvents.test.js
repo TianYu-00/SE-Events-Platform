@@ -14,15 +14,14 @@ describe("DELETE /api/events", () => {
   const emptyEventIds = [];
 
   test("should return 200 and success message when valid event IDs are provided", async () => {
-    const { body } = await request(app).delete("/api/events").send({ eventIds: validEventIds }).expect(200);
-
+    const { body } = await request(app).delete("/api/events").send({ event_id: validEventIds }).expect(200);
     expect(body.success).toBe(true);
     expect(body.data.deletedIds).toEqual(expect.arrayContaining(validEventIds));
     expect(body.data.failedToDeleteIds.length).toBe(0);
   });
 
   test("should return 400 and error code when eventIds array is empty", async () => {
-    const { body } = await request(app).delete("/api/events").send({ eventIds: emptyEventIds }).expect(400);
+    const { body } = await request(app).delete("/api/events").send({ event_id: emptyEventIds }).expect(400);
 
     expect(body.success).toBe(false);
     expect(body.code).toBe("BODY_CONTENT_INCOMPLETE");
@@ -36,7 +35,7 @@ describe("DELETE /api/events", () => {
   });
 
   test("should return 400 and error code when no events are deleted", async () => {
-    const { body } = await request(app).delete("/api/events").send({ eventIds: invalidEventIds }).expect(400);
+    const { body } = await request(app).delete("/api/events").send({ event_id: invalidEventIds }).expect(400);
 
     expect(body.success).toBe(false);
     expect(body.code).toBe("NO_EVENT_DELETED");
@@ -45,7 +44,7 @@ describe("DELETE /api/events", () => {
   test("should return 200 with a partial deletion when some events exist and others do not", async () => {
     const { body } = await request(app)
       .delete("/api/events")
-      .send({ eventIds: [...validEventIds, ...invalidEventIds] })
+      .send({ event_id: [...validEventIds, ...invalidEventIds] })
       .expect(200);
 
     expect(body.success).toBe(true);
