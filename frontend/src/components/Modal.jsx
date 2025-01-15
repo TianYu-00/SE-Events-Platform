@@ -8,7 +8,7 @@ const Modal = ({ isOpen, onClose, children, modalTitle }) => {
     <div className="fixed inset-0 bg-black bg-opacity-80 flex justify-center items-center z-50">
       <div className="bg-card rounded-lg max-w-full p-6 overflow-hidden max-h-full">
         {/* Header */}
-        <div className="flex justify-between items-center mb-4">
+        <div className="flex justify-between items-center mb-4 space-x-4">
           <h2 className="text-lg font-bold text-copy-primary whitespace-nowrap overflow-hidden truncate ">
             {modalTitle}
           </h2>
