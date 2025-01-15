@@ -59,24 +59,24 @@ export const createEvent = async ({
   eventTags,
 }) => {
   const data = {
-    eventName: eventName,
-    startDate: eventStartDate,
-    endDate: eventEndDate,
-    fullAddress: eventAddress,
-    description: eventDescription,
-    organizerUserId: eventOrganizerUserId,
-    capacity: eventCapacity,
-    attendees: eventAttendees,
-    costInPence: eventCostInPence,
-    contactEmail: eventContactEmail,
-    contactPhonePrefix: eventContactPhonePrefix,
-    contactPhone: eventContactPhone,
-    website: eventWebsite,
-    tags: eventTags,
-    thumbnail: eventThumbnail,
+    event_name: eventName,
+    event_start_date: eventStartDate,
+    event_end_date: eventEndDate,
+    event_full_address: eventAddress,
+    event_description: eventDescription,
+    event_organizer_id: eventOrganizerUserId,
+    event_capacity: eventCapacity,
+    event_attendees: eventAttendees,
+    event_cost_in_pence: eventCostInPence,
+    event_contact_email: eventContactEmail,
+    event_contact_phone_prefix: eventContactPhonePrefix,
+    event_contact_phone: eventContactPhone,
+    event_website: eventWebsite,
+    event_tags: eventTags,
+    event_thumbnail: eventThumbnail,
   };
   try {
-    const response = await api.post(`/events/create-event`, data);
+    const response = await api.post(`/events`, data);
     return response.data;
   } catch (error) {
     throw error;
@@ -86,7 +86,7 @@ export const createEvent = async ({
 export const deleteEvents = async ({ listOfEventIds }) => {
   try {
     const data = { eventIds: listOfEventIds };
-    const response = await api.delete(`/events/delete-events`, { data });
+    const response = await api.delete(`/events`, { data });
     return response.data;
   } catch (error) {
     throw error;
