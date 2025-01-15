@@ -41,39 +41,23 @@ export const initializeUser = async (userId, publicMetadata) => {
   }
 };
 
-export const createEvent = async ({
-  eventName,
-  eventStartDate,
-  eventEndDate,
-  eventAddress,
-  eventDescription,
-  eventOrganizerUserId,
-  eventCapacity,
-  eventAttendees,
-  eventCostInPence,
-  eventContactEmail,
-  eventThumbnail,
-  eventWebsite,
-  eventContactPhonePrefix,
-  eventContactPhone,
-  eventTags,
-}) => {
+export const createEvent = async (eventData) => {
   const data = {
-    event_name: eventName,
-    event_start_date: eventStartDate,
-    event_end_date: eventEndDate,
-    event_full_address: eventAddress,
-    event_description: eventDescription,
-    event_organizer_id: eventOrganizerUserId,
-    event_capacity: eventCapacity,
-    event_attendees: eventAttendees,
-    event_cost_in_pence: eventCostInPence,
-    event_contact_email: eventContactEmail,
-    event_contact_phone_prefix: eventContactPhonePrefix,
-    event_contact_phone: eventContactPhone,
-    event_website: eventWebsite,
-    event_tags: eventTags,
-    event_thumbnail: eventThumbnail,
+    event_name: eventData.eventName,
+    event_start_date: eventData.eventStartDate,
+    event_end_date: eventData.eventEndDate,
+    event_full_address: eventData.eventAddress,
+    event_description: eventData.eventDescription,
+    event_organizer_id: eventData.eventOrganizerUserId,
+    event_capacity: eventData.eventCapacity,
+    event_attendees: eventData.eventAttendees,
+    event_cost_in_pence: eventData.eventCostInPence,
+    event_contact_email: eventData.eventContactEmail,
+    event_contact_phone_prefix: eventData.eventContactPhonePrefix,
+    event_contact_phone: eventData.eventContactPhone,
+    event_website: eventData.eventWebsite,
+    event_tags: eventData.eventTags,
+    event_thumbnail: eventData.eventThumbnail,
   };
   try {
     const response = await api.post(`/events`, data);
