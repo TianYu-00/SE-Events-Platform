@@ -7,7 +7,7 @@ beforeEach(async () => {
   await seed(data);
 });
 
-describe("POST /api/events/create-event", () => {
+describe("POST /api/events", () => {
   const validEventData = {
     eventName: "Test Event",
     startDate: "2025-01-15T10:00:00Z",
@@ -25,7 +25,7 @@ describe("POST /api/events/create-event", () => {
   };
 
   test("should return 200 and success message when valid event data is provided", async () => {
-    const { body } = await request(app).post("/api/events/create-event").send(validEventData).expect(200);
+    const { body } = await request(app).post("/api/events").send(validEventData).expect(200);
 
     expect(body.success).toBe(true);
     expect(body.data).toHaveProperty("event_name", validEventData.eventName);
@@ -38,13 +38,13 @@ describe("POST /api/events/create-event", () => {
       startDate: null,
     };
 
-    const { body } = await request(app).post("/api/events/create-event").send(incompleteEventData).expect(400);
+    const { body } = await request(app).post("/api/events").send(incompleteEventData).expect(400);
     expect(body.success).toBe(false);
     expect(body.code).toBe("BODY_CONTENT_INCOMPLETE");
   });
 
   test("should return 400 and error message when request body is empty", async () => {
-    const { body } = await request(app).post("/api/events/create-event").send({}).expect(400);
+    const { body } = await request(app).post("/api/events").send({}).expect(400);
     expect(body.success).toBe(false);
     expect(body.code).toBe("BODY_CONTENT_INCOMPLETE");
   });
