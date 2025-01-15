@@ -9,7 +9,7 @@ import { TiCalendar } from "react-icons/ti";
 function AddToCalendar({ eventData, isOpen, onClose }) {
   const event = {
     title: eventData.event_name,
-    description: "Event to attend",
+    description: eventData.event_description,
     start: eventData.event_start_date,
     end: eventData.event_end_date,
     location: eventData.event_full_address,
