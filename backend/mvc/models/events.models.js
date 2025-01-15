@@ -1,5 +1,5 @@
 const db = require("../../db/connection");
-const { deleteImage } = require("../../utils/cloudinaryHandler");
+const { deleteImage, deleteMultipleImages } = require("../../utils/cloudinaryHandler");
 
 exports.getAllEvents = async ({ orderCreatedAt = undefined }) => {
   try {
@@ -84,13 +84,39 @@ exports.removeEvents = async (eventIds) => {
   try {
     const query = `DELETE FROM events WHERE event_id = ANY($1) RETURNING *;`;
     const result = await db.query(query, [eventIds]);
+
     const deletedIds = result.rows.map((row) => row.event_id);
-    const failedToDeleteIds = eventIds.filter((id) => !deletedIds.includes(id));
-    if (deletedIds <= 0) {
+
+    if (deletedIds.length === 0) {
       return Promise.reject({ code: "NO_EVENT_DELETED", message: "No event was deleted" });
     }
-    // Note: Still need to remove image from cloudinary.
-    return { deletedRows: result.rows, deletedIds, failedToDeleteIds, length: result.rows.length };
+
+    const failedToDeleteIds = eventIds.filter((id) => !deletedIds.includes(id));
+
+    if (process.env.NODE_ENV !== "test") {
+      const listOfImageSecureURLs = result.rows.map((row) => row.event_thumbnail);
+      try {
+        const deleteImagesResponse = await deleteMultipleImages(listOfImageSecureURLs);
+        if (deleteImagesResponse?.deleted) {
+          if (deleteImagesResponse.partial) {
+            console.warn("Some images might not have been deleted.");
+          } else {
+            console.log("All images deleted successfully.");
+          }
+        } else {
+          console.error("Failed to delete images from Cloudinary.");
+        }
+      } catch (imageError) {
+        console.error("Error during image deletion", imageError);
+      }
+    }
+
+    return {
+      deletedRows: result.rows,
+      deletedIds,
+      failedToDeleteIds,
+      length: result.rows.length,
+    };
   } catch (error) {
     return Promise.reject(error);
   }
@@ -122,12 +148,14 @@ exports.patchEvent = async (eventId, eventData) => {
 
     const result = await db.query(query, values);
 
-    if (fetchedEventResponse.event_thumbnail !== result.rows[0].event_thumbnail) {
-      const deleteImageResponse = await deleteImage(fetchedEventResponse.event_thumbnail);
-      if (deleteImageResponse?.result === "ok") {
-        console.log("image deleted successfully");
-      } else {
-        console.error("Failed to delete image");
+    if (process.env.NODE_ENV !== "test") {
+      if (fetchedEventResponse.event_thumbnail !== result.rows[0].event_thumbnail) {
+        const deleteImageResponse = await deleteImage(fetchedEventResponse.event_thumbnail);
+        if (deleteImageResponse?.result === "ok") {
+          console.log("image deleted successfully");
+        } else {
+          console.error("Failed to delete image");
+        }
       }
     }
 

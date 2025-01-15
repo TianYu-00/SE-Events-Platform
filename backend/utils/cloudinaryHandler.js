@@ -17,3 +17,18 @@ exports.deleteImage = async (imageSecureURL) => {
     console.error("Error deleting image:", error);
   }
 };
+
+exports.deleteMultipleImages = async (imageSecureURLs) => {
+  try {
+    // console.log("secure links", imageSecureURLs);
+    const publicIds = imageSecureURLs.map((imageSecureURL) => {
+      return imageSecureURL.split("/").slice(-1)[0].split(".")[0];
+    });
+    // console.log("public id", publicIds);
+    const response = await cloudinary.api.delete_resources(publicIds);
+    console.log(response);
+    return response;
+  } catch (error) {
+    console.error("Error bulk deleting images:", error);
+  }
+};
