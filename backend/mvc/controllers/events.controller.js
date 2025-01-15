@@ -56,7 +56,7 @@ exports.postEvent = async (req, res, next) => {
 
 exports.deleteEvents = async (req, res, next) => {
   try {
-    const { eventIds } = req.body;
+    const { event_id: eventIds } = req.body;
     if (!eventIds || eventIds.length <= 0) {
       const error = new Error("Some fields are missing");
       error.code = "BODY_CONTENT_INCOMPLETE";

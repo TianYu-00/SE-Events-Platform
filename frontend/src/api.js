@@ -85,7 +85,7 @@ export const createEvent = async ({
 
 export const deleteEvents = async ({ listOfEventIds }) => {
   try {
-    const data = { eventIds: listOfEventIds };
+    const data = { event_id: listOfEventIds };
     const response = await api.delete(`/events`, { data });
     return response.data;
   } catch (error) {
