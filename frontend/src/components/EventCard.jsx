@@ -1,17 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import { dateFormatter } from "./DateFormatter";
 import { moneyFormatter } from "./MoneyFormatter";
-// https://react-icons.github.io/react-icons/icons/tb/
 import { TbCalendar, TbCalendarTime, TbLocation } from "react-icons/tb";
+import AddToCalendar from "./AddToCalendar";
 
 function EventCard({ event }) {
+  const [showCalendarLinks, setShowCalendarLinks] = useState(false);
+
+  const toggleCalendarLinks = () => {
+    setShowCalendarLinks((prev) => !prev);
+  };
+
   return (
     <div className="text-copy-primary">
       <div className="w-full h-full bg-card rounded-t-lg border border-border/40 shadow-lg flex flex-col">
         <img
           src={`${event.event_thumbnail || "https://placehold.co/600x400?text=Image+Not+Available"} `}
           className="rounded-t-lg w-full h-64 object-cover"
-        ></img>
+          alt="Event Thumbnail"
+        />
         <div className="p-3 flex flex-col flex-grow">
           <div className="mb-3">
             <h3 className="truncate text-2xl font-medium mb-1">{event.event_name}</h3>
@@ -32,11 +39,16 @@ function EventCard({ event }) {
             <button className="bg-cta hover:bg-cta-active p-2 rounded-md text-cta-text w-32 flex justify-center items-center">
               {event.event_cost_in_pence > 0 ? "Purchase" : "Free"}
             </button>
-            <button className="hover:bg-cta-active hover:text-cta-text p-2 rounded-md text-copy-primary border border-border w-40 ml-auto flex justify-center items-center hover:border-0">
+            <button
+              onClick={toggleCalendarLinks}
+              className="hover:bg-cta-active hover:text-cta-text p-2 rounded-md text-copy-primary border border-border w-40 ml-auto flex justify-center items-center hover:border-0"
+            >
               <TbCalendar className="mr-2" size={17} />
               <span>Add to calendar</span>
             </button>
           </div>
+
+          <AddToCalendar eventData={event} isOpen={showCalendarLinks} onClose={() => setShowCalendarLinks(false)} />
         </div>
       </div>
     </div>
