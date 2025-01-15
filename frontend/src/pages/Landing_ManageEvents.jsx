@@ -8,7 +8,15 @@ import {
   getFilteredRowModel,
   getPaginationRowModel,
 } from "@tanstack/react-table";
-import { TbSearch, TbCaretLeft, TbCaretLeftFilled, TbCaretRight, TbCaretRightFilled, TbTrash } from "react-icons/tb";
+import {
+  TbSearch,
+  TbCaretLeft,
+  TbCaretLeftFilled,
+  TbCaretRight,
+  TbCaretRightFilled,
+  TbTrash,
+  TbEdit,
+} from "react-icons/tb";
 import { eventColumns } from "../components/EventColumns";
 import Modal from "../components/Modal";
 import Landing_EditEvent from "./Landing_EditEvent";
@@ -105,21 +113,25 @@ function Landing_ManageEvents() {
           Log Selected Rows
         </button>
 
-        <button
-          onClick={handle_DeleteEvents}
-          className="mt-4 px-4 py-2 bg-cta text-cta-text rounded hover:bg-cta-active flex justify-center items-center space-x-2"
-        >
-          <TbTrash size={17} />
-          <span>Delete</span>
-        </button>
+        {table.getSelectedRowModel().rows.length > 0 && (
+          <button
+            onClick={handle_DeleteEvents}
+            className="mt-4 px-4 py-2 bg-cta text-cta-text rounded hover:bg-cta-active flex justify-center items-center space-x-2"
+          >
+            <TbTrash size={17} />
+            <span>Delete</span>
+          </button>
+        )}
 
-        <button
-          onClick={() => setIsModalOpen(true)}
-          className="mt-4 px-4 py-2 bg-cta text-cta-text rounded hover:bg-cta-active flex justify-center items-center space-x-2"
-        >
-          <TbTrash size={17} />
-          <span>Test Modal</span>
-        </button>
+        {table.getSelectedRowModel().rows.length === 1 && (
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="mt-4 px-4 py-2 bg-cta text-cta-text rounded hover:bg-cta-active flex justify-center items-center space-x-2"
+          >
+            <TbEdit size={17} />
+            <span>Edit</span>
+          </button>
+        )}
       </div>
 
       <Modal
