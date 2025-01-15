@@ -84,7 +84,6 @@ export const updateEvent = async (eventId, eventData) => {
     event_end_date: eventData.event_end_date,
     event_full_address: eventData.event_full_address,
     event_description: eventData.event_description,
-    event_organizer_id: eventData.event_organizer_id,
     event_capacity: eventData.event_capacity,
     event_attendees: eventData.event_attendees,
     event_cost_in_pence: eventData.event_cost_in_pence,

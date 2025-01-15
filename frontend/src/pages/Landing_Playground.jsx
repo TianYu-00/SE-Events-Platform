@@ -10,11 +10,14 @@ import {
 } from "@tanstack/react-table";
 import { TbSearch, TbCaretLeft, TbCaretLeftFilled, TbCaretRight, TbCaretRightFilled, TbTrash } from "react-icons/tb";
 import { eventColumns } from "../components/EventColumns";
+import Modal from "../components/Modal";
+import Landing_EditEvent from "./Landing_EditEvent";
 
 function Landing_Playground() {
   const [events, setEvents] = useState([]);
   const [sorting, setSorting] = useState([]);
   const [globalFilter, setGlobalFilter] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const runFetchEvents = async () => {
@@ -109,7 +112,25 @@ function Landing_Playground() {
           <TbTrash size={17} />
           <span>Delete</span>
         </button>
+
+        <button
+          onClick={() => setIsModalOpen(true)}
+          className="mt-4 px-4 py-2 bg-cta text-cta-text rounded hover:bg-cta-active flex justify-center items-center space-x-2"
+        >
+          <TbTrash size={17} />
+          <span>Test Modal</span>
+        </button>
       </div>
+
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => {
+          setIsModalOpen(false);
+        }}
+        modalTitle={`Test Modal`}
+      >
+        <Landing_EditEvent eventData={table.getSelectedRowModel().rows[0]?.original} />
+      </Modal>
 
       <div className="px-4">
         <table className="w-full table-fixed border-collapse bg-card rounded-md">
