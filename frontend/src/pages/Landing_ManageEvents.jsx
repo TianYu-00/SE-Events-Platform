@@ -110,7 +110,7 @@ function Landing_ManageEvents() {
           onClick={handle_LogSelectedRows}
           className="mt-4 px-4 py-2 bg-cta text-cta-text rounded hover:bg-cta-active"
         >
-          Log Selected Rows
+          Log Selected
         </button>
 
         {table.getSelectedRowModel().rows.length > 0 && (
@@ -174,7 +174,11 @@ function Landing_ManageEvents() {
               table.getRowModel().rows.map((row) => (
                 <tr key={row.id} className="border-t text-copy-primary/65 hover:bg-background-opp/10 h-14">
                   {row.getVisibleCells().map((cell) => (
-                    <td key={cell.id} className={cell.column.columnDef.meta?.className}>
+                    <td
+                      key={cell.id}
+                      className={`${cell.column.columnDef.meta?.className} cursor-pointer`}
+                      onClick={row.getToggleSelectedHandler()}
+                    >
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </td>
                   ))}
