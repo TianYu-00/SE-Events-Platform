@@ -313,7 +313,7 @@ function EventForm({ initialEventData = null, isCreate = true }) {
                 className="block text-sm font-medium text-copy-primary/80 ml-1 text-nowrap mb-1"
                 htmlFor="event_thumbnail"
               >
-                Thumbnail {isCreate ? `${(<span className="text-red-500">*</span>)}` : ""}
+                Thumbnail {isCreate && <span className="text-red-500">*</span>}
               </label>
 
               {/* {imagePreview && <img src={imagePreview} className="mb-2" />} */}
