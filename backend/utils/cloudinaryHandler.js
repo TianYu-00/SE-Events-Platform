@@ -1,5 +1,6 @@
 const cloudinary = require("cloudinary").v2;
 // https://cloudinary.com/documentation/node_integration
+// https://cloudinary.com/documentation/deleting_assets_tutorial
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
