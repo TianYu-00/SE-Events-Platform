@@ -19,13 +19,13 @@ function Landing_Playground() {
   const [globalFilter, setGlobalFilter] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  useEffect(() => {
-    const runFetchEvents = async () => {
-      const response = await getAllEvents({});
-      // console.log("Events response:", response.data);
-      setEvents(response.data);
-    };
+  const runFetchEvents = async () => {
+    const response = await getAllEvents({});
+    // console.log("Events response:", response.data);
+    setEvents(response.data);
+  };
 
+  useEffect(() => {
     runFetchEvents();
   }, []);
 
@@ -126,6 +126,8 @@ function Landing_Playground() {
         isOpen={isModalOpen}
         onClose={() => {
           setIsModalOpen(false);
+          runFetchEvents();
+          table.resetRowSelection();
         }}
         modalTitle={`Test Modal`}
       >
