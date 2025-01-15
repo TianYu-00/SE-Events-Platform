@@ -80,7 +80,6 @@ exports.editEvents = async (req, res, next) => {
     }
 
     const eventData = req.body;
-    console.log(eventData);
     const allowedFields = [
       "event_name",
       "event_start_date",

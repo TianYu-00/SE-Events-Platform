@@ -1,4 +1,5 @@
 const db = require("../../db/connection");
+const { deleteImage } = require("../../utils/cloudinaryHandler");
 
 exports.getAllEvents = async ({ orderCreatedAt = undefined }) => {
   try {
@@ -23,7 +24,7 @@ exports.getEventById = async (eventId) => {
     if (result.rows <= 0) {
       return Promise.reject({ code: "EVENT_NOT_FOUND", message: "Event not found" });
     }
-    return result.rows;
+    return result.rows[0];
   } catch (error) {
     return Promise.reject(error);
   }
@@ -97,7 +98,7 @@ exports.removeEvents = async (eventIds) => {
 
 exports.patchEvent = async (eventId, eventData) => {
   try {
-    await exports.getEventById(eventId);
+    const fetchedEventResponse = await exports.getEventById(eventId);
 
     const fields = [];
     const values = [];
@@ -120,6 +121,16 @@ exports.patchEvent = async (eventId, eventData) => {
     `;
 
     const result = await db.query(query, values);
+
+    if (fetchedEventResponse.event_thumbnail !== result.rows[0].event_thumbnail) {
+      const deleteImageResponse = await deleteImage(fetchedEventResponse.event_thumbnail);
+      if (deleteImageResponse?.result === "ok") {
+        console.log("image deleted successfully");
+      } else {
+        console.error("Failed to delete image");
+      }
+    }
+
     return result.rows[0];
   } catch (error) {
     return Promise.reject(error);
