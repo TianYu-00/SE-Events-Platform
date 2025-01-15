@@ -43,21 +43,21 @@ export const initializeUser = async (userId, publicMetadata) => {
 
 export const createEvent = async (eventData) => {
   const data = {
-    event_name: eventData.eventName,
-    event_start_date: eventData.eventStartDate,
-    event_end_date: eventData.eventEndDate,
-    event_full_address: eventData.eventAddress,
-    event_description: eventData.eventDescription,
-    event_organizer_id: eventData.eventOrganizerUserId,
-    event_capacity: eventData.eventCapacity,
-    event_attendees: eventData.eventAttendees,
-    event_cost_in_pence: eventData.eventCostInPence,
-    event_contact_email: eventData.eventContactEmail,
-    event_contact_phone_prefix: eventData.eventContactPhonePrefix,
-    event_contact_phone: eventData.eventContactPhone,
-    event_website: eventData.eventWebsite,
-    event_tags: eventData.eventTags,
-    event_thumbnail: eventData.eventThumbnail,
+    event_name: eventData.event_name,
+    event_start_date: eventData.event_start_date,
+    event_end_date: eventData.event_end_date,
+    event_full_address: eventData.event_full_address,
+    event_description: eventData.event_description,
+    event_organizer_id: eventData.event_organizer_id,
+    event_capacity: eventData.event_capacity,
+    event_attendees: eventData.event_attendees,
+    event_cost_in_pence: eventData.event_cost_in_pence,
+    event_contact_email: eventData.event_contact_email,
+    event_contact_phone_prefix: eventData.event_contact_phone_prefix,
+    event_contact_phone: eventData.event_contact_phone,
+    event_website: eventData.event_website,
+    event_tags: eventData.event_tags,
+    event_thumbnail: eventData.event_thumbnail,
   };
   try {
     const response = await api.post(`/events`, data);
@@ -79,21 +79,21 @@ export const deleteEvents = async ({ listOfEventIds }) => {
 
 export const updateEvent = async (eventId, eventData) => {
   const data = {
-    event_name: eventData.eventName,
-    event_start_date: eventData.eventStartDate,
-    event_end_date: eventData.eventEndDate,
-    event_full_address: eventData.eventAddress,
-    event_description: eventData.eventDescription,
-    event_organizer_id: eventData.eventOrganizerUserId,
-    event_capacity: eventData.eventCapacity,
-    event_attendees: eventData.eventAttendees,
-    event_cost_in_pence: eventData.eventCostInPence,
-    event_contact_email: eventData.eventContactEmail,
-    event_contact_phone_prefix: eventData.eventContactPhonePrefix,
-    event_contact_phone: eventData.eventContactPhone,
-    event_website: eventData.eventWebsite,
-    event_tags: eventData.eventTags,
-    event_thumbnail: eventData.eventThumbnail,
+    event_name: eventData.event_name,
+    event_start_date: eventData.event_start_date,
+    event_end_date: eventData.event_end_date,
+    event_full_address: eventData.event_full_address,
+    event_description: eventData.event_description,
+    event_organizer_id: eventData.event_organizer_id,
+    event_capacity: eventData.event_capacity,
+    event_attendees: eventData.event_attendees,
+    event_cost_in_pence: eventData.event_cost_in_pence,
+    event_contact_email: eventData.event_contact_email,
+    event_contact_phone_prefix: eventData.event_contact_phone_prefix,
+    event_contact_phone: eventData.event_contact_phone,
+    event_website: eventData.event_website,
+    event_tags: eventData.event_tags,
+    event_thumbnail: eventData.event_thumbnail,
   };
   try {
     const response = await api.patch(`/events/${eventId}`, data);
