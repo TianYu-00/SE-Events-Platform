@@ -1,4 +1,4 @@
-const { getAllEvents, createEvent, removeEvents } = require("../models/events.models");
+const { getAllEvents, createEvent, removeEvents, patchEvent } = require("../models/events.models");
 
 exports.fetchAllEvents = async (req, res, next) => {
   try {
@@ -65,6 +65,47 @@ exports.deleteEvents = async (req, res, next) => {
 
     const data = await removeEvents(eventIds);
     res.json({ success: true, msg: "List of events has been removed", data: data });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.editEvents = async (req, res, next) => {
+  try {
+    const { event_id: eventId } = req.params;
+    if (isNaN(eventId) || Number(eventId) <= 0) {
+      const error = new Error("Event id is not valid");
+      error.code = "INVALID_PARAMS";
+      return next(error);
+    }
+
+    const eventData = req.body;
+    const allowedFields = [
+      "event_name",
+      "event_start_date",
+      "event_end_date",
+      "event_full_address",
+      "event_description",
+      "event_capacity",
+      "event_attendees",
+      "event_cost_in_pence",
+      "event_contact_email",
+      "event_contact_phone_prefix",
+      "event_contact_phone",
+      "event_website",
+      "event_tags",
+      "event_thumbnail",
+    ];
+    const isValid = Object.keys(eventData).every((key) => allowedFields.includes(key));
+    if (!isValid) {
+      const error = new Error("Some object keys are invalid");
+      error.code = "BODY_CONTENT_INVALID";
+      return next(error);
+    }
+
+    const data = await patchEvent(eventId, eventData);
+
+    res.json({ success: true, msg: "Event updated", data: data });
   } catch (error) {
     next(error);
   }

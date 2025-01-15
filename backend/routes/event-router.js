@@ -5,6 +5,6 @@ const eventRouter = express.Router();
 eventRouter.get("/", eventController.fetchAllEvents);
 eventRouter.post("/", eventController.postEvent);
 eventRouter.delete("/", eventController.deleteEvents);
-// eventRouter.patch("/:event_id", eventController.deleteEvents);
+eventRouter.patch("/:event_id", eventController.editEvents);
 
 module.exports = eventRouter;

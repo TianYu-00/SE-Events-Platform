@@ -15,6 +15,20 @@ exports.getAllEvents = async ({ orderCreatedAt = undefined }) => {
   }
 };
 
+exports.getEventById = async (eventId) => {
+  try {
+    let query = "SELECT * FROM events WHERE event_id = $1;";
+
+    const result = await db.query(query, [eventId]);
+    if (result.rows <= 0) {
+      return Promise.reject({ code: "EVENT_NOT_FOUND", message: "Event not found" });
+    }
+    return result.rows;
+  } catch (error) {
+    return Promise.reject(error);
+  }
+};
+
 exports.createEvent = async (eventData) => {
   try {
     // console.log(eventData);
@@ -76,6 +90,37 @@ exports.removeEvents = async (eventIds) => {
     }
     // Note: Still need to remove image from cloudinary.
     return { deletedRows: result.rows, deletedIds, failedToDeleteIds, length: result.rows.length };
+  } catch (error) {
+    return Promise.reject(error);
+  }
+};
+
+exports.patchEvent = async (eventId, eventData) => {
+  try {
+    await exports.getEventById(eventId);
+
+    const fields = [];
+    const values = [];
+    let counter = 1;
+
+    for (const [key, value] of Object.entries(eventData)) {
+      fields.push(`${key} = $${counter++}`);
+      values.push(value);
+    }
+
+    fields.push(`event_modified_at = CURRENT_TIMESTAMP`);
+
+    values.push(eventId);
+
+    const query = `
+      UPDATE events
+      SET ${fields.join(", ")}
+      WHERE event_id = $${counter}
+      RETURNING *;
+    `;
+
+    const result = await db.query(query, values);
+    return result.rows[0];
   } catch (error) {
     return Promise.reject(error);
   }
