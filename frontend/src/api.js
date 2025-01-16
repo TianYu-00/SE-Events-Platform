@@ -31,6 +31,15 @@ export const getAllEvents = async ({ orderCreatedAt = undefined }) => {
   }
 };
 
+export const getEvent = async (eventId) => {
+  try {
+    const response = await api.get(`/events/${eventId}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const initializeUser = async (userId, publicMetadata) => {
   const data = { user_id: userId, user_publicMetadata: publicMetadata };
   try {
@@ -102,9 +111,9 @@ export const updateEvent = async (eventId, eventData) => {
   }
 };
 
-export const createPayment = async (amount) => {
+export const createPayment = async (eventId) => {
   try {
-    const data = { amount: amount };
+    const data = { event_id: eventId };
     const response = await api.post(`/payment/create-payment-intent`, data);
     return response.data;
   } catch (error) {

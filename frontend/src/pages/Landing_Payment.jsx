@@ -21,18 +21,16 @@ function Landing_Payment() {
   useEffect(() => {
     const runCreatePaymentIntent = async () => {
       try {
-        const response = await createPayment(100);
+        const response = await createPayment(eventId);
         // console.log(response);
-        setClientSecret(response.data);
+        setClientSecret(response.data.clientSecret);
+        console.log(response.data.price);
       } catch (error) {
         console.error(error);
       }
     };
-    runCreatePaymentIntent();
-  }, []);
 
-  useEffect(() => {
-    console.log(eventId);
+    runCreatePaymentIntent();
   }, []);
 
   return (
