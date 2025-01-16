@@ -22,6 +22,11 @@ user123
 admin+clerk_test@example.com
 admin123
 
+# Test Stripe Cards
+Success: 4000008260000000
+Decline: 4000000000000002
+
+
 # Backend
 Main Tools to use:
 - Express
