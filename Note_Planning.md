@@ -39,3 +39,13 @@ Main Tools to use:
 - need formData with
     - file (image)
     - upload_preset (preset name) for unsigned upload
+
+
+# NOTE Stripe
+- https://docs.stripe.com/sdks/stripejs-react?locale=en-GB
+- https://docs.stripe.com/testing
+- https://docs.stripe.com/testing?testing-method=card-numbers#visa
+- https://docs.stripe.com/keys
+- https://docs.stripe.com/get-started/checklist/website
+- https://docs.stripe.com/plan-integration/get-started/server-side-integration
+- https://docs.stripe.com/get-started/development-environment
