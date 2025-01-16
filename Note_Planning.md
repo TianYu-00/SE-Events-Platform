@@ -49,3 +49,7 @@ Main Tools to use:
 - https://docs.stripe.com/get-started/checklist/website
 - https://docs.stripe.com/plan-integration/get-started/server-side-integration
 - https://docs.stripe.com/get-started/development-environment
+
+
+# NOTE
+- Need to sort out my naming conventions later to be more consistent i.e handleXXX to handle_WhatEverItDoes

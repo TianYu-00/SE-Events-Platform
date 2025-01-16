@@ -3,10 +3,17 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import CheckoutForm from "../components/CheckoutForm";
 import { createPayment } from "../api";
+import { useLocation } from "react-router-dom";
+
+// Stripe
 const STRIPE_PUBLISHABLE_KEY = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY;
 const stripePromise = loadStripe(STRIPE_PUBLISHABLE_KEY);
 
 function Landing_Payment() {
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const eventId = queryParams.get("event_id");
+
   const [clientSecret, setClientSecret] = useState(null);
   const appearance = { theme: "stripe" };
   const elementOptions = { clientSecret, appearance };
@@ -22,6 +29,10 @@ function Landing_Payment() {
       }
     };
     runCreatePaymentIntent();
+  }, []);
+
+  useEffect(() => {
+    console.log(eventId);
   }, []);
 
   return (
