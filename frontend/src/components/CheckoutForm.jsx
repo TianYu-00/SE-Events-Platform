@@ -40,7 +40,7 @@ const CheckoutForm = ({ eventPrice, eventName }) => {
     <div className="w-full h-full flex flex justify-center items-center text-copy-primary">
       <form
         onSubmit={handleSubmit}
-        className="flex justify-center items-center flex-col space-y-10 md:border md:border-border/30 p-10 rounded-md w-full md:w-5/12 shadow-lg"
+        className="flex justify-center items-center flex-col space-y-10 md:border md:border-border/30 p-10 rounded-md w-full md:w-5/12 shadow-lg bg-card"
       >
         <div className="flex justify-center items-center flex-col">
           <h2 className="font-semibold text-3xl">Payment Form</h2>
