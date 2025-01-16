@@ -4,6 +4,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import CheckoutForm from "../components/CheckoutForm";
 import { createPayment, getEvent } from "../api";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useTheme } from "../context/ThemeContext";
 
 // Stripe
 const STRIPE_PUBLISHABLE_KEY = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY;
@@ -14,9 +15,10 @@ function Landing_Payment() {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const eventId = queryParams.get("event_id");
+  const { theme } = useTheme();
 
   const [clientSecret, setClientSecret] = useState(null);
-  const appearance = { theme: "stripe" };
+  const appearance = { theme: theme === "dark" ? "night" : "stripe" };
   const elementOptions = { clientSecret, appearance };
 
   const [event, setEvent] = useState(null);
@@ -59,7 +61,7 @@ function Landing_Payment() {
   }, [event]);
 
   return (
-    <div className="w-full bg-white h-[calc(100vh-5rem)]">
+    <div className="w-full h-[calc(100vh-5rem)]">
       {clientSecret && stripePromise && eventPrice && (
         <Elements stripe={stripePromise} options={elementOptions}>
           <CheckoutForm eventPrice={eventPrice} eventName={event.event_name} />
