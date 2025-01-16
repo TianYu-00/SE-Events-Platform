@@ -72,6 +72,8 @@ const CheckoutForm = ({ eventPrice, eventName }) => {
             <a
               href="https://docs.stripe.com/testing?testing-method=card-numbers"
               className="text-blue-500 underline italic"
+              target="_blank"
+              rel="noopener noreferrer"
             >
               Click me for other cards
             </a>
