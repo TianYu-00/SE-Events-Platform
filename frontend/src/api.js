@@ -101,3 +101,13 @@ export const updateEvent = async (eventId, eventData) => {
     throw error;
   }
 };
+
+export const createPayment = async (amount) => {
+  try {
+    const data = { amount: amount };
+    const response = await api.post(`/payment/create-payment-intent`, data);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
