@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useStripe, useElements, PaymentElement } from "@stripe/react-stripe-js";
+import { moneyFormatter } from "./MoneyFormatter";
 
-const Checkout = () => {
+const CheckoutForm = ({ eventPrice, eventName }) => {
   const stripe = useStripe();
   const elements = useElements();
   // https://docs.stripe.com/payments/payment-element
@@ -39,11 +40,19 @@ const Checkout = () => {
     <div className="w-full h-full flex flex justify-center items-center">
       <form
         onSubmit={handleSubmit}
-        className="flex justify-center items-center flex-col space-y-10 md:border md:border-border/30 p-10 rounded-md w-full md:w-2/3 shadow-lg"
+        className="flex justify-center items-center flex-col space-y-10 md:border md:border-border/30 p-10 rounded-md w-full md:w-1/3 shadow-lg"
       >
-        <h2 className="font-semibold text-2xl">Payment</h2>
+        <div className="flex justify-center items-center flex-col">
+          <h2 className="font-semibold text-3xl">Payment Form</h2>
+          <p className="font-semibold">{eventName}</p>
+          <p className="font-semibold">£{moneyFormatter(eventPrice)}</p>
+        </div>
+
         <PaymentElement className="w-full" options={paymentElementOptions} />
-        <button disabled={isProcessing || !stripe || !elements} className="p-2 bg-cta rounded-md text-cta-text w-40">
+        <button
+          disabled={isProcessing || !stripe || !elements}
+          className="p-2 bg-cta rounded-md text-cta-text w-40 hover:bg-cta-active"
+        >
           <span id="button-text">{isProcessing ? "Processing ... " : "Pay now"}</span>
         </button>
         {message && <div className="text-red-500 text-sm">{message}</div>}
@@ -52,4 +61,4 @@ const Checkout = () => {
   );
 };
 
-export default Checkout;
+export default CheckoutForm;
