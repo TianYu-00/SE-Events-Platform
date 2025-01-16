@@ -61,12 +61,14 @@ function Landing_Payment() {
   }, [event]);
 
   return (
-    <div className="w-full h-[calc(100vh-5rem)]">
-      {clientSecret && stripePromise && eventPrice && (
-        <Elements stripe={stripePromise} options={elementOptions}>
-          <CheckoutForm eventPrice={eventPrice} eventName={event.event_name} />
-        </Elements>
-      )}
+    <div className="w-full min-h-[calc(100vh-5rem)] flex justify-center items-center">
+      <div className="w-full h-full">
+        {clientSecret && stripePromise && eventPrice && (
+          <Elements stripe={stripePromise} options={elementOptions}>
+            <CheckoutForm eventPrice={eventPrice} eventName={event.event_name} />
+          </Elements>
+        )}
+      </div>
     </div>
   );
 }

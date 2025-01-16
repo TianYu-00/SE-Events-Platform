@@ -56,6 +56,27 @@ const CheckoutForm = ({ eventPrice, eventName }) => {
           <span id="button-text">{isProcessing ? "Processing ... " : "Pay now"}</span>
         </button>
         {message && <div className="text-red-500 text-sm">{message}</div>}
+
+        {/* For testing purposes */}
+        <div className="text-xs grid grid-cols-2 gap-2 border border-border/30">
+          <div className="border-b border-r border-gray-300 p-2">
+            <span className="text-green-500">Test Success Card:</span>
+          </div>
+          <div className="border-b border-gray-300 p-2">
+            <span className="text-red-500">Test Decline Card:</span>
+          </div>
+          <div className="border-b border-r border-gray-300 p-2">4000008260000000</div>
+          <div className="border-b border-gray-300 p-2">4000000000000002</div>
+
+          <div className="col-span-2 text-center p-2">
+            <a
+              href="https://docs.stripe.com/testing?testing-method=card-numbers"
+              className="text-blue-500 underline italic"
+            >
+              Click me for other cards
+            </a>
+          </div>
+        </div>
       </form>
     </div>
   );
