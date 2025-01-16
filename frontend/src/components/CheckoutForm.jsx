@@ -58,7 +58,7 @@ const CheckoutForm = ({ eventPrice, eventName }) => {
         {message && <div className="text-red-500 text-sm">{message}</div>}
 
         {/* For testing purposes */}
-        <div className="text-xs grid grid-cols-2 gap-2 border border-border/30">
+        {/* <div className="text-xs grid grid-cols-2 gap-2 border border-border/30">
           <div className="border-b border-r border-gray-300 p-2">
             <span className="text-green-500">Test Success Card:</span>
           </div>
@@ -78,7 +78,7 @@ const CheckoutForm = ({ eventPrice, eventName }) => {
               Click me for other cards
             </a>
           </div>
-        </div>
+        </div> */}
       </form>
     </div>
   );
