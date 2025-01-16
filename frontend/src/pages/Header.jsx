@@ -4,9 +4,11 @@ import ThemeSwitcher from "../components/ThemeSwitcher";
 import { Link } from "react-router-dom";
 import { SignedIn, SignedOut, SignInButton, UserButton, useUser } from "@clerk/clerk-react";
 import { DrawerMenu } from "../components/DrawerMenu";
+import { useTheme } from "../context/ThemeContext";
 
-function Header({ toggleTheme, theme }) {
+function Header() {
   const { user } = useUser();
+  const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
     // console.log(user);

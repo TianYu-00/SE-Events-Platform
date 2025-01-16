@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LazyPageLoader from "./components/LazyPageLoader";
 import { ClerkProvider } from "@clerk/clerk-react";
 import PrivateRoute from "./components/ProtectedRoute";
+import { ThemeProvider } from "./context/ThemeContext";
 
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
@@ -30,16 +31,6 @@ if (!PUBLISHABLE_KEY) {
 }
 
 const App = () => {
-  const [theme, setTheme] = useState(() => localStorage.getItem("theme") || "light");
-
-  const toggleTheme = () => {
-    setTheme((prevTheme) => (prevTheme === "dark" ? "light" : "dark"));
-  };
-
-  useEffect(() => {
-    localStorage.setItem("theme", theme);
-  }, [theme]);
-
   return (
     <ClerkProvider
       publishableKey={PUBLISHABLE_KEY}
@@ -48,10 +39,10 @@ const App = () => {
       signUpUrl="/auth-signup"
       signUpForceRedirectUrl="/auth-signup/initialize"
     >
-      <BrowserRouter>
-        <div className={theme}>
+      <ThemeProvider>
+        <BrowserRouter>
           <div className="min-h-screen">
-            <Header toggleTheme={toggleTheme} theme={theme} />
+            <Header />
             <Suspense fallback={<LazyPageLoader delay={300} />}>
               <Routes>
                 <Route path="*" element={<Landing_404 />} />
@@ -69,8 +60,8 @@ const App = () => {
               </Routes>
             </Suspense>
           </div>
-        </div>
-      </BrowserRouter>
+        </BrowserRouter>
+      </ThemeProvider>
     </ClerkProvider>
   );
 };
