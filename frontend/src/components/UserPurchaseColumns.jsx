@@ -9,8 +9,9 @@ export const purchaseColumns = [
   columnHelper.accessor("purchase_event_name", {
     cell: (info) => <span>{info.getValue()}</span>,
     header: () => (
-      <div className="flex space-x-2 justify-center items-center">
-        <span>Event Name</span> <TbArrowsSort size={15} />
+      <div className="inline-flex items-center align-middle whitespace-nowrap space-x-1">
+        <span>Event Name</span>
+        <TbArrowsSort size={15} />
       </div>
     ),
   }),
@@ -28,8 +29,9 @@ export const purchaseColumns = [
       </div>
     ),
     header: () => (
-      <div className="flex space-x-2 justify-center items-center">
-        <span>Status</span> <TbArrowsSort size={15} />
+      <div className="inline-flex items-center align-middle whitespace-nowrap space-x-1">
+        <span>Status</span>
+        <TbArrowsSort size={15} />
       </div>
     ),
   }),
@@ -37,8 +39,9 @@ export const purchaseColumns = [
   columnHelper.accessor("purchase_paid_amount_in_pence", {
     cell: (info) => <span>£{moneyFormatter(info.getValue())}</span>,
     header: () => (
-      <div className="flex space-x-2 justify-center items-center">
-        <span>Paid</span> <TbArrowsSort size={15} />
+      <div className="inline-flex items-center align-middle whitespace-nowrap space-x-1">
+        <span>Paid</span>
+        <TbArrowsSort size={15} />
       </div>
     ),
   }),
@@ -46,8 +49,9 @@ export const purchaseColumns = [
   columnHelper.accessor("purchase_created_at", {
     cell: (info) => <span>{dateFormatter(info.getValue(), 3)}</span>,
     header: () => (
-      <div className="flex space-x-2 justify-center items-center">
-        <span>Created At</span> <TbArrowsSort size={15} />
+      <div className="inline-flex items-center align-middle whitespace-nowrap space-x-1">
+        <span>Created At</span>
+        <TbArrowsSort size={15} />
       </div>
     ),
   }),

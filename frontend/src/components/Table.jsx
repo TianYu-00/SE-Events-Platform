@@ -6,12 +6,15 @@ const Table = ({ table }) => {
     <div className="px-4">
       <div className="border border-border rounded-lg overflow-hidden">
         <div className="overflow-x-auto bg-card">
-          <table className="w-full table-fixed border-collapse ">
+          <table className="min-w-full table-fixed border-collapse ">
             <thead>
               {table.getHeaderGroups().map((headerGroup) => (
                 <tr key={headerGroup.id} className="text-copy-primary h-16">
                   {headerGroup.headers.map((header) => (
-                    <th key={header.id} className={header.column.columnDef.meta?.className}>
+                    <th
+                      key={header.id}
+                      className={`${header.column.columnDef.meta?.className} p-4 text-sm md:text-base`}
+                    >
                       <div
                         {...{
                           className: header.column.getCanSort() ? "cursor-pointer select-none flex items-center" : "",
@@ -32,7 +35,7 @@ const Table = ({ table }) => {
                     {row.getVisibleCells().map((cell) => (
                       <td
                         key={cell.id}
-                        className={`${cell.column.columnDef.meta?.className} cursor-pointer`}
+                        className={`${cell.column.columnDef.meta?.className} cursor-pointer p-4 text-sm md:text-base`}
                         onClick={row.getToggleSelectedHandler()}
                       >
                         {flexRender(cell.column.columnDef.cell, cell.getContext())}

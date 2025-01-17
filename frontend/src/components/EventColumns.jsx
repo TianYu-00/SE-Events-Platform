@@ -28,120 +28,109 @@ export const eventColumns = [
   columnHelper.accessor("event_id", {
     cell: (info) => <span>{info.getValue()}</span>,
     header: () => (
-      <div className="flex space-x-2 justify-center items-center">
-        <span>Event ID</span> <TbArrowsSort size={15} />
+      <div className="inline-flex items-center align-middle whitespace-nowrap space-x-1">
+        <span>Event ID</span>
+        <TbArrowsSort size={15} />
       </div>
     ),
-    meta: {
-      className: "px-4 py-2 text-left",
-    },
+    meta: {},
   }),
 
   columnHelper.accessor("event_name", {
     cell: (info) => <span>{info.getValue()}</span>,
     header: () => (
-      <div className="flex space-x-2 justify-center items-center">
-        <span>Name</span> <TbArrowsSort size={15} />
+      <div className="inline-flex items-center align-middle whitespace-nowrap space-x-1">
+        <span>Name</span>
+        <TbArrowsSort size={15} />
       </div>
     ),
-    meta: {
-      className: "px-4 py-2 text-left truncate",
-    },
+    meta: {},
   }),
 
   columnHelper.accessor("event_start_date", {
     cell: (info) => <span>{dateFormatter(info.getValue(), 3)}</span>,
     header: () => (
-      <div className="flex space-x-2 justify-center items-center">
-        <span>Start Date</span> <TbArrowsSort size={15} />
+      <div className="inline-flex items-center align-middle whitespace-nowrap space-x-1">
+        <span>Start Date</span>
+        <TbArrowsSort size={15} />
       </div>
     ),
-    meta: {
-      className: "px-4 py-2 text-left hidden md:table-cell",
-    },
+    meta: {},
   }),
 
   columnHelper.accessor("event_end_date", {
     cell: (info) => <span>{dateFormatter(info.getValue(), 3)}</span>,
     header: () => (
-      <div className="flex space-x-2 justify-center items-center">
-        <span>End Date</span> <TbArrowsSort size={15} />
+      <div className="inline-flex items-center align-middle whitespace-nowrap space-x-1">
+        <span>End Date</span>
+        <TbArrowsSort size={15} />
       </div>
     ),
-    meta: {
-      className: "px-4 py-2 text-left hidden md:table-cell",
-    },
+    meta: {},
   }),
 
   columnHelper.accessor("event_created_at", {
     cell: (info) => <span>{dateFormatter(info.getValue(), 3)}</span>,
     header: () => (
-      <div className="flex space-x-2 justify-center items-center">
-        <span>Created At</span> <TbArrowsSort size={15} />
+      <div className="inline-flex items-center align-middle whitespace-nowrap space-x-1">
+        <span>Created At</span>
+        <TbArrowsSort size={15} />
       </div>
     ),
-    meta: {
-      className: "px-4 py-2 text-left hidden md:table-cell",
-    },
+    meta: {},
   }),
 
   columnHelper.accessor("event_modified_at", {
     cell: (info) => <span>{dateFormatter(info.getValue(), 3)}</span>,
     header: () => (
-      <div className="flex space-x-2 justify-center items-center">
+      <div className="inline-flex items-center align-middle whitespace-nowrap space-x-1">
         <span>Modified At</span> <TbArrowsSort size={15} />
       </div>
     ),
-    meta: {
-      className: "px-4 py-2 text-left hidden md:table-cell",
-    },
+    meta: {},
   }),
 
   columnHelper.accessor("event_cost_in_pence", {
     cell: (info) => <span>£{moneyFormatter(info.getValue())}</span>,
     header: () => (
-      <div className="flex space-x-2 justify-center items-center">
-        <span>Cost</span> <TbArrowsSort size={15} />
+      <div className="inline-flex items-center align-middle whitespace-nowrap space-x-1">
+        <span>Cost</span>
+        <TbArrowsSort size={15} />
       </div>
     ),
-    meta: {
-      className: "px-4 py-2 text-left hidden md:table-cell",
-    },
+    meta: {},
   }),
 
   columnHelper.accessor("event_attendees", {
     cell: (info) => <span>{info.getValue()}</span>,
     header: () => (
-      <div className="flex space-x-2 justify-center items-center">
-        <span>Attendees</span> <TbArrowsSort size={15} />
+      <div className="inline-flex items-center align-middle whitespace-nowrap space-x-1">
+        <span>Attendees</span>
+        <TbArrowsSort size={15} />
       </div>
     ),
-    meta: {
-      className: "px-4 py-2 text-left hidden md:table-cell",
-    },
+    meta: {},
   }),
 
   columnHelper.accessor("event_capacity", {
     cell: (info) => <span>{info.getValue()}</span>,
     header: () => (
-      <div className="flex space-x-2 justify-center items-center">
-        <span>Capacity</span> <TbArrowsSort size={15} />
+      <div className="inline-flex items-center align-middle whitespace-nowrap space-x-1">
+        <span>Capacity</span>
+        <TbArrowsSort size={15} />
       </div>
     ),
-    meta: {
-      className: "px-4 py-2 text-left hidden md:table-cell",
-    },
+    meta: {},
   }),
 
   columnHelper.accessor("event_organizer_id", {
     cell: (info) => <span>{info.getValue()}</span>,
     header: () => (
-      <div className="flex space-x-2 justify-center items-center">
-        <span>Organizer ID</span> <TbArrowsSort size={15} />
+      <div className="inline-flex items-center align-middle whitespace-nowrap space-x-1">
+        <span>Organizer ID</span>
+        <TbArrowsSort size={15} />
       </div>
     ),
-    meta: {
-      className: "px-4 py-2 text-left hidden md:table-cell truncate",
-    },
+    meta: {},
   }),
 ];
