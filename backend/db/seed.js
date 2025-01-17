@@ -49,6 +49,7 @@ async function createPurchasesTable() {
       purchase_user_id VARCHAR(255) NOT NULL,
       purchase_payment_intent_id VARCHAR(255) NOT NULL,
       purchase_event_id INT NOT NULL,
+      purchase_event_name VARCHAR(255) NOT NULL,
       purchase_paid_amount_in_pence INT NOT NULL,
       purchase_payment_status VARCHAR(255) NOT NULL,
       purchase_created_at TIMESTAMP NOT NULL,
@@ -94,13 +95,14 @@ async function insertPurchases(purchases) {
     purchase.purchase_user_id,
     purchase.purchase_payment_intent_id,
     purchase.purchase_event_id,
+    purchase.purchase_event_name,
     purchase.purchase_paid_amount_in_pence,
     purchase.purchase_payment_status,
     purchase.purchase_created_at,
   ]);
 
   const query = format(
-    `INSERT INTO purchases (purchase_user_id, purchase_payment_intent_id, purchase_event_id, purchase_paid_amount_in_pence, purchase_payment_status, purchase_created_at) VALUES %L`,
+    `INSERT INTO purchases (purchase_user_id, purchase_payment_intent_id, purchase_event_id, purchase_event_name, purchase_paid_amount_in_pence, purchase_payment_status, purchase_created_at) VALUES %L`,
     purchaseValues
   );
 

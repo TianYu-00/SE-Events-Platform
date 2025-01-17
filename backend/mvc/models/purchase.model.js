@@ -28,6 +28,7 @@ exports.addPurchase = async (paymentIntent) => {
           purchase_user_id, 
           purchase_payment_intent_id, 
           purchase_event_id, 
+          purchase_event_name, 
           purchase_paid_amount_in_pence, 
           purchase_payment_status, 
           purchase_created_at
@@ -41,6 +42,7 @@ exports.addPurchase = async (paymentIntent) => {
       paymentIntent.metadata.user_id,
       paymentIntent.id,
       parseInt(paymentIntent.metadata.event_id),
+      paymentIntent.metadata.event_name,
       paymentIntent.amount_received,
       paymentIntent.status,
       new Date(paymentIntent.created * 1000),
