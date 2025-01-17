@@ -1,11 +1,13 @@
 const db = require("./connection");
 const format = require("pg-format");
 
-async function createTables({ users, events }) {
+async function createTables({ events }) {
   try {
+    await db.query("DROP TABLE IF EXISTS purchases CASCADE;");
     await db.query("DROP TABLE IF EXISTS events CASCADE;");
 
     await createEventsTable();
+    await createPurchasesTable();
 
     await insertEvents(events);
   } catch (err) {
@@ -13,20 +15,7 @@ async function createTables({ users, events }) {
   }
 }
 
-async function createUsersTable() {
-  await db.query(`
-    CREATE TABLE users (
-      user_id SERIAL PRIMARY KEY,
-      user_username VARCHAR(255) NOT NULL,
-      user_company_name VARCHAR(255),
-      user_email VARCHAR(255) UNIQUE NOT NULL,
-      user_password VARCHAR(255) NOT NULL,
-      user_created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-      user_role VARCHAR(50) DEFAULT 'user' NOT NULL
-    );
-  `);
-}
-
+//////////////////////////////////////////////////////// CREATE TABLE
 async function createEventsTable() {
   await db.query(`
     CREATE TABLE events (
@@ -48,6 +37,21 @@ async function createEventsTable() {
       event_thumbnail VARCHAR(255) NOT NULL,
       event_created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
       event_modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
+  `);
+}
+
+async function createPurchasesTable() {
+  await db.query(`
+    CREATE TABLE purchases (
+      purchase_id SERIAL PRIMARY KEY,
+      purchase_user_id VARCHAR(255) NOT NULL,
+      purchase_payment_intent_id VARCHAR(255) NOT NULL,
+      purchase_event_id INT NOT NULL,
+      purchase_paid_amount INT NOT NULL,
+      purchase_payment_status VARCHAR(255) NOT NULL,
+      purchase_created_at TIMESTAMP NOT NULL,
+      FOREIGN KEY (purchase_event_id) REFERENCES events (event_id) ON DELETE CASCADE
     );
   `);
 }
