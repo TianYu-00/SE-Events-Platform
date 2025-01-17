@@ -10,6 +10,6 @@ apisRouter.get("/test", controller_apis.test);
 
 apisRouter.use("/users", userRouter);
 apisRouter.use("/events", eventRouter);
-apisRouter.use("/payment", paymentRouter);
+apisRouter.use("/stripe", paymentRouter);
 
 module.exports = apisRouter;

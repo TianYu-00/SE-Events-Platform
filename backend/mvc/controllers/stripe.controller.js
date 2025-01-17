@@ -1,5 +1,5 @@
 const { getEventById } = require("../models/events.models");
-const { addPurchase } = require("../models/payment.model");
+const { addPurchase } = require("../models/purchase.model");
 const Stripe = require("stripe");
 const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;

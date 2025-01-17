@@ -18,7 +18,7 @@ app.use(cors(corsConfigOptions));
 app.use(
   express.json({
     verify: (req, res, buf) => {
-      if (req.originalUrl.startsWith("/api/payment/webhook")) {
+      if (req.originalUrl.startsWith("/api/stripe/webhook")) {
         req.rawBody = buf.toString();
       }
     },

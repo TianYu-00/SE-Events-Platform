@@ -1,9 +1,9 @@
-const paymentRouter = require("express").Router();
-const paymentController = require("../mvc/controllers/payment.controller");
+const stripeRouter = require("express").Router();
+const stripeController = require("../mvc/controllers/stripe.controller");
 
 //
-paymentRouter.post("/create-payment-intent", paymentController.createPayment);
-paymentRouter.post("/verify-payment-intent", paymentController.verifyPayment);
-paymentRouter.post("/webhook", paymentController.handleWebhook);
+stripeRouter.post("/create-payment-intent", stripeController.createPayment);
+stripeRouter.post("/verify-payment-intent", stripeController.verifyPayment);
+stripeRouter.post("/webhook", stripeController.handleWebhook);
 
-module.exports = paymentRouter;
+module.exports = stripeRouter;
