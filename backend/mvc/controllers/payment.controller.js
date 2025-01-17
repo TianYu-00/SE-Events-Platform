@@ -1,6 +1,7 @@
 const { getEventById } = require("../models/events.models");
 const Stripe = require("stripe");
 const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
+const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
 exports.createPayment = async (req, res, next) => {
   try {
@@ -76,4 +77,32 @@ exports.verifyPayment = async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+};
+
+exports.handleWebhook = async (req, res, next) => {
+  // https://docs.stripe.com/webhooks/quickstart
+  const payload = req.rawBody;
+  let event;
+
+  if (endpointSecret) {
+    const signature = req.headers["stripe-signature"];
+    try {
+      event = stripe.webhooks.constructEvent(payload, signature, endpointSecret);
+    } catch (error) {
+      console.log(`⚠️  Webhook signature verification failed.`, error.message);
+      return res.status(400);
+    }
+  }
+
+  // Handle the event
+  switch (event.type) {
+    case "payment_intent.succeeded":
+      const paymentIntent = event.data.object;
+      console.log(`PaymentIntent for ${paymentIntent.amount} was successful!`);
+      break;
+    default:
+      console.log(`Unhandled event type ${event.type}.`);
+  }
+
+  res.send();
 };

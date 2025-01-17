@@ -62,7 +62,27 @@ sudo mv stripe /usr/local/bin/
 ```
 - `stripe --version`
 - `stripe login` or `stripe login --interactive` or `stripe login --api-key <api key here without brackets>`
-- `stripe listen --forward-to http://localhost:port/api/webhook-route`
+- `stripe listen --forward-to localhost:port/api/webhook-route`
+- `stripe listen --forward-to localhost:9090/api/payment/webhook`
+- https://docs.stripe.com/webhooks/quickstart
+```
+    // webhook payload needs to be a string or buffer not json
+    app.use(express.json({
+    verify: (req, res, buf) => {
+    if (req.originalUrl.startsWith('/api/payment/webhook')) {
+        req.rawBody = buf.toString();
+    }
+    },
+    }));
+```
+
+```
+    const payload = req.rawBody;
+    const signature = req.headers["stripe-signature"];
+    const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
+    let event;
+    event = stripe.webhooks.constructEvent(payload, signature, endpointSecret);
+```
 
 
 # NOTE
