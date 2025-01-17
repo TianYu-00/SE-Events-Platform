@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { TbUser, TbHome, TbMenu2, TbTicket } from "react-icons/tb";
+import { TbUser, TbHome, TbMenu2, TbTicket, TbReceipt } from "react-icons/tb";
 import ThemeSwitcher from "../components/ThemeSwitcher";
 import { Link } from "react-router-dom";
 import { SignedIn, SignedOut, SignInButton, UserButton, useUser } from "@clerk/clerk-react";
@@ -136,6 +136,7 @@ function MenuNav() {
                     to="/user/purchases"
                     className="flex flex-row items-center space-x-2 p-4 rounded-md hover:bg-white hover:text-black"
                   >
+                    <TbReceipt size={17} />
                     <span className="font-medium">Purchases</span>
                   </Link>
                 </li>
