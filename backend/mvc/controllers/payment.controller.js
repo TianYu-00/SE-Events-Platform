@@ -1,4 +1,5 @@
 const { getEventById } = require("../models/events.models");
+const { addPurchase } = require("../models/payment.model");
 const Stripe = require("stripe");
 const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
@@ -99,12 +100,9 @@ exports.handleWebhook = async (req, res, next) => {
     case "payment_intent.succeeded":
       const paymentIntent = event.data.object;
       console.log(`PaymentIntent for ${paymentIntent.amount} was successful!`);
-      console.log(paymentIntent);
-      // note:
-      // need to create a table with emmmmm
-      // table name: purchases
-      // columns: id (primary), user_id(not null), payment_intent_id(not null), event_id(not null, reference), paid_amount(not null), payment_status(not null)
-      // const whatever = await addPurchase(paymentIntent)
+      // console.log(paymentIntent);
+      const response = await addPurchase(paymentIntent);
+      console.log(response);
       break;
     default:
       console.log(`Unhandled event type ${event.type}.`);

@@ -1,0 +1,39 @@
+{
+  "_meta": {
+    "template_version": 0,
+    "exclude_metadata": false
+  },
+  "fixtures": [
+    {
+      "name": "payment_intent",
+      "expected_error_type": "",
+      "path": "/v1/payment_intents",
+      "method": "post",
+      "params": {
+        "amount": 2000,
+        "confirm": "true",
+        "currency": "usd",
+        "description": "(created by Stripe CLI)",
+        "payment_method": "pm_card_visa",
+        "payment_method_types": ["card"],
+        "metadata": {
+          "event_id": "1",
+          "event_name": "Quantum Computing Conference",
+          "event_organizer_id": "1",
+          "user_id": "user_2rPTtagNORnIeB0T5rMsFOnlKXn"
+        },
+        "shipping": {
+          "address": {
+            "city": "San Francisco",
+            "country": "US",
+            "line1": "510 Townsend St",
+            "postal_code": "94103",
+            "state": "CA"
+          },
+          "name": "Jenny Rosen"
+        }
+      }
+    }
+  ],
+  "env": null
+}

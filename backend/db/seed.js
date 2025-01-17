@@ -48,7 +48,7 @@ async function createPurchasesTable() {
       purchase_user_id VARCHAR(255) NOT NULL,
       purchase_payment_intent_id VARCHAR(255) NOT NULL,
       purchase_event_id INT NOT NULL,
-      purchase_paid_amount INT NOT NULL,
+      purchase_paid_amount_in_pence INT NOT NULL,
       purchase_payment_status VARCHAR(255) NOT NULL,
       purchase_created_at TIMESTAMP NOT NULL,
       FOREIGN KEY (purchase_event_id) REFERENCES events (event_id) ON DELETE CASCADE
