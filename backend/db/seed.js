@@ -1,7 +1,7 @@
 const db = require("./connection");
 const format = require("pg-format");
 
-async function createTables({ events }) {
+async function createTables({ events, purchases }) {
   try {
     await db.query("DROP TABLE IF EXISTS purchases CASCADE;");
     await db.query("DROP TABLE IF EXISTS events CASCADE;");
@@ -10,6 +10,7 @@ async function createTables({ events }) {
     await createPurchasesTable();
 
     await insertEvents(events);
+    await insertPurchases(purchases);
   } catch (err) {
     console.error("Error creating tables:", err);
   }
@@ -83,6 +84,24 @@ async function insertEvents(events) {
   const query = format(
     `INSERT INTO events (event_name, event_start_date, event_end_date, event_full_address, event_description, event_organizer_id, event_capacity, event_attendees, event_cost_in_pence, event_contact_email, event_contact_phone_prefix, event_contact_phone, event_website, event_tags, event_thumbnail, event_created_at, event_modified_at) VALUES %L`,
     eventValues
+  );
+
+  await db.query(query);
+}
+
+async function insertPurchases(purchases) {
+  const purchaseValues = purchases.map((purchase) => [
+    purchase.purchase_user_id,
+    purchase.purchase_payment_intent_id,
+    purchase.purchase_event_id,
+    purchase.purchase_paid_amount_in_pence,
+    purchase.purchase_payment_status,
+    purchase.purchase_created_at,
+  ]);
+
+  const query = format(
+    `INSERT INTO purchases (purchase_user_id, purchase_payment_intent_id, purchase_event_id, purchase_paid_amount_in_pence, purchase_payment_status, purchase_created_at) VALUES %L`,
+    purchaseValues
   );
 
   await db.query(query);

@@ -1,5 +1,20 @@
 const db = require("../../db/connection");
 
+exports.getAllPurchases = async ({ orderCreatedAt = undefined }) => {
+  try {
+    let query = "SELECT * FROM purchases";
+
+    if (orderCreatedAt) {
+      query += ` ORDER BY purchase_created_at ${orderCreatedAt}`;
+    }
+
+    const result = await db.query(query);
+    return result.rows;
+  } catch (error) {
+    return Promise.reject(error);
+  }
+};
+
 exports.addPurchase = async (paymentIntent) => {
   try {
     const query = `
