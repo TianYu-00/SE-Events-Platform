@@ -1,14 +1,20 @@
 const db = require("../../db/connection");
 
-exports.getAllPurchases = async ({ orderCreatedAt = undefined }) => {
+exports.getAllPurchases = async ({ orderCreatedAt = undefined, userId = undefined }) => {
   try {
     let query = "SELECT * FROM purchases";
+    const queryParams = [];
+
+    if (userId) {
+      query += " WHERE purchase_user_id = $1";
+      queryParams.push(userId);
+    }
 
     if (orderCreatedAt) {
       query += ` ORDER BY purchase_created_at ${orderCreatedAt}`;
     }
 
-    const result = await db.query(query);
+    const result = await db.query(query, queryParams);
     return result.rows;
   } catch (error) {
     return Promise.reject(error);
