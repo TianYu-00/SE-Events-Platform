@@ -130,3 +130,20 @@ export const verifyPayment = async ({ paymentIntentId, userId }) => {
     throw error;
   }
 };
+
+export const getAllPurchases = async ({ orderCreatedAt = undefined, userId = undefined }) => {
+  try {
+    const params = new URLSearchParams();
+    if (orderCreatedAt) {
+      params.append("order_created_at", orderCreatedAt);
+    }
+    if (userId) {
+      params.append("user_id", userId);
+    }
+    const query = `/purchases${params.toString() ? `?${params.toString()}` : ""}`;
+    const response = await api.get(query);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};

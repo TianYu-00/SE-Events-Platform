@@ -63,6 +63,15 @@ function LargeNav() {
             <span className="font-medium text-sm pl-2">Events</span>
           </Link>
         </li>
+
+        <div className={`${user ? "" : "hidden"} flex flex-row justify-center items-center space-x-4`}>
+          <li>
+            <Link to="/user/purchases" className="flex flex-row p-2">
+              <span className="font-medium text-sm pl-2">Purchases</span>
+            </Link>
+          </li>
+        </div>
+
         <div
           className={`${
             user?.publicMetadata?.role === "admin" ? "" : "hidden"
@@ -120,6 +129,17 @@ function MenuNav() {
                   <span className="font-medium">Events</span>
                 </Link>
               </li>
+
+              <div className={`${user ? "" : "hidden"}`}>
+                <li>
+                  <Link
+                    to="/user/purchases"
+                    className="flex flex-row items-center space-x-2 p-4 rounded-md hover:bg-white hover:text-black"
+                  >
+                    <span className="font-medium">Purchases</span>
+                  </Link>
+                </li>
+              </div>
 
               <div className={`${user?.publicMetadata?.role === "admin" ? "" : "hidden"}`}>
                 <li>

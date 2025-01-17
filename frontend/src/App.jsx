@@ -26,6 +26,8 @@ const Landing_ManageEvents = lazy(() => import("./pages/Landing_ManageEvents"));
 const Landing_Payment = lazy(() => import("./pages/Landing_Payment"));
 const Landing_PaymentCompletion = lazy(() => import("./pages/Landing_PaymentCompletion"));
 
+const Landing_UserPurchases = lazy(() => import("./pages/Landing_UserPurchases"));
+
 if (!PUBLISHABLE_KEY) {
   throw new Error("Missing Publishable Key");
 }
@@ -54,6 +56,7 @@ const App = () => {
                 <Route path="/auth-signin" element={<Landing_Auth_SignIn />} />
                 <Route path="/auth-signup" element={<Landing_Auth_SignUp />} />
                 <Route path="/auth-signup/initialize" element={<Landing_Auth_Signup_Initialize />} />
+                <Route path="/user/purchases" element={<Landing_UserPurchases />} />
                 <Route path="/create-event" element={<PrivateRoute element={<Landing_CreateEvent />} />} />
                 <Route path="/manage-events" element={<PrivateRoute element={<Landing_ManageEvents />} />} />
                 <Route path="/playground" element={<PrivateRoute element={<Landing_Playground />} />} />
