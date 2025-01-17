@@ -54,6 +54,15 @@ Main Tools to use:
 - https://docs.stripe.com/get-started/checklist/website
 - https://docs.stripe.com/plan-integration/get-started/server-side-integration
 - https://docs.stripe.com/get-started/development-environment
+- https://docs.stripe.com/stripe-cli?install-method=linux
+- Stripe CLI: https://github.com/stripe/stripe-cli/releases
+```
+tar -xvzf stripe_1.23.3_linux_x86_64.tar.gz
+sudo mv stripe /usr/local/bin/
+```
+- `stripe --version`
+- `stripe login` or `stripe login --interactive` or `stripe login --api-key <api key here without brackets>`
+- `stripe listen --forward-to http://localhost:port/api/webhook-route`
 
 
 # NOTE
