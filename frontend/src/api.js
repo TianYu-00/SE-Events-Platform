@@ -111,10 +111,20 @@ export const updateEvent = async (eventId, eventData) => {
   }
 };
 
-export const createPayment = async (eventId) => {
+export const createPayment = async ({ eventId, userId }) => {
   try {
-    const data = { event_id: eventId };
+    const data = { event_id: eventId, user_id: userId };
     const response = await api.post(`/payment/create-payment-intent`, data);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const verifyPayment = async ({ paymentIntentId, userId }) => {
+  try {
+    const data = { paymentIntentId: paymentIntentId, user_id: userId };
+    const response = await api.post(`/payment/verify-payment-intent`, data);
     return response.data;
   } catch (error) {
     throw error;

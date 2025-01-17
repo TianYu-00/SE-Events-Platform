@@ -5,6 +5,7 @@ import CheckoutForm from "../components/CheckoutForm";
 import { createPayment, getEvent } from "../api";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useTheme } from "../context/ThemeContext";
+import { useUser } from "@clerk/clerk-react";
 
 // Stripe
 const STRIPE_PUBLISHABLE_KEY = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY;
@@ -23,6 +24,8 @@ function Landing_Payment() {
 
   const [event, setEvent] = useState(null);
   const [eventPrice, setEventPrice] = useState(null);
+
+  const { user } = useUser();
 
   useEffect(() => {
     const getEventDetails = async () => {
@@ -46,7 +49,7 @@ function Landing_Payment() {
   useEffect(() => {
     const runCreatePaymentIntent = async () => {
       try {
-        const response = await createPayment(eventId);
+        const response = await createPayment({ eventId: eventId, userId: user.id });
         // console.log(response);
         setClientSecret(response.data.clientSecret);
         setEventPrice(response.data.price);
@@ -55,10 +58,10 @@ function Landing_Payment() {
       }
     };
 
-    if (event) {
+    if (event && user) {
       runCreatePaymentIntent();
     }
-  }, [event]);
+  }, [event, user]);
 
   return (
     <div className="w-full min-h-[calc(100vh-5rem)] flex justify-center items-center">
