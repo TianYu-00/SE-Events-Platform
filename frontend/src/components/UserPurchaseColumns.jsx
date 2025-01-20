@@ -56,6 +56,26 @@ export const purchaseColumns = [
     ),
   }),
 
+  columnHelper.accessor("purchase_captured_amount_in_pence", {
+    cell: (info) => <span>£{moneyFormatter(info.getValue())}</span>,
+    header: () => (
+      <div className="inline-flex items-center align-middle whitespace-nowrap space-x-1">
+        <span>Processed</span>
+        <TbArrowsSort size={15} />
+      </div>
+    ),
+  }),
+
+  columnHelper.accessor("purchase_refunded_amount_in_pence", {
+    cell: (info) => <span>£{moneyFormatter(info.getValue())}</span>,
+    header: () => (
+      <div className="inline-flex items-center align-middle whitespace-nowrap space-x-1">
+        <span>Refunded</span>
+        <TbArrowsSort size={15} />
+      </div>
+    ),
+  }),
+
   columnHelper.accessor("purchase_created_at", {
     cell: (info) => <span>{dateFormatter(info.getValue(), 3)}</span>,
     header: () => (
