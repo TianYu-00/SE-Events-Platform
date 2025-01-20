@@ -85,4 +85,14 @@ export const purchaseColumns = [
       </div>
     ),
   }),
+
+  columnHelper.accessor("purchase_modified_at", {
+    cell: (info) => <span>{dateFormatter(info.getValue(), 3)}</span>,
+    header: () => (
+      <div className="inline-flex items-center align-middle whitespace-nowrap space-x-1">
+        <span>Modified At</span>
+        <TbArrowsSort size={15} />
+      </div>
+    ),
+  }),
 ];
