@@ -20,7 +20,7 @@ describe("GET /api/events", () => {
 
   test("should return correct event object", async () => {
     const { body } = await request(app).get("/api/events/1");
-    console.log(body.data);
+    // console.log(body.data);
     expect(body.data).toMatchObject({
       event_name: expect.any(String),
       event_start_date: expect.any(String),
