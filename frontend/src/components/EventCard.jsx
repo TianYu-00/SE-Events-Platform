@@ -3,12 +3,22 @@ import { dateFormatter } from "./DateFormatter";
 import { moneyFormatter } from "./MoneyFormatter";
 import { TbCalendar, TbCalendarTime, TbLocation } from "react-icons/tb";
 import AddToCalendar from "./AddToCalendar";
+import { useNavigate } from "react-router-dom";
 
 function EventCard({ event }) {
+  const navigate = useNavigate();
   const [showCalendarLinks, setShowCalendarLinks] = useState(false);
 
   const toggleCalendarLinks = () => {
     setShowCalendarLinks((prev) => !prev);
+  };
+
+  const handle_EventPurchase = async () => {
+    if (event.event_cost_in_pence > 0) {
+      navigate(`/payment?event_id=${event.event_id}`);
+    } else {
+      console.log("ITS FREE!");
+    }
   };
 
   return (
@@ -36,9 +46,13 @@ function EventCard({ event }) {
             {event.event_cost_in_pence > 0 ? `£${moneyFormatter(event.event_cost_in_pence)}` : "Free"}
           </p>
           <div className="flex h-10">
-            <button className="bg-cta hover:bg-cta-active p-2 rounded-md text-cta-text w-32 flex justify-center items-center">
+            <button
+              className="bg-cta hover:bg-cta-active p-2 rounded-md text-cta-text w-32 flex justify-center items-center"
+              onClick={handle_EventPurchase}
+            >
               {event.event_cost_in_pence > 0 ? "Purchase" : "Free"}
             </button>
+
             <button
               onClick={toggleCalendarLinks}
               className="hover:bg-cta-active hover:text-cta-text p-2 rounded-md text-copy-primary border border-border w-40 ml-auto flex justify-center items-center hover:border-0"

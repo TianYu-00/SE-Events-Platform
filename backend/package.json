@@ -21,7 +21,8 @@
     "express-rate-limit": "^7.5.0",
     "marked": "^15.0.5",
     "pg": "^8.13.1",
-    "pg-format": "^1.0.4"
+    "pg-format": "^1.0.4",
+    "stripe": "^17.5.0"
   },
   "devDependencies": {
     "jest": "^29.7.0",

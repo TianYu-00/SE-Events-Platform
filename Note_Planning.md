@@ -22,6 +22,11 @@ user123
 admin+clerk_test@example.com
 admin123
 
+# Test Stripe Cards
+Success: 4000008260000000
+Decline: 4000000000000002
+
+
 # Backend
 Main Tools to use:
 - Express
@@ -39,3 +44,46 @@ Main Tools to use:
 - need formData with
     - file (image)
     - upload_preset (preset name) for unsigned upload
+
+
+# NOTE Stripe
+- https://docs.stripe.com/sdks/stripejs-react?locale=en-GB
+- https://docs.stripe.com/testing
+- https://docs.stripe.com/testing?testing-method=card-numbers#visa
+- https://docs.stripe.com/keys
+- https://docs.stripe.com/get-started/checklist/website
+- https://docs.stripe.com/plan-integration/get-started/server-side-integration
+- https://docs.stripe.com/get-started/development-environment
+- https://docs.stripe.com/stripe-cli?install-method=linux
+- Stripe CLI: https://github.com/stripe/stripe-cli/releases
+```
+tar -xvzf stripe_1.23.3_linux_x86_64.tar.gz
+sudo mv stripe /usr/local/bin/
+```
+- `stripe --version`
+- `stripe login` or `stripe login --interactive` or `stripe login --api-key <api key here without brackets>`
+- `stripe listen --forward-to localhost:port/api/webhook-route`
+- `stripe listen --forward-to localhost:9090/api/payment/webhook`
+- https://docs.stripe.com/webhooks/quickstart
+```
+    // webhook payload needs to be a string or buffer not json
+    app.use(express.json({
+    verify: (req, res, buf) => {
+    if (req.originalUrl.startsWith('/api/payment/webhook')) {
+        req.rawBody = buf.toString();
+    }
+    },
+    }));
+```
+
+```
+    const payload = req.rawBody;
+    const signature = req.headers["stripe-signature"];
+    const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
+    let event;
+    event = stripe.webhooks.constructEvent(payload, signature, endpointSecret);
+```
+
+
+# NOTE
+- Need to sort out my naming conventions later to be more consistent i.e handleXXX to handle_WhatEverItDoes

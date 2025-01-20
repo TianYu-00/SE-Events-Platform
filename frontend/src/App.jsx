@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LazyPageLoader from "./components/LazyPageLoader";
 import { ClerkProvider } from "@clerk/clerk-react";
 import PrivateRoute from "./components/ProtectedRoute";
+import { ThemeProvider } from "./context/ThemeContext";
 
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
@@ -21,21 +22,17 @@ const Landing_Playground = lazy(() => import("./pages/Landing_Playground"));
 const Landing_CreateEvent = lazy(() => import("./pages/Landing_CreateEvent"));
 const Landing_ManageEvents = lazy(() => import("./pages/Landing_ManageEvents"));
 
+// Payment
+const Landing_Payment = lazy(() => import("./pages/Landing_Payment"));
+const Landing_PaymentCompletion = lazy(() => import("./pages/Landing_PaymentCompletion"));
+
+const Landing_UserPurchases = lazy(() => import("./pages/Landing_UserPurchases"));
+
 if (!PUBLISHABLE_KEY) {
   throw new Error("Missing Publishable Key");
 }
 
 const App = () => {
-  const [theme, setTheme] = useState(() => localStorage.getItem("theme") || "light");
-
-  const toggleTheme = () => {
-    setTheme((prevTheme) => (prevTheme === "dark" ? "light" : "dark"));
-  };
-
-  useEffect(() => {
-    localStorage.setItem("theme", theme);
-  }, [theme]);
-
   return (
     <ClerkProvider
       publishableKey={PUBLISHABLE_KEY}
@@ -44,27 +41,30 @@ const App = () => {
       signUpUrl="/auth-signup"
       signUpForceRedirectUrl="/auth-signup/initialize"
     >
-      <BrowserRouter>
-        <div className={theme}>
+      <ThemeProvider>
+        <BrowserRouter>
           <div className="min-h-screen">
-            <Header toggleTheme={toggleTheme} theme={theme} />
+            <Header />
             <Suspense fallback={<LazyPageLoader delay={300} />}>
               <Routes>
                 <Route path="*" element={<Landing_404 />} />
                 <Route path="/" element={<Landing_Home />} />
                 <Route path="/home" element={<Landing_Home />} />
                 <Route path="/events" element={<Landing_Events />} />
+                <Route path="/payment" element={<Landing_Payment />} />
+                <Route path="/payment/completion" element={<Landing_PaymentCompletion />} />
                 <Route path="/auth-signin" element={<Landing_Auth_SignIn />} />
                 <Route path="/auth-signup" element={<Landing_Auth_SignUp />} />
                 <Route path="/auth-signup/initialize" element={<Landing_Auth_Signup_Initialize />} />
+                <Route path="/user/purchases" element={<Landing_UserPurchases />} />
                 <Route path="/create-event" element={<PrivateRoute element={<Landing_CreateEvent />} />} />
                 <Route path="/manage-events" element={<PrivateRoute element={<Landing_ManageEvents />} />} />
                 <Route path="/playground" element={<PrivateRoute element={<Landing_Playground />} />} />
               </Routes>
             </Suspense>
           </div>
-        </div>
-      </BrowserRouter>
+        </BrowserRouter>
+      </ThemeProvider>
     </ClerkProvider>
   );
 };

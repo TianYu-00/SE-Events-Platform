@@ -55,6 +55,13 @@ const errorHandler = (err, req, res, next) => {
       data: null,
       code: err.code,
     });
+  } else if (err.code === "UNAUTHORISED_ACCESS") {
+    return res.status(403).send({
+      success: false,
+      msg: err.message || "Unauthorised Access",
+      data: null,
+      code: err.code,
+    });
   }
 
   next(err);

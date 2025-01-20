@@ -15,7 +15,15 @@ const globalLimiter = rateLimit({
   limit: 100,
 });
 app.use(cors(corsConfigOptions));
-app.use(express.json());
+app.use(
+  express.json({
+    verify: (req, res, buf) => {
+      if (req.originalUrl.startsWith("/api/stripe/webhook")) {
+        req.rawBody = buf.toString();
+      }
+    },
+  })
+);
 app.use(clerkMiddleware());
 app.use(globalLimiter);
 

@@ -1,4 +1,4 @@
-const { getAllEvents, createEvent, removeEvents, patchEvent } = require("../models/events.models");
+const { getAllEvents, createEvent, removeEvents, patchEvent, getEventById } = require("../models/events.models");
 
 exports.fetchAllEvents = async (req, res, next) => {
   try {
@@ -15,6 +15,22 @@ exports.fetchAllEvents = async (req, res, next) => {
 
     const data = await getAllEvents({ orderCreatedAt: validatedOrder });
     res.json({ success: true, msg: "Events have been fetched", data: data });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.getSingleEvent = async (req, res, next) => {
+  try {
+    const { event_id: eventId } = req.params;
+    if (isNaN(eventId) || Number(eventId) <= 0) {
+      const error = new Error("Event id is not valid");
+      error.code = "INVALID_PARAMS";
+      return next(error);
+    }
+
+    const data = await getEventById(eventId);
+    res.json({ success: true, msg: "Event fetched", data: data });
   } catch (err) {
     next(err);
   }

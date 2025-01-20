@@ -31,6 +31,15 @@ export const getAllEvents = async ({ orderCreatedAt = undefined }) => {
   }
 };
 
+export const getEvent = async (eventId) => {
+  try {
+    const response = await api.get(`/events/${eventId}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const initializeUser = async (userId, publicMetadata) => {
   const data = { user_id: userId, user_publicMetadata: publicMetadata };
   try {
@@ -96,6 +105,43 @@ export const updateEvent = async (eventId, eventData) => {
   };
   try {
     const response = await api.patch(`/events/${eventId}`, data);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const createPayment = async ({ eventId, userId }) => {
+  try {
+    const data = { event_id: eventId, user_id: userId };
+    const response = await api.post(`/stripe/create-payment-intent`, data);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const verifyPayment = async ({ paymentIntentId, userId }) => {
+  try {
+    const data = { paymentIntentId: paymentIntentId, user_id: userId };
+    const response = await api.post(`/stripe/verify-payment-intent`, data);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getAllPurchases = async ({ orderCreatedAt = undefined, userId = undefined }) => {
+  try {
+    const params = new URLSearchParams();
+    if (orderCreatedAt) {
+      params.append("order_created_at", orderCreatedAt);
+    }
+    if (userId) {
+      params.append("user_id", userId);
+    }
+    const query = `/purchases${params.toString() ? `?${params.toString()}` : ""}`;
+    const response = await api.get(query);
     return response.data;
   } catch (error) {
     throw error;
