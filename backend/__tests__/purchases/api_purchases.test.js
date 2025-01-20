@@ -24,12 +24,16 @@ describe("GET /api/purchases", () => {
       expect(user).toMatchObject({
         purchase_user_id: expect.any(String),
         purchase_payment_intent_id: expect.any(String),
+        purchase_payment_charge_id: expect.any(String),
         purchase_event_id: expect.any(Number),
         purchase_event_name: expect.any(String),
         purchase_paid_amount_in_pence: expect.any(Number),
+        purchase_captured_amount_in_pence: expect.any(Number),
+        purchase_refunded_amount_in_pence: expect.any(Number),
         purchase_payment_status: expect.any(String),
         purchase_descriptive_status: expect.any(String),
         purchase_created_at: expect.any(String),
+        purchase_modified_at: expect.any(String),
       });
     }
   });
