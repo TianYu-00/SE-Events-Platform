@@ -36,6 +36,16 @@ export const purchaseColumns = [
     ),
   }),
 
+  columnHelper.accessor("purchase_descriptive_status", {
+    cell: (info) => <span>{info.getValue()}</span>,
+    header: () => (
+      <div className="inline-flex items-center align-middle whitespace-nowrap space-x-1">
+        <span>Descriptive Status</span>
+        <TbArrowsSort size={15} />
+      </div>
+    ),
+  }),
+
   columnHelper.accessor("purchase_paid_amount_in_pence", {
     cell: (info) => <span>£{moneyFormatter(info.getValue())}</span>,
     header: () => (
