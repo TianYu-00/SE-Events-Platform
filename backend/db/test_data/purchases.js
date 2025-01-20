@@ -2,6 +2,7 @@ module.exports = [
   {
     purchase_user_id: "user_2rPTtagNORnIeB0T5rMsFOnlzxc",
     purchase_payment_intent_id: "pi_3QiIZKDeM0VnsTs04pewfzxc",
+    purchase_payment_charge_id: "ch_3QjQCPDeM0VnsTs005myKDyx",
     purchase_event_id: 1,
     purchase_event_name: "Event 1 Test 123",
     purchase_paid_amount_in_pence: 200,
@@ -13,6 +14,7 @@ module.exports = [
   {
     purchase_user_id: "user_2rPTtagNORnIeB0T5rMsFOnlabc",
     purchase_payment_intent_id: "pi_3QiIZKDeM0VnsTs04pewfabc",
+    purchase_payment_charge_id: "ch_3QjQCPDeM0VnsTs005myKDyz",
     purchase_event_id: 2,
     purchase_event_name: "Event 2 Test 123",
     purchase_paid_amount_in_pence: 2000,
@@ -24,6 +26,7 @@ module.exports = [
   {
     purchase_user_id: "user_2rPTtagNORnIeB0T5rMsFOnlasd",
     purchase_payment_intent_id: "pi_3QiIZKDeM0VnsTs04pewfasd",
+    purchase_payment_charge_id: "ch_3QjQCPDeM0VnsTs005myKDyc",
     purchase_event_id: 3,
     purchase_event_name: "Event 3 Test 123",
     purchase_paid_amount_in_pence: 1500,
@@ -35,6 +38,7 @@ module.exports = [
   {
     purchase_user_id: "user_2rPTtagNORnIeB0T5rMsFOnlfgh",
     purchase_payment_intent_id: "pi_3QiIZKDeM0VnsTs04pewffgh",
+    purchase_payment_charge_id: "ch_3QjQCPDeM0VnsTs005myKDyv",
     purchase_event_id: 4,
     purchase_event_name: "Event 4 Test 123",
     purchase_paid_amount_in_pence: 1000,
@@ -46,6 +50,7 @@ module.exports = [
   {
     purchase_user_id: "user_2rPTtagNORnIeB0T5rMsFOnlvbn",
     purchase_payment_intent_id: "pi_3QiIZKDeM0VnsTs04pewfvbn",
+    purchase_payment_charge_id: "ch_3QjQCPDeM0VnsTs005myKDyb",
     purchase_event_id: 5,
     purchase_event_name: "Event 5 Test 123",
     purchase_paid_amount_in_pence: 100,

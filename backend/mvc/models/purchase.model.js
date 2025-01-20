@@ -27,6 +27,7 @@ exports.addPurchase = async ({ paymentIntent, message = null }) => {
         INSERT INTO purchases (
           purchase_user_id, 
           purchase_payment_intent_id, 
+          purchase_payment_charge_id, 
           purchase_event_id, 
           purchase_event_name, 
           purchase_paid_amount_in_pence, 
@@ -35,13 +36,14 @@ exports.addPurchase = async ({ paymentIntent, message = null }) => {
           purchase_created_at
         ) 
         VALUES (
-          $1, $2, $3, $4, $5, $6, $7, $8
+          $1, $2, $3, $4, $5, $6, $7, $8, $9
         ) RETURNING *;
       `;
 
     const values = [
       paymentIntent.metadata.user_id,
       paymentIntent.id,
+      paymentIntent.latest_charge,
       parseInt(paymentIntent.metadata.event_id),
       paymentIntent.metadata.event_name,
       paymentIntent.amount_received,
@@ -56,3 +58,25 @@ exports.addPurchase = async ({ paymentIntent, message = null }) => {
     return Promise.reject(error);
   }
 };
+
+// exports.editPurchaseCharge = async ({ paymentIntent, message = null }) => {
+//   try {
+//     const query = `
+//       UPDATE purchases
+//       SET
+//         purchase_paid_amount_in_pence = $1,
+//         purchase_payment_status = $2,
+//         purchase_descriptive_status = $3,
+//         purchase_modified_at = CURRENT_TIMESTAMP
+//       WHERE purchase_payment_intent_id = $4
+//       RETURNING *;
+//     `;
+
+//     const values = [paymentIntent.amount_received, paymentIntent.status, message, paymentIntent.id];
+
+//     const result = await db.query(query, values);
+//     return result.rows[0];
+//   } catch (error) {
+//     return Promise.reject(error);
+//   }
+// };
