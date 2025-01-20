@@ -102,6 +102,7 @@ exports.handleWebhook = async (req, res, next) => {
         paymentIntent: paymentIntent,
         message: "Payment confirmed, we are now processing the funds",
       });
+      // console.log(response);
       break;
     }
     case "charge.succeeded": {
@@ -114,7 +115,6 @@ exports.handleWebhook = async (req, res, next) => {
     }
     case "charge.refunded": {
       const paymentIntent = event.data.object;
-      console.log("refund payment intent", paymentIntent);
       const response = await editPurchaseCharge({
         paymentIntent: paymentIntent,
         message: "Payment refunded, funds are being returned.",
