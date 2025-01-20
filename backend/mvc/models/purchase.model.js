@@ -64,14 +64,22 @@ exports.editPurchaseCharge = async ({ paymentIntent, message = null }) => {
     const query = `
       UPDATE purchases
       SET
-        purchase_payment_status = $1,
-        purchase_descriptive_status = $2,
+        purchase_captured_amount_in_pence = $1,
+        purchase_refunded_amount_in_pence = $2,
+        purchase_payment_status = $3,
+        purchase_descriptive_status = $4,
         purchase_modified_at = CURRENT_TIMESTAMP
-      WHERE purchase_payment_intent_id = $3
+      WHERE purchase_payment_intent_id = $5
       RETURNING *;
     `;
 
-    const values = [paymentIntent.status, message, paymentIntent.payment_intent];
+    const values = [
+      paymentIntent.amount_captured,
+      paymentIntent.amount_refunded,
+      paymentIntent.status,
+      message,
+      paymentIntent.payment_intent,
+    ];
 
     const result = await db.query(query, values);
     return result.rows[0];
