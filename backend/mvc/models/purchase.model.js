@@ -59,24 +59,23 @@ exports.addPurchase = async ({ paymentIntent, message = null }) => {
   }
 };
 
-// exports.editPurchaseCharge = async ({ paymentIntent, message = null }) => {
-//   try {
-//     const query = `
-//       UPDATE purchases
-//       SET
-//         purchase_paid_amount_in_pence = $1,
-//         purchase_payment_status = $2,
-//         purchase_descriptive_status = $3,
-//         purchase_modified_at = CURRENT_TIMESTAMP
-//       WHERE purchase_payment_intent_id = $4
-//       RETURNING *;
-//     `;
+exports.editPurchaseCharge = async ({ paymentIntent, message = null }) => {
+  try {
+    const query = `
+      UPDATE purchases
+      SET
+        purchase_payment_status = $1,
+        purchase_descriptive_status = $2,
+        purchase_modified_at = CURRENT_TIMESTAMP
+      WHERE purchase_payment_intent_id = $3
+      RETURNING *;
+    `;
 
-//     const values = [paymentIntent.amount_received, paymentIntent.status, message, paymentIntent.id];
+    const values = [paymentIntent.status, message, paymentIntent.payment_intent];
 
-//     const result = await db.query(query, values);
-//     return result.rows[0];
-//   } catch (error) {
-//     return Promise.reject(error);
-//   }
-// };
+    const result = await db.query(query, values);
+    return result.rows[0];
+  } catch (error) {
+    return Promise.reject(error);
+  }
+};
