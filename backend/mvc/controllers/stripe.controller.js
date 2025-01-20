@@ -95,24 +95,15 @@ exports.handleWebhook = async (req, res, next) => {
     }
   }
 
-  // console.log(event.data.object);
-
-  // Handle the event
   switch (event.type) {
     case "payment_intent.succeeded": {
       const paymentIntent = event.data.object;
-      console.log(`PaymentIntent for ${paymentIntent.amount} was successful!`);
       // console.log(paymentIntent);
-      const response = await addPurchase({ paymentIntent: paymentIntent, message: "Payment Completed Successfully" });
-      // console.log(response);
-      break;
-    }
-    case "charge.refunded": {
-      const paymentIntent = event.data.object;
-      console.log(paymentIntent);
-      // console.log(`PaymentIntent for ${paymentIntent.amount} was successful!`);
-      // const response = await addPurchase(paymentIntent);
-      console.log("refunded");
+      const response = await addPurchase({
+        paymentIntent: paymentIntent,
+        message: "Payment confirmed, we are now processing the funds",
+      });
+      console.log(response);
       break;
     }
     default:

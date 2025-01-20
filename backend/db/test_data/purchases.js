@@ -8,6 +8,7 @@ module.exports = [
     purchase_payment_status: "succeeded",
     purchase_descriptive_status: "Payment Completed Successfully",
     purchase_created_at: "2025-01-17T16:38:50.000Z",
+    purchase_modified_at: "2025-01-17T16:38:50.000Z",
   },
   {
     purchase_user_id: "user_2rPTtagNORnIeB0T5rMsFOnlabc",
@@ -18,6 +19,7 @@ module.exports = [
     purchase_payment_status: "succeeded",
     purchase_descriptive_status: "Payment Completed Successfully",
     purchase_created_at: "2025-01-12T16:38:50.000Z",
+    purchase_modified_at: "2025-01-12T16:38:50.000Z",
   },
   {
     purchase_user_id: "user_2rPTtagNORnIeB0T5rMsFOnlasd",
@@ -28,6 +30,7 @@ module.exports = [
     purchase_payment_status: "succeeded",
     purchase_descriptive_status: "Payment Completed Successfully",
     purchase_created_at: "2025-01-10T16:38:50.000Z",
+    purchase_modified_at: "2025-01-10T16:38:50.000Z",
   },
   {
     purchase_user_id: "user_2rPTtagNORnIeB0T5rMsFOnlfgh",
@@ -38,6 +41,7 @@ module.exports = [
     purchase_payment_status: "succeeded",
     purchase_descriptive_status: "Payment Completed Successfully",
     purchase_created_at: "2025-01-19T16:38:50.000Z",
+    purchase_modified_at: "2025-01-19T16:38:50.000Z",
   },
   {
     purchase_user_id: "user_2rPTtagNORnIeB0T5rMsFOnlvbn",
@@ -48,5 +52,6 @@ module.exports = [
     purchase_payment_status: "succeeded",
     purchase_descriptive_status: "Payment Completed Successfully",
     purchase_created_at: "2025-01-18T16:38:50.000Z",
+    purchase_modified_at: "2025-01-18T16:38:50.000Z",
   },
 ];
