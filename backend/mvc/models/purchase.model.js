@@ -21,7 +21,7 @@ exports.getAllPurchases = async ({ orderCreatedAt = undefined, userId = undefine
   }
 };
 
-exports.addPurchase = async (paymentIntent) => {
+exports.addPurchase = async ({ paymentIntent, message = null }) => {
   try {
     const query = `
         INSERT INTO purchases (
@@ -31,10 +31,11 @@ exports.addPurchase = async (paymentIntent) => {
           purchase_event_name, 
           purchase_paid_amount_in_pence, 
           purchase_payment_status, 
+          purchase_descriptive_status,
           purchase_created_at
         ) 
         VALUES (
-          $1, $2, $3, $4, $5, $6, $7
+          $1, $2, $3, $4, $5, $6, $7, $8
         ) RETURNING *;
       `;
 
@@ -45,6 +46,7 @@ exports.addPurchase = async (paymentIntent) => {
       paymentIntent.metadata.event_name,
       paymentIntent.amount_received,
       paymentIntent.status,
+      message,
       new Date(paymentIntent.created * 1000),
     ];
 

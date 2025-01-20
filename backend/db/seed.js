@@ -52,6 +52,7 @@ async function createPurchasesTable() {
       purchase_event_name VARCHAR(255) NOT NULL,
       purchase_paid_amount_in_pence INT NOT NULL,
       purchase_payment_status VARCHAR(255) NOT NULL,
+      purchase_descriptive_status VARCHAR(255),
       purchase_created_at TIMESTAMP NOT NULL,
       FOREIGN KEY (purchase_event_id) REFERENCES events (event_id) ON DELETE CASCADE
     );
@@ -98,11 +99,12 @@ async function insertPurchases(purchases) {
     purchase.purchase_event_name,
     purchase.purchase_paid_amount_in_pence,
     purchase.purchase_payment_status,
+    purchase.purchase_descriptive_status,
     purchase.purchase_created_at,
   ]);
 
   const query = format(
-    `INSERT INTO purchases (purchase_user_id, purchase_payment_intent_id, purchase_event_id, purchase_event_name, purchase_paid_amount_in_pence, purchase_payment_status, purchase_created_at) VALUES %L`,
+    `INSERT INTO purchases (purchase_user_id, purchase_payment_intent_id, purchase_event_id, purchase_event_name, purchase_paid_amount_in_pence, purchase_payment_status, purchase_descriptive_status, purchase_created_at) VALUES %L`,
     purchaseValues
   );
 

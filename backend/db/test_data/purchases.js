@@ -6,6 +6,7 @@ module.exports = [
     purchase_event_name: "Event 1 Test 123",
     purchase_paid_amount_in_pence: 200,
     purchase_payment_status: "succeeded",
+    purchase_descriptive_status: "Payment Completed Successfully",
     purchase_created_at: "2025-01-17T16:38:50.000Z",
   },
   {
@@ -15,6 +16,7 @@ module.exports = [
     purchase_event_name: "Event 2 Test 123",
     purchase_paid_amount_in_pence: 2000,
     purchase_payment_status: "succeeded",
+    purchase_descriptive_status: "Payment Completed Successfully",
     purchase_created_at: "2025-01-12T16:38:50.000Z",
   },
   {
@@ -24,6 +26,7 @@ module.exports = [
     purchase_event_name: "Event 3 Test 123",
     purchase_paid_amount_in_pence: 1500,
     purchase_payment_status: "succeeded",
+    purchase_descriptive_status: "Payment Completed Successfully",
     purchase_created_at: "2025-01-10T16:38:50.000Z",
   },
   {
@@ -33,6 +36,7 @@ module.exports = [
     purchase_event_name: "Event 4 Test 123",
     purchase_paid_amount_in_pence: 1000,
     purchase_payment_status: "succeeded",
+    purchase_descriptive_status: "Payment Completed Successfully",
     purchase_created_at: "2025-01-19T16:38:50.000Z",
   },
   {
@@ -42,6 +46,7 @@ module.exports = [
     purchase_event_name: "Event 5 Test 123",
     purchase_paid_amount_in_pence: 100,
     purchase_payment_status: "succeeded",
+    purchase_descriptive_status: "Payment Completed Successfully",
     purchase_created_at: "2025-01-18T16:38:50.000Z",
   },
 ];
