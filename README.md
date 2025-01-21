@@ -17,6 +17,8 @@ Project that allows community memebers to view, sign up for and add events to th
 # Prerequisites
 - **Node.js** v21.7.2
 - **PostgreSQL** v14.15
+- **Clerk API Keys**
+- **Stripe API Keys**
 
 # Backend
 ```
