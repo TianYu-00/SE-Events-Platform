@@ -46,7 +46,7 @@ npm run dev
 ```
 
 # Environment Variables
-### Backend .env.development
+### Backend `.env.development`
 ``` 
 # Express
 PORT=
@@ -68,7 +68,7 @@ STRIPE_SECRET_KEY=
 STRIPE_WEBHOOK_SECRET=
 ```
 
-### Backend .env.test
+### Backend `.env.test`
 ``` 
 # Express
 PORT=
@@ -84,7 +84,7 @@ CLERK_SECRET_KEY=
 STRIPE_SECRET_KEY=
 ```
 
-### Frontend .env.local
+### Frontend `.env.local`
 ```
 #Clerk
 VITE_CLERK_PUBLISHABLE_KEY=
