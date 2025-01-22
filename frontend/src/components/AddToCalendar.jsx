@@ -17,54 +17,46 @@ function AddToCalendar({ eventData, isOpen, onClose }) {
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} modalTitle={"Add To Calendar"}>
-      <div className="space-y-2">
-        <ul className="space-y-1">
-          <li>
-            <button
-              onClick={() => window.open(google(event), "_blank")}
-              className="p-2 bg-cta text-cta-text rounded-md hover:bg-cta-active flex justify-center items-center space-x-2"
-            >
-              <SiGooglecalendar size={17} />
-              <span>Google Calendar</span>
-            </button>
-          </li>
-          <li>
-            <button
-              onClick={() => window.open(outlook(event), "_blank")}
-              className="p-2 bg-cta text-cta-text rounded-md hover:bg-cta-active flex justify-center items-center space-x-2"
-            >
-              <PiMicrosoftOutlookLogoBold size={17} />
-              <span>Outlook</span>
-            </button>
-          </li>
-          <li>
-            <button
-              onClick={() => window.open(office365(event), "_blank")}
-              className="p-2 bg-cta text-cta-text rounded-md hover:bg-cta-active flex justify-center items-center space-x-2"
-            >
-              <FaMicrosoft size={17} />
-              <span>Office 365</span>
-            </button>
-          </li>
-          <li>
-            <button
-              onClick={() => window.open(yahoo(event), "_blank")}
-              className="p-2 bg-cta text-cta-text rounded-md hover:bg-cta-active flex justify-center items-center space-x-2"
-            >
-              <FaYahoo size={17} />
-              <span>Yahoo Calendar</span>
-            </button>
-          </li>
-          <li>
-            <button
-              onClick={() => window.open(ics(event), "_blank")}
-              className="p-2 bg-cta text-cta-text rounded-md hover:bg-cta-active flex justify-center items-center space-x-2"
-            >
-              <TiCalendar size={17} />
-              <span>Download ICS file</span>
-            </button>
-          </li>
-        </ul>
+      <div className="flex flex-col space-y-2">
+        <button
+          onClick={() => window.open(google(event), "_blank")}
+          className="bg-cta hover:bg-cta-active text-cta-text p-2 rounded-md flex items-center space-x-2"
+        >
+          <SiGooglecalendar size={17} />
+          <span>Google Calendar</span>
+        </button>
+
+        <button
+          onClick={() => window.open(outlook(event), "_blank")}
+          className="bg-cta hover:bg-cta-active text-cta-text p-2 rounded-md flex items-center space-x-2"
+        >
+          <PiMicrosoftOutlookLogoBold size={17} />
+          <span>Outlook</span>
+        </button>
+
+        <button
+          onClick={() => window.open(office365(event), "_blank")}
+          className="bg-cta hover:bg-cta-active text-cta-text p-2 rounded-md flex items-center space-x-2"
+        >
+          <FaMicrosoft size={17} />
+          <span>Office 365</span>
+        </button>
+
+        <button
+          onClick={() => window.open(yahoo(event), "_blank")}
+          className="bg-cta hover:bg-cta-active text-cta-text p-2 rounded-md flex items-center space-x-2"
+        >
+          <FaYahoo size={17} />
+          <span>Yahoo Calendar</span>
+        </button>
+
+        <button
+          onClick={() => window.open(ics(event), "_blank")}
+          className="bg-cta hover:bg-cta-active text-cta-text p-2 rounded-md flex items-center space-x-2"
+        >
+          <TiCalendar size={17} />
+          <span>Download ICS file</span>
+        </button>
       </div>
     </Modal>
   );
