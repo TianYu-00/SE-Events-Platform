@@ -16,6 +16,7 @@ const Landing_Auth_SignIn = lazy(() => import("./pages/Landing_Auth_SignIn"));
 const Landing_Auth_SignUp = lazy(() => import("./pages/Landing_Auth_SignUp"));
 const Landing_Auth_Signup_Initialize = lazy(() => import("./pages/Landing_Auth_Signup_Initialize"));
 const Landing_404 = lazy(() => import("./pages/Landing_404"));
+const Landing_EventDetails = lazy(() => import("./pages/Landing_EventDetails"));
 
 // Admin & Staff
 const Landing_Playground = lazy(() => import("./pages/Landing_Playground"));
@@ -51,6 +52,7 @@ const App = () => {
                 <Route path="/" element={<Landing_Home />} />
                 <Route path="/home" element={<Landing_Home />} />
                 <Route path="/events" element={<Landing_Events />} />
+                <Route path="/event/:eventId" element={<Landing_EventDetails />} />
                 <Route path="/payment" element={<Landing_Payment />} />
                 <Route path="/payment/completion" element={<Landing_PaymentCompletion />} />
                 <Route path="/auth-signin" element={<Landing_Auth_SignIn />} />
