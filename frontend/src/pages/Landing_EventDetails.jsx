@@ -46,7 +46,15 @@ function Landing_EventDetails() {
   return (
     <div className="text-copy-primary min-h-[calc(100vh-5rem)] max-w-screen-xl mx-auto p-4">
       <div className="shadow-md rounded-lg">
-        <img src={event.event_thumbnail} alt={`${event.event_name} image`} className="rounded-lg w-full" />
+        <img
+          src={event.event_thumbnail}
+          alt={`${event.event_name} image`}
+          className="rounded-lg w-full"
+          onError={(e) => {
+            e.target.onerror = null;
+            e.target.src = "https://placehold.co/600x400?text=Image+Not+Available";
+          }}
+        />
       </div>
 
       <div className="mt-4 bg-card border border-border rounded-md p-4 w-full shadow-md">

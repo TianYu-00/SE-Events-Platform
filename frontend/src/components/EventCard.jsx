@@ -25,9 +25,14 @@ function EventCard({ event }) {
     <div className="text-copy-primary">
       <div className="w-full h-full bg-card rounded-t-lg border border-border/40 shadow-lg flex flex-col">
         <img
-          src={`${event.event_thumbnail || "https://placehold.co/600x400?text=Image+Not+Available"} `}
-          className="rounded-t-lg w-full h-64 object-cover"
+          src={event.event_thumbnail}
+          className="rounded-t-lg w-full h-64 object-cover cursor-pointer"
           alt="Event Thumbnail"
+          onClick={() => navigate(`/event/${event.event_id}`)}
+          onError={(e) => {
+            e.target.onerror = null;
+            e.target.src = "https://placehold.co/600x400?text=Image+Not+Available";
+          }}
         />
         <div className="p-3 flex flex-col flex-grow">
           <div className="mb-3">
