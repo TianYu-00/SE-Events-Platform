@@ -44,3 +44,55 @@ npm install
 ```
 npm run dev
 ```
+
+# Environment Variables
+### Backend `.env.development`
+``` 
+# Express
+PORT=
+
+# Database
+PGDATABASE=
+
+# Clerk
+CLERK_PUBLISHABLE_KEY=
+CLERK_SECRET_KEY=
+
+# Cloudinary
+CLOUDINARY_CLOUD_NAME=
+CLOUDINARY_API_KEY=
+CLOUDINARY_API_SECRET=
+
+#Stripe
+STRIPE_SECRET_KEY=
+STRIPE_WEBHOOK_SECRET=
+```
+
+### Backend `.env.test`
+``` 
+# Express
+PORT=
+
+# Database
+PGDATABASE=
+
+# Clerk
+CLERK_PUBLISHABLE_KEY=
+CLERK_SECRET_KEY=
+
+#Stripe
+STRIPE_SECRET_KEY=
+```
+
+### Frontend `.env.local`
+```
+#Clerk
+VITE_CLERK_PUBLISHABLE_KEY=
+
+#Cloudinary
+VITE_CLOUDINARY_CLOUD_NAME=
+VITE_CLOUDINARY_UPLOAD_PRESET_NAME=
+
+#Stripe
+VITE_STRIPE_PUBLISHABLE_KEY=
+```
