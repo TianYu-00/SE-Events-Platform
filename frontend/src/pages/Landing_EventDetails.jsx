@@ -14,18 +14,24 @@ import {
   TbUsers,
   TbWorld,
 } from "react-icons/tb";
+import AddToCalendar from "../components/AddToCalendar";
 
 function Landing_EventDetails() {
   const [event, setEvent] = useState(null);
   const { eventId } = useParams();
   const navigate = useNavigate();
+  const [showCalendarLinks, setShowCalendarLinks] = useState(false);
+
+  const toggleCalendarLinks = () => {
+    setShowCalendarLinks((prev) => !prev);
+  };
 
   useEffect(() => {
     const runFetchEvent = async () => {
       const response = await getEvent(eventId);
       const eventData = response.data;
       setEvent(eventData);
-      console.log(eventData);
+      // console.log(eventData);
     };
 
     runFetchEvent();
@@ -156,14 +162,27 @@ function Landing_EventDetails() {
         <div className="">
           <div className="bg-card border border-border rounded-md p-4 flex flex-col justify-center items-center w-full h-full shadow-md">
             <div className="flex flex-col items-center">
-              <h2 className="text-2xl md:text-5xl font-bold mb-2">£{moneyFormatter(event.event_cost_in_pence)}</h2>
+              <h2 className="text-3xl md:text-5xl font-bold mb-2">£{moneyFormatter(event.event_cost_in_pence)}</h2>
               <p className="text-copy-secondary">per ticket</p>
-              <button
-                className="p-3 bg-cta hover:bg-cta-active text-cta-text rounded-md font-semibold mt-5"
-                onClick={handle_EventPurchase}
-              >
-                {event.event_cost_in_pence > 0 ? "Purchase Now" : "Signup Now"}
-              </button>
+
+              <div className="flex flex-col justify-center space-y-2">
+                <button
+                  className="p-3 bg-cta hover:bg-cta-active text-cta-text rounded-md font-semibold mt-5"
+                  onClick={handle_EventPurchase}
+                >
+                  {event.event_cost_in_pence > 0 ? "Purchase Now" : "Signup Now"}
+                </button>
+
+                <button
+                  onClick={toggleCalendarLinks}
+                  className="p-3 bg-cta hover:bg-cta-active text-cta-text rounded-md font-semibold flex flex-row items-center"
+                >
+                  <TbCalendar className="mr-2" size={17} />
+                  <span>Add to calendar</span>
+                </button>
+              </div>
+
+              <AddToCalendar eventData={event} isOpen={showCalendarLinks} onClose={() => setShowCalendarLinks(false)} />
             </div>
           </div>
         </div>
