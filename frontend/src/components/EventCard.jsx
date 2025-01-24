@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { dateFormatter } from "../utils/DateFormatter";
 import { moneyFormatter } from "../utils/MoneyFormatter";
-import { TbCalendar, TbCalendarTime, TbLocation } from "react-icons/tb";
+import { TbCalendar, TbCalendarTime, TbLocation, TbMapPin } from "react-icons/tb";
 import AddToCalendar from "./AddToCalendar";
 import { useNavigate } from "react-router-dom";
 import { useEventPurchase } from "../hooks/useEventPurchase";
@@ -32,7 +32,7 @@ function EventCard({ event }) {
           <div className="mb-3">
             <h3 className="truncate text-2xl font-medium mb-1">{event.event_name}</h3>
             <p className="truncate text-sm text-copy-secondary flex">
-              <TbLocation className="mr-2" size={17} /> <span>{event.event_full_address}</span>
+              <TbMapPin className="mr-2" size={17} /> <span>{event.event_full_address}</span>
             </p>
             <p className="truncate text-sm text-copy-secondary flex">
               <TbCalendarTime className="mr-2" size={17} /> <span>{dateFormatter(event.event_start_date, 4)}</span>
