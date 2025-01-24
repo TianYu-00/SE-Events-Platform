@@ -6,8 +6,9 @@ const apiRouter = require("./routes/api-router");
 const errorHandler = require("./utils/middleware/errorHandler");
 
 const app = express();
+const allowedCorsOrigin = ["http://127.0.0.1:5173", "http://localhost:5173"];
 const corsConfigOptions = {
-  origin: "http://127.0.0.1:5173",
+  origin: allowedCorsOrigin,
   credentials: true,
 };
 const globalLimiter = rateLimit({
