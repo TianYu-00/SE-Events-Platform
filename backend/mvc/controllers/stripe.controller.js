@@ -1,4 +1,4 @@
-const { getEventById } = require("../models/events.models");
+const { getEventById, checkTicketsAvailable } = require("../models/events.models");
 const { addPurchase, editPurchaseCharge } = require("../models/purchase.model");
 const Stripe = require("stripe");
 const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
@@ -18,6 +18,8 @@ exports.createPayment = async (req, res, next) => {
       error.code = "BODY_CONTENT_INVALID";
       return next(error);
     }
+
+    await checkTicketsAvailable(eventId);
 
     const eventInfo = await getEventById(eventId);
 

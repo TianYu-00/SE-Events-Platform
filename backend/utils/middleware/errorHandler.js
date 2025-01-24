@@ -83,6 +83,13 @@ const errorHandler = (err, req, res, next) => {
       data: null,
       code: err.code,
     });
+  } else if (err.code === "NO_TICKETS_AVAILABLE") {
+    return res.status(409).send({
+      success: false,
+      msg: err.message || "Tickets are not available.",
+      data: null,
+      code: err.code,
+    });
   }
 
   next(err);

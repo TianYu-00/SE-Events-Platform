@@ -213,3 +213,31 @@ exports.validateAttendeesCapacity = ({ event_attendees, event_capacity }) => {
 
   return Promise.resolve();
 };
+
+exports.checkTicketsAvailable = async (eventId) => {
+  try {
+    const query = `
+      SELECT event_capacity, event_attendees 
+      FROM events 
+      WHERE event_id = $1
+    `;
+    const result = await db.query(query, [eventId]);
+
+    if (result.rows.length === 0) {
+      return Promise.reject({ code: "EVENT_NOT_FOUND", message: "Event not found" });
+    }
+
+    const { event_capacity, event_attendees } = result.rows[0];
+
+    if (event_attendees >= event_capacity) {
+      return Promise.reject({
+        code: "NO_TICKETS_AVAILABLE",
+        message: "No more tickets are available for this event",
+      });
+    }
+
+    return Promise.resolve();
+  } catch (error) {
+    return Promise.reject(error);
+  }
+};
