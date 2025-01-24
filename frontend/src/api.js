@@ -147,3 +147,13 @@ export const getAllPurchases = async ({ orderCreatedAt = undefined, userId = und
     throw error;
   }
 };
+
+export const createFreePurchase = async ({ userId, eventName, eventId }) => {
+  try {
+    const data = { user_id: userId, event_name: eventName, event_id: eventId };
+    const response = await api.post(`/purchases/free`, data);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};

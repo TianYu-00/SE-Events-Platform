@@ -4,20 +4,35 @@ import { moneyFormatter } from "./MoneyFormatter";
 import { TbCalendar, TbCalendarTime, TbLocation } from "react-icons/tb";
 import AddToCalendar from "./AddToCalendar";
 import { useNavigate } from "react-router-dom";
+import { createFreePurchase } from "../api";
+import { useUser } from "@clerk/clerk-react";
 
 function EventCard({ event }) {
   const navigate = useNavigate();
   const [showCalendarLinks, setShowCalendarLinks] = useState(false);
+  const { user } = useUser();
 
   const toggleCalendarLinks = () => {
     setShowCalendarLinks((prev) => !prev);
   };
 
   const handle_EventPurchase = async () => {
-    if (event.event_cost_in_pence > 0) {
-      navigate(`/payment?event_id=${event.event_id}`);
+    if (user === null) {
+      navigate("/auth-signin");
     } else {
-      console.log("ITS FREE!");
+      if (event.event_cost_in_pence > 0 && event.event_cost_in_pence > 30) {
+        navigate(`/payment?event_id=${event.event_id}`);
+      } else if (event.event_cost_in_pence < 30 && event.event_cost_in_pence > 0) {
+        // need to visualize this for users
+        console.log("CONTACT SUPPORT TO UPDATE THE PRICE OF TICKETS TO BE ABOVE 30 PENCE");
+      } else {
+        const response = await createFreePurchase({
+          userId: user.id,
+          eventName: event.event_name,
+          eventId: event.event_id,
+        });
+        console.log(response);
+      }
     }
   };
 
