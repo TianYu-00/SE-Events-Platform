@@ -125,6 +125,14 @@ exports.removeEvents = async (eventIds) => {
 exports.patchEvent = async (eventId, eventData) => {
   try {
     const fetchedEventResponse = await exports.getEventById(eventId);
+    const originalModifiedAt = eventData.event_modified_at;
+    const currentModifiedAt = fetchedEventResponse.event_modified_at;
+    // console.log(originalModifiedAt, currentModifiedAt);
+    if (originalModifiedAt != currentModifiedAt) {
+      return Promise.reject({ code: "DATA_OUT_OF_SYNC", message: "Provided data is out of sync with database" });
+    }
+
+    delete eventData.event_modified_at;
 
     const fields = [];
     const values = [];
@@ -178,7 +186,11 @@ exports.increaseEventAttendee = async (eventId) => {
 
     const newAttendeeCount = currentAttendees + 1;
 
-    const updateQuery = "UPDATE events SET event_attendees = $1 WHERE event_id = $2 RETURNING *";
+    const updateQuery = `
+      UPDATE events 
+      SET event_attendees = $1, event_modified_at = CURRENT_TIMESTAMP
+      WHERE event_id = $2
+      RETURNING *`;
     const updateResult = await db.query(updateQuery, [newAttendeeCount, eventId]);
 
     return updateResult.rows[0];

@@ -111,6 +111,7 @@ exports.editEvents = async (req, res, next) => {
       "event_website",
       "event_tags",
       "event_thumbnail",
+      "event_modified_at",
     ];
     const isValid = Object.keys(eventData).every((key) => allowedFields.includes(key));
     if (!isValid) {

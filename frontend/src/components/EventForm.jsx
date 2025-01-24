@@ -257,7 +257,7 @@ function EventForm({ initialEventData = null, isCreate = true }) {
                 className="block text-sm font-medium text-copy-primary/80 ml-1 text-nowrap mb-1"
                 htmlFor="event_attendees"
               >
-                Attendees <span className="text-red-500">*</span> {!isCreate ? "(not editable)" : ""}
+                Attendees <span className="text-red-500">*</span>
               </label>
               <input
                 id="event_attendees"
@@ -268,7 +268,6 @@ function EventForm({ initialEventData = null, isCreate = true }) {
                 min="0"
                 required
                 placeholder="0"
-                disabled={!isCreate}
               />
             </div>
 

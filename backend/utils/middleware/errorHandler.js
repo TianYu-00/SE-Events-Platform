@@ -69,6 +69,13 @@ const errorHandler = (err, req, res, next) => {
       data: null,
       code: err.code,
     });
+  } else if (err.code === "DATA_OUT_OF_SYNC") {
+    return res.status(409).send({
+      success: false,
+      msg: err.message || "Data out of sync, please refresh and try again",
+      data: null,
+      code: err.code,
+    });
   }
 
   next(err);
