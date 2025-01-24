@@ -15,8 +15,8 @@ exports.fetchAllEvents = async (req, res, next) => {
 
     const data = await getAllEvents({ orderCreatedAt: validatedOrder });
     res.json({ success: true, msg: "Events have been fetched", data: data });
-  } catch (err) {
-    next(err);
+  } catch (error) {
+    next(error);
   }
 };
 
@@ -31,8 +31,8 @@ exports.getSingleEvent = async (req, res, next) => {
 
     const data = await getEventById(eventId);
     res.json({ success: true, msg: "Event fetched", data: data });
-  } catch (err) {
-    next(err);
+  } catch (error) {
+    next(error);
   }
 };
 
@@ -65,8 +65,8 @@ exports.postEvent = async (req, res, next) => {
 
     const data = await createEvent(eventData);
     res.json({ success: true, msg: "Event posted", data: data });
-  } catch (err) {
-    next(err);
+  } catch (error) {
+    next(error);
   }
 };
 

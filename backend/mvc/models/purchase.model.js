@@ -21,7 +21,7 @@ exports.getAllPurchases = async ({ orderCreatedAt = undefined, userId = undefine
   }
 };
 
-exports.addPurchase = async ({ paymentIntent, message = null }) => {
+exports.addPurchase = async ({ paymentIntent, message = null, isFree = false }) => {
   try {
     const query = `
         INSERT INTO purchases (
@@ -42,14 +42,14 @@ exports.addPurchase = async ({ paymentIntent, message = null }) => {
 
     const values = [
       paymentIntent.metadata.user_id,
-      paymentIntent.id,
-      paymentIntent.latest_charge,
+      isFree ? null : paymentIntent.id,
+      isFree ? null : paymentIntent.latest_charge,
       parseInt(paymentIntent.metadata.event_id),
       paymentIntent.metadata.event_name,
-      paymentIntent.amount_received,
-      paymentIntent.status,
+      isFree ? 0 : paymentIntent.amount_received,
+      isFree ? "succeeded" : paymentIntent.status,
       message,
-      new Date(paymentIntent.created * 1000),
+      isFree ? new Date() : new Date(paymentIntent.created * 1000),
     ];
 
     const result = await db.query(query, values);

@@ -47,8 +47,8 @@ async function createPurchasesTable() {
     CREATE TABLE purchases (
       purchase_id SERIAL PRIMARY KEY,
       purchase_user_id VARCHAR(255) NOT NULL,
-      purchase_payment_intent_id VARCHAR(255) NOT NULL,
-      purchase_payment_charge_id VARCHAR(255) NOT NULL,
+      purchase_payment_intent_id VARCHAR(255),
+      purchase_payment_charge_id VARCHAR(255),
       purchase_event_id INT NOT NULL,
       purchase_event_name VARCHAR(255) NOT NULL,
       purchase_paid_amount_in_pence INT NOT NULL,
