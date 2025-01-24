@@ -174,8 +174,11 @@ function Landing_EventDetails() {
 
               <div className="flex flex-col justify-center space-y-2">
                 <button
-                  className="p-3 bg-cta hover:bg-cta-active text-cta-text rounded-md font-semibold mt-5"
+                  className={`p-3 bg-cta hover:bg-cta-active text-cta-text rounded-md font-semibold mt-5 ${
+                    event.event_attendees >= event.event_capacity ? "cursor-not-allowed bg-cta/30 hover:bg-cta/30" : ""
+                  }`}
                   onClick={purchaseEvent}
+                  disabled={event.event_attendees >= event.event_capacity}
                 >
                   {event.event_cost_in_pence > 0 ? "Purchase Now" : "Signup Now"}
                 </button>

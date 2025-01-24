@@ -53,7 +53,7 @@ function EventCard({ event }) {
           <div className="flex h-10">
             <button
               className={`bg-cta hover:bg-cta-active p-2 rounded-md text-cta-text w-32 flex justify-center items-center ${
-                event.event_attendees >= event.event_capacity ? "cursor-not-allowed" : ""
+                event.event_attendees >= event.event_capacity ? "cursor-not-allowed bg-cta/30 hover:bg-cta/30" : ""
               }`}
               onClick={purchaseEvent}
               disabled={event.event_attendees >= event.event_capacity}
