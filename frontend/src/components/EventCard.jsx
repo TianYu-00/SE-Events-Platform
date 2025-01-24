@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { dateFormatter } from "../utils/DateFormatter";
 import { moneyFormatter } from "../utils/MoneyFormatter";
-import { TbCalendar, TbCalendarTime, TbLocation, TbMapPin } from "react-icons/tb";
+import { TbCalendar, TbCalendarTime, TbLocation, TbMapPin, TbUsers } from "react-icons/tb";
 import AddToCalendar from "./AddToCalendar";
 import { useNavigate } from "react-router-dom";
 import { useEventPurchase } from "../hooks/useEventPurchase";
@@ -37,6 +37,12 @@ function EventCard({ event }) {
             <p className="truncate text-sm text-copy-secondary flex">
               <TbCalendarTime className="mr-2" size={17} /> <span>{dateFormatter(event.event_start_date, 4)}</span>
             </p>
+            <p className="truncate text-sm text-copy-secondary flex">
+              <TbUsers className="mr-2" size={17} />{" "}
+              <span>
+                {event.event_attendees} / {event.event_capacity}
+              </span>
+            </p>
           </div>
           <p className="mb-8 line-clamp-3 mt-3">{event.event_description}</p>
           <div className="flex-grow" />
@@ -46,8 +52,11 @@ function EventCard({ event }) {
           </p>
           <div className="flex h-10">
             <button
-              className="bg-cta hover:bg-cta-active p-2 rounded-md text-cta-text w-32 flex justify-center items-center"
+              className={`bg-cta hover:bg-cta-active p-2 rounded-md text-cta-text w-32 flex justify-center items-center ${
+                event.event_attendees >= event.event_capacity ? "cursor-not-allowed" : ""
+              }`}
               onClick={purchaseEvent}
+              disabled={event.event_attendees >= event.event_capacity}
             >
               {event.event_cost_in_pence > 0 ? "Purchase" : "Free"}
             </button>
