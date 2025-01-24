@@ -164,3 +164,25 @@ exports.patchEvent = async (eventId, eventData) => {
     return Promise.reject(error);
   }
 };
+
+exports.increaseEventAttendee = async (eventId) => {
+  try {
+    const tempQuery = "SELECT event_attendees FROM events WHERE event_id = $1";
+    const tempResult = await db.query(tempQuery, [eventId]);
+
+    if (tempResult.rows.length === 0) {
+      return Promise.reject({ code: "EVENT_NOT_FOUND", message: "Event not found" });
+    }
+
+    const currentAttendees = tempResult.rows[0].event_attendees;
+
+    const newAttendeeCount = currentAttendees + 1;
+
+    const updateQuery = "UPDATE events SET event_attendees = $1 WHERE event_id = $2 RETURNING *";
+    const updateResult = await db.query(updateQuery, [newAttendeeCount, eventId]);
+
+    return updateResult.rows[0];
+  } catch (error) {
+    return Promise.reject(error);
+  }
+};

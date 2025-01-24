@@ -1,4 +1,5 @@
 const db = require("../../db/connection");
+const { getEventById, increaseEventAttendee } = require("./events.models");
 
 exports.getAllPurchases = async ({ orderCreatedAt = undefined, userId = undefined }) => {
   try {
@@ -33,6 +34,8 @@ exports.addPurchase = async ({ paymentIntent, message = null, isFree = false }) 
       }
     }
 
+    await getEventById(paymentIntent.metadata.event_id);
+
     const query = `
         INSERT INTO purchases (
           purchase_user_id, 
@@ -63,6 +66,7 @@ exports.addPurchase = async ({ paymentIntent, message = null, isFree = false }) 
     ];
 
     const result = await db.query(query, values);
+    await increaseEventAttendee(paymentIntent.metadata.event_id);
     return result.rows[0];
   } catch (error) {
     return Promise.reject(error);
