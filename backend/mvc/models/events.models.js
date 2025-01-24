@@ -125,6 +125,15 @@ exports.removeEvents = async (eventIds) => {
 exports.patchEvent = async (eventId, eventData) => {
   try {
     const fetchedEventResponse = await exports.getEventById(eventId);
+    const originalModifiedAtDate = new Date(eventData.event_modified_at);
+    const currentModifiedAtDate = new Date(fetchedEventResponse.event_modified_at);
+    // console.log(originalModifiedAtDate, currentModifiedAtDate);
+    if (originalModifiedAtDate.getTime() !== currentModifiedAtDate.getTime()) {
+      return Promise.reject({ code: "DATA_OUT_OF_SYNC", message: "Provided data is out of sync with database" });
+    }
+    delete eventData.event_modified_at;
+
+    await exports.validateAttendeesCapacity(eventData);
 
     const fields = [];
     const values = [];
@@ -160,6 +169,74 @@ exports.patchEvent = async (eventId, eventData) => {
     }
 
     return result.rows[0];
+  } catch (error) {
+    return Promise.reject(error);
+  }
+};
+
+exports.increaseEventAttendee = async (eventId) => {
+  try {
+    const tempQuery = "SELECT event_attendees FROM events WHERE event_id = $1";
+    const tempResult = await db.query(tempQuery, [eventId]);
+
+    if (tempResult.rows.length === 0) {
+      return Promise.reject({ code: "EVENT_NOT_FOUND", message: "Event not found" });
+    }
+
+    const currentAttendees = tempResult.rows[0].event_attendees;
+    const eventCapacity = tempResult.rows[0].event_capacity;
+
+    const newAttendeeCount = currentAttendees + 1;
+
+    await exports.validateAttendeesCapacity({ event_attendees: newAttendeeCount, event_capacity: eventCapacity });
+
+    const updateQuery = `
+      UPDATE events 
+      SET event_attendees = $1, event_modified_at = CURRENT_TIMESTAMP
+      WHERE event_id = $2
+      RETURNING *`;
+    const updateResult = await db.query(updateQuery, [newAttendeeCount, eventId]);
+
+    return updateResult.rows[0];
+  } catch (error) {
+    return Promise.reject(error);
+  }
+};
+
+exports.validateAttendeesCapacity = ({ event_attendees, event_capacity }) => {
+  if (event_capacity < event_attendees) {
+    return Promise.reject({
+      code: "INVALID_CAPACITY_ATTENDEES",
+      message: "Event capacity cannot be less than the number of attendees.",
+    });
+  }
+
+  return Promise.resolve();
+};
+
+exports.checkTicketsAvailable = async (eventId) => {
+  try {
+    const query = `
+      SELECT event_capacity, event_attendees 
+      FROM events 
+      WHERE event_id = $1
+    `;
+    const result = await db.query(query, [eventId]);
+
+    if (result.rows.length === 0) {
+      return Promise.reject({ code: "EVENT_NOT_FOUND", message: "Event not found" });
+    }
+
+    const { event_capacity, event_attendees } = result.rows[0];
+
+    if (event_attendees >= event_capacity) {
+      return Promise.reject({
+        code: "NO_TICKETS_AVAILABLE",
+        message: "No more tickets are available for this event",
+      });
+    }
+
+    return Promise.resolve();
   } catch (error) {
     return Promise.reject(error);
   }

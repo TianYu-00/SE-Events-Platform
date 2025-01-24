@@ -1,4 +1,4 @@
-const { getEventById } = require("../models/events.models");
+const { getEventById, checkTicketsAvailable } = require("../models/events.models");
 const { addPurchase, editPurchaseCharge } = require("../models/purchase.model");
 const Stripe = require("stripe");
 const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
@@ -19,6 +19,8 @@ exports.createPayment = async (req, res, next) => {
       return next(error);
     }
 
+    await checkTicketsAvailable(eventId);
+
     const eventInfo = await getEventById(eventId);
 
     const paymentIntent = await stripe.paymentIntents.create({
@@ -26,6 +28,7 @@ exports.createPayment = async (req, res, next) => {
       currency: "gbp",
       automatic_payment_methods: {
         enabled: true,
+        allow_redirects: "never",
       },
       metadata: {
         event_id: eventId,
@@ -33,6 +36,7 @@ exports.createPayment = async (req, res, next) => {
         event_organizer_id: eventInfo.event_organizer_id,
         user_id: userId,
       },
+      capture_method: "manual",
     });
 
     res.status(200).json({
@@ -95,17 +99,53 @@ exports.handleWebhook = async (req, res, next) => {
     }
   }
 
+  console.log(event.type);
+
   switch (event.type) {
-    case "payment_intent.succeeded": {
+    case "payment_intent.amount_capturable_updated": {
+      // https://docs.stripe.com/api/payment_intents/capture
       const paymentIntent = event.data.object;
-      const response = await addPurchase({
-        paymentIntent: paymentIntent,
-        message: "Payment confirmed, we are now processing the funds",
-      });
-      // console.log(response);
+      try {
+        await checkTicketsAvailable(paymentIntent.metadata.event_id);
+        const paymentIntentCapture = await stripe.paymentIntents.capture(paymentIntent.id);
+        const response = await addPurchase({
+          paymentIntent: paymentIntent,
+          message: "Payment confirm, we are now attempting to capture payment",
+        });
+      } catch (error) {
+        console.log(error);
+
+        const updateFailureMetaData = async (message) => {
+          try {
+            await stripe.paymentIntents.update(paymentIntent.id, {
+              metadata: {
+                ...paymentIntent.metadata,
+                failure_message: message,
+                failure_code: error.code,
+              },
+            });
+          } catch (updateError) {
+            console.log("Failed to update metadata:", updateError);
+          }
+        };
+
+        if (error.code === "NO_TICKETS_AVAILABLE") {
+          await updateFailureMetaData("Tickets have sold out");
+        } else {
+          await updateFailureMetaData("Failed to capture funds");
+        }
+      }
       break;
     }
     case "charge.succeeded": {
+      const paymentIntent = event.data.object;
+      break;
+    }
+    case "payment_intent.succeeded": {
+      const paymentIntent = event.data.object;
+      break;
+    }
+    case "charge.captured": {
       const paymentIntent = event.data.object;
       const response = await editPurchaseCharge({
         paymentIntent: paymentIntent,

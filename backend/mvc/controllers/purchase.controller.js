@@ -21,7 +21,35 @@ exports.getAllPurchases = async (req, res, next) => {
 
     const data = await getAllPurchases({ orderCreatedAt: validatedOrder, userId: userId });
     res.json({ success: true, msg: "Purchases have been fetched", data: data });
-  } catch (err) {
-    next(err);
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.createFreePurchase = async (req, res, next) => {
+  try {
+    const { user_id: userId, event_name: eventName, event_id: eventId } = req.body;
+    if (userId === undefined || eventName === undefined || eventId === undefined) {
+      const error = new Error("Some fields are missing");
+      error.code = "BODY_CONTENT_INCOMPLETE";
+      return next(error);
+    }
+
+    const tempPaymentIntent = {
+      metadata: {
+        user_id: userId,
+        event_name: eventName,
+        event_id: eventId,
+      },
+    };
+
+    const data = await addPurchase({
+      paymentIntent: tempPaymentIntent,
+      message: "Event signed up successfully",
+      isFree: true,
+    });
+    res.json({ success: true, msg: "Event signed up successfully", data: data });
+  } catch (error) {
+    next(error);
   }
 };

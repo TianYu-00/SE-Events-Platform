@@ -6,6 +6,8 @@ import { createPayment, getEvent } from "../api";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useTheme } from "../context/ThemeContext";
 import { useUser } from "@clerk/clerk-react";
+import Lottie from "lottie-react";
+import failAnimation from "../assets/lotties/Animation_Fail - 1737087453027.json";
 
 // Stripe
 const STRIPE_PUBLISHABLE_KEY = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY;
@@ -24,6 +26,7 @@ function Landing_Payment() {
 
   const [event, setEvent] = useState(null);
   const [eventPrice, setEventPrice] = useState(null);
+  const [isSoldOut, setIsSoldOut] = useState(false);
 
   const { user } = useUser();
 
@@ -35,6 +38,7 @@ function Landing_Payment() {
         console.log("Found event");
       } catch (error) {
         const errorCode = error.response.data.code;
+        // console.log(errorCode);
         if (errorCode === "EVENT_NOT_FOUND" || errorCode === "INVALID_PARAMS") {
           navigate(`/`);
         } else {
@@ -55,6 +59,10 @@ function Landing_Payment() {
         setEventPrice(response.data.price);
       } catch (error) {
         console.error(error);
+        const errorCode = error.response.data.code;
+        if (errorCode === "NO_TICKETS_AVAILABLE") {
+          setIsSoldOut(true);
+        }
       }
     };
 
@@ -62,6 +70,24 @@ function Landing_Payment() {
       runCreatePaymentIntent();
     }
   }, [event, user]);
+
+  if (isSoldOut) {
+    return (
+      <div className="text-copy-primary w-full min-h-[calc(100vh-5rem)] flex justify-center items-center flex-col">
+        <div className="w-40">
+          <Lottie animationData={failAnimation} loop autoplay />
+        </div>
+        <h2 className="font-bold text-xl">Oops! Looks like tickets for this event are all sold out!</h2>
+
+        <button
+          className="p-2 bg-cta text-cta-text rounded-md hover:bg-cta-active mt-6"
+          onClick={() => navigate("/events", { replace: true })}
+        >
+          Return To Events
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full min-h-[calc(100vh-5rem)] flex justify-center items-center">

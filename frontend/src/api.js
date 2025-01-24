@@ -102,6 +102,7 @@ export const updateEvent = async (eventId, eventData) => {
     event_website: eventData.event_website,
     event_tags: eventData.event_tags,
     event_thumbnail: eventData.event_thumbnail,
+    event_modified_at: eventData.event_modified_at,
   };
   try {
     const response = await api.patch(`/events/${eventId}`, data);
@@ -142,6 +143,16 @@ export const getAllPurchases = async ({ orderCreatedAt = undefined, userId = und
     }
     const query = `/purchases${params.toString() ? `?${params.toString()}` : ""}`;
     const response = await api.get(query);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const createFreePurchase = async ({ userId, eventName, eventId }) => {
+  try {
+    const data = { user_id: userId, event_name: eventName, event_id: eventId };
+    const response = await api.post(`/purchases/free`, data);
     return response.data;
   } catch (error) {
     throw error;

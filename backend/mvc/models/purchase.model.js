@@ -1,4 +1,5 @@
 const db = require("../../db/connection");
+const { getEventById, increaseEventAttendee } = require("./events.models");
 
 exports.getAllPurchases = async ({ orderCreatedAt = undefined, userId = undefined }) => {
   try {
@@ -21,8 +22,20 @@ exports.getAllPurchases = async ({ orderCreatedAt = undefined, userId = undefine
   }
 };
 
-exports.addPurchase = async ({ paymentIntent, message = null }) => {
+exports.addPurchase = async ({ paymentIntent, message = null, isFree = false }) => {
   try {
+    if (isFree) {
+      const isPurchased = await exports.checkEventAlreadyPurchased({
+        userId: paymentIntent.metadata.user_id,
+        eventId: paymentIntent.metadata.event_id,
+      });
+      if (isPurchased) {
+        return Promise.reject({ code: "EVENT_ALREADY_PURCHASED", message: "Free event already purchased" });
+      }
+    }
+
+    await getEventById(paymentIntent.metadata.event_id);
+
     const query = `
         INSERT INTO purchases (
           purchase_user_id, 
@@ -30,7 +43,7 @@ exports.addPurchase = async ({ paymentIntent, message = null }) => {
           purchase_payment_charge_id, 
           purchase_event_id, 
           purchase_event_name, 
-          purchase_paid_amount_in_pence, 
+          purchase_amount_in_pence, 
           purchase_payment_status, 
           purchase_descriptive_status,
           purchase_created_at
@@ -40,19 +53,22 @@ exports.addPurchase = async ({ paymentIntent, message = null }) => {
         ) RETURNING *;
       `;
 
+    // console.log(paymentIntent);
+
     const values = [
       paymentIntent.metadata.user_id,
-      paymentIntent.id,
-      paymentIntent.latest_charge,
+      isFree ? null : paymentIntent.id,
+      isFree ? null : paymentIntent.latest_charge,
       parseInt(paymentIntent.metadata.event_id),
       paymentIntent.metadata.event_name,
-      paymentIntent.amount_received,
-      paymentIntent.status,
+      isFree ? 0 : paymentIntent.amount,
+      isFree ? "succeeded" : paymentIntent.status,
       message,
-      new Date(paymentIntent.created * 1000),
+      isFree ? new Date() : new Date(paymentIntent.created * 1000),
     ];
 
     const result = await db.query(query, values);
+    await increaseEventAttendee(paymentIntent.metadata.event_id);
     return result.rows[0];
   } catch (error) {
     return Promise.reject(error);
@@ -83,6 +99,20 @@ exports.editPurchaseCharge = async ({ paymentIntent, message = null }) => {
 
     const result = await db.query(query, values);
     return result.rows[0];
+  } catch (error) {
+    return Promise.reject(error);
+  }
+};
+
+exports.checkEventAlreadyPurchased = async ({ userId, eventId }) => {
+  try {
+    const query = `SELECT * FROM purchases WHERE purchase_user_id = $1 AND purchase_event_id = $2`;
+    const result = await db.query(query, [userId, eventId]);
+
+    if (result.rows.length > 0) {
+      return true;
+    }
+    return false;
   } catch (error) {
     return Promise.reject(error);
   }

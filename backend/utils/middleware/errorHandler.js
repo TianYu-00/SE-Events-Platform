@@ -62,6 +62,34 @@ const errorHandler = (err, req, res, next) => {
       data: null,
       code: err.code,
     });
+  } else if (err.code === "EVENT_ALREADY_PURCHASED") {
+    return res.status(409).send({
+      success: false,
+      msg: err.message || "Event already purchased",
+      data: null,
+      code: err.code,
+    });
+  } else if (err.code === "DATA_OUT_OF_SYNC") {
+    return res.status(409).send({
+      success: false,
+      msg: err.message || "Data out of sync, please refresh and try again",
+      data: null,
+      code: err.code,
+    });
+  } else if (err.code === "INVALID_CAPACITY_ATTENDEES") {
+    return res.status(409).send({
+      success: false,
+      msg: err.message || "Invalid attendee or capacity data.",
+      data: null,
+      code: err.code,
+    });
+  } else if (err.code === "NO_TICKETS_AVAILABLE") {
+    return res.status(409).send({
+      success: false,
+      msg: err.message || "Tickets are not available.",
+      data: null,
+      code: err.code,
+    });
   }
 
   next(err);

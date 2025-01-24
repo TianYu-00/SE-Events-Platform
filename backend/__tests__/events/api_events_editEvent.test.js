@@ -1,5 +1,23 @@
 const { app, request, db, seed, data } = require("../../utils/test-utils/index");
 
+const validEventData = {
+  event_name: "Test Event",
+  event_start_date: "2025-01-15T10:00:00Z",
+  event_end_date: "2025-01-15T12:00:00Z",
+  event_full_address: "123 Test Street, Test City",
+  event_description: "This is a test event.",
+  event_organizer_id: "user123",
+  event_capacity: 100,
+  event_attendees: 0,
+  event_cost_in_pence: 1000,
+  event_contact_email: "test@example.com",
+  event_contact_phone_prefix: "+44",
+  event_contact_phone: "1234567890",
+  event_thumbnail: "https://example.com/thumbnail.jpg",
+  event_website: "https://example.com",
+  event_tags: ["test", "123"],
+};
+
 afterAll(() => {
   return db.end();
 });
@@ -14,10 +32,16 @@ describe("PATCH /api/events/:event_id", () => {
       event_name: "Test 123",
     };
 
-    const { body } = await request(app).patch(`/api/events/1`).send(updateData).expect(200);
+    const { body: createEventResponse } = await request(app).post("/api/events").send(validEventData).expect(200);
+    updateData.event_modified_at = createEventResponse.data.event_modified_at;
+
+    const { body } = await request(app)
+      .patch(`/api/events/${createEventResponse.data.event_id}`)
+      .send(updateData)
+      .expect(200);
     expect(body.success).toBe(true);
     expect(body.data).toHaveProperty("event_name", updateData.event_name);
-    expect(body.data).toHaveProperty("event_id", 1);
+    expect(body.data).toHaveProperty("event_id", createEventResponse.data.event_id);
   });
 
   test("should return 404 if the event does not exist", async () => {
@@ -49,7 +73,13 @@ describe("PATCH /api/events/:event_id", () => {
       event_capacity: 100,
     };
 
-    const { body } = await request(app).patch(`/api/events/1`).send(updateData).expect(200);
+    const { body: createEventResponse } = await request(app).post("/api/events").send(validEventData).expect(200);
+    updateData.event_modified_at = createEventResponse.data.event_modified_at;
+
+    const { body } = await request(app)
+      .patch(`/api/events/${createEventResponse.data.event_id}`)
+      .send(updateData)
+      .expect(200);
 
     expect(body.success).toBe(true);
     expect(body.data).toHaveProperty("event_name", updateData.event_name);
@@ -62,7 +92,13 @@ describe("PATCH /api/events/:event_id", () => {
       event_name: "Test 123",
     };
 
-    const { body } = await request(app).patch(`/api/events/1`).send(updateData).expect(200);
+    const { body: createEventResponse } = await request(app).post("/api/events").send(validEventData).expect(200);
+    updateData.event_modified_at = createEventResponse.data.event_modified_at;
+
+    const { body } = await request(app)
+      .patch(`/api/events/${createEventResponse.data.event_id}`)
+      .send(updateData)
+      .expect(200);
 
     expect(body.success).toBe(true);
     expect(body.data.event_modified_at).not.toBeNull();

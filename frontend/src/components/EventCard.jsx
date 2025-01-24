@@ -1,24 +1,18 @@
 import React, { useState } from "react";
-import { dateFormatter } from "./DateFormatter";
-import { moneyFormatter } from "./MoneyFormatter";
-import { TbCalendar, TbCalendarTime, TbLocation } from "react-icons/tb";
+import { dateFormatter } from "../utils/DateFormatter";
+import { moneyFormatter } from "../utils/MoneyFormatter";
+import { TbCalendar, TbCalendarTime, TbLocation, TbMapPin, TbUsers } from "react-icons/tb";
 import AddToCalendar from "./AddToCalendar";
 import { useNavigate } from "react-router-dom";
+import { useEventPurchase } from "../hooks/useEventPurchase";
 
 function EventCard({ event }) {
   const navigate = useNavigate();
   const [showCalendarLinks, setShowCalendarLinks] = useState(false);
+  const purchaseEvent = useEventPurchase(event);
 
   const toggleCalendarLinks = () => {
     setShowCalendarLinks((prev) => !prev);
-  };
-
-  const handle_EventPurchase = async () => {
-    if (event.event_cost_in_pence > 0) {
-      navigate(`/payment?event_id=${event.event_id}`);
-    } else {
-      console.log("ITS FREE!");
-    }
   };
 
   return (
@@ -38,10 +32,16 @@ function EventCard({ event }) {
           <div className="mb-3">
             <h3 className="truncate text-2xl font-medium mb-1">{event.event_name}</h3>
             <p className="truncate text-sm text-copy-secondary flex">
-              <TbLocation className="mr-2" size={17} /> <span>{event.event_full_address}</span>
+              <TbMapPin className="mr-2" size={17} /> <span>{event.event_full_address}</span>
             </p>
             <p className="truncate text-sm text-copy-secondary flex">
               <TbCalendarTime className="mr-2" size={17} /> <span>{dateFormatter(event.event_start_date, 4)}</span>
+            </p>
+            <p className="truncate text-sm text-copy-secondary flex">
+              <TbUsers className="mr-2" size={17} />{" "}
+              <span>
+                {event.event_attendees} / {event.event_capacity}
+              </span>
             </p>
           </div>
           <p className="mb-8 line-clamp-3 mt-3">{event.event_description}</p>
@@ -52,8 +52,11 @@ function EventCard({ event }) {
           </p>
           <div className="flex h-10">
             <button
-              className="bg-cta hover:bg-cta-active p-2 rounded-md text-cta-text w-32 flex justify-center items-center"
-              onClick={handle_EventPurchase}
+              className={`bg-cta hover:bg-cta-active p-2 rounded-md text-cta-text w-32 flex justify-center items-center ${
+                event.event_attendees >= event.event_capacity ? "cursor-not-allowed bg-cta/30 hover:bg-cta/30" : ""
+              }`}
+              onClick={purchaseEvent}
+              disabled={event.event_attendees >= event.event_capacity}
             >
               {event.event_cost_in_pence > 0 ? "Purchase" : "Free"}
             </button>

@@ -47,11 +47,11 @@ async function createPurchasesTable() {
     CREATE TABLE purchases (
       purchase_id SERIAL PRIMARY KEY,
       purchase_user_id VARCHAR(255) NOT NULL,
-      purchase_payment_intent_id VARCHAR(255) NOT NULL,
-      purchase_payment_charge_id VARCHAR(255) NOT NULL,
+      purchase_payment_intent_id VARCHAR(255),
+      purchase_payment_charge_id VARCHAR(255),
       purchase_event_id INT NOT NULL,
       purchase_event_name VARCHAR(255) NOT NULL,
-      purchase_paid_amount_in_pence INT NOT NULL,
+      purchase_amount_in_pence INT NOT NULL,
       purchase_captured_amount_in_pence INT NOT NULL DEFAULT 0,
       purchase_refunded_amount_in_pence INT NOT NULL DEFAULT 0,
       purchase_payment_status VARCHAR(255) NOT NULL,
@@ -102,7 +102,7 @@ async function insertPurchases(purchases) {
     purchase.purchase_payment_charge_id,
     purchase.purchase_event_id,
     purchase.purchase_event_name,
-    purchase.purchase_paid_amount_in_pence,
+    purchase.purchase_amount_in_pence,
     purchase.purchase_captured_amount_in_pence,
     purchase.purchase_refunded_amount_in_pence,
     purchase.purchase_payment_status,
@@ -112,7 +112,7 @@ async function insertPurchases(purchases) {
   ]);
 
   const query = format(
-    `INSERT INTO purchases (purchase_user_id, purchase_payment_intent_id, purchase_payment_charge_id, purchase_event_id, purchase_event_name, purchase_paid_amount_in_pence, purchase_captured_amount_in_pence, purchase_refunded_amount_in_pence, purchase_payment_status, purchase_descriptive_status, purchase_created_at, purchase_modified_at) VALUES %L`,
+    `INSERT INTO purchases (purchase_user_id, purchase_payment_intent_id, purchase_payment_charge_id, purchase_event_id, purchase_event_name, purchase_amount_in_pence, purchase_captured_amount_in_pence, purchase_refunded_amount_in_pence, purchase_payment_status, purchase_descriptive_status, purchase_created_at, purchase_modified_at) VALUES %L`,
     purchaseValues
   );
 
