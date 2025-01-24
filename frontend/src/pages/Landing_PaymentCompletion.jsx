@@ -26,6 +26,8 @@ function Landing_PaymentCompletion() {
           setPaymentMessage("Payment successful");
         } else if (response.data.status === "requires_payment_method") {
           setPaymentMessage("Payment declined");
+        } else {
+          setPaymentMessage(response.data?.metadata?.failure_message);
         }
       } catch (error) {
         if (error.response?.data?.code === "UNAUTHORISED_ACCESS") {

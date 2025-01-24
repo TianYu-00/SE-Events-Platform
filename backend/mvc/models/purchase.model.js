@@ -43,7 +43,7 @@ exports.addPurchase = async ({ paymentIntent, message = null, isFree = false }) 
           purchase_payment_charge_id, 
           purchase_event_id, 
           purchase_event_name, 
-          purchase_paid_amount_in_pence, 
+          purchase_amount_in_pence, 
           purchase_payment_status, 
           purchase_descriptive_status,
           purchase_created_at
@@ -53,13 +53,15 @@ exports.addPurchase = async ({ paymentIntent, message = null, isFree = false }) 
         ) RETURNING *;
       `;
 
+    // console.log(paymentIntent);
+
     const values = [
       paymentIntent.metadata.user_id,
       isFree ? null : paymentIntent.id,
       isFree ? null : paymentIntent.latest_charge,
       parseInt(paymentIntent.metadata.event_id),
       paymentIntent.metadata.event_name,
-      isFree ? 0 : paymentIntent.amount_received,
+      isFree ? 0 : paymentIntent.amount,
       isFree ? "succeeded" : paymentIntent.status,
       message,
       isFree ? new Date() : new Date(paymentIntent.created * 1000),

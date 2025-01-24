@@ -46,7 +46,7 @@ export const purchaseColumns = [
     ),
   }),
 
-  columnHelper.accessor("purchase_paid_amount_in_pence", {
+  columnHelper.accessor("purchase_amount_in_pence", {
     cell: (info) => <span>£{moneyFormatter(info.getValue())}</span>,
     header: () => (
       <div className="inline-flex items-center align-middle whitespace-nowrap space-x-1">
