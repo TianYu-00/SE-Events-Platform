@@ -62,6 +62,13 @@ const errorHandler = (err, req, res, next) => {
       data: null,
       code: err.code,
     });
+  } else if (err.code === "EVENT_ALREADY_PURCHASED") {
+    return res.status(409).send({
+      success: false,
+      msg: err.message || "Event already purchased",
+      data: null,
+      code: err.code,
+    });
   }
 
   next(err);

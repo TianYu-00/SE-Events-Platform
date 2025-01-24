@@ -23,6 +23,16 @@ exports.getAllPurchases = async ({ orderCreatedAt = undefined, userId = undefine
 
 exports.addPurchase = async ({ paymentIntent, message = null, isFree = false }) => {
   try {
+    if (isFree) {
+      const isPurchased = await exports.checkEventAlreadyPurchased({
+        userId: paymentIntent.metadata.user_id,
+        eventId: paymentIntent.metadata.event_id,
+      });
+      if (isPurchased) {
+        return Promise.reject({ code: "EVENT_ALREADY_PURCHASED", message: "Free event already purchased" });
+      }
+    }
+
     const query = `
         INSERT INTO purchases (
           purchase_user_id, 
@@ -83,6 +93,20 @@ exports.editPurchaseCharge = async ({ paymentIntent, message = null }) => {
 
     const result = await db.query(query, values);
     return result.rows[0];
+  } catch (error) {
+    return Promise.reject(error);
+  }
+};
+
+exports.checkEventAlreadyPurchased = async ({ userId, eventId }) => {
+  try {
+    const query = `SELECT * FROM purchases WHERE purchase_user_id = $1 AND purchase_event_id = $2`;
+    const result = await db.query(query, [userId, eventId]);
+
+    if (result.rows.length > 0) {
+      return true;
+    }
+    return false;
   } catch (error) {
     return Promise.reject(error);
   }
