@@ -87,3 +87,11 @@ sudo mv stripe /usr/local/bin/
 
 # NOTE
 - Need to sort out my naming conventions later to be more consistent i.e handleXXX to handle_WhatEverItDoes
+
+# SOME TODO LIST (Optional):
+- Create filter in events page
+- Add search bar in events page
+- Add clickable tags that redirect to the events page with a query parameter search=tag, automatically searching for events that has the same tag.
+
+# 🔴 Urgent TODO
+- Need to handle free events 
