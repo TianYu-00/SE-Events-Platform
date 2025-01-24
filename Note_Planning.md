@@ -98,6 +98,6 @@ sudo mv stripe /usr/local/bin/
 - +1 to attendee when user signs up for an event ✅
 - ~~Make attendee not editable ✅~~
 - add optimistic concurrency control to patch event instead ✅
-- Refetch events upon update event 
+- ~~Refetch events upon update event~~
 - Capacity cannot be less than attendees ✅
 - Attendees cannot be more than capacity ✅

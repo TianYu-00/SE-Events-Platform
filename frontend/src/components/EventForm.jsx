@@ -101,7 +101,8 @@ function EventForm({ initialEventData = null, isCreate = true }) {
       }
 
       const editEventResponse = await updateEvent(eventData.event_id, eventData);
-      console.log(editEventResponse);
+      // console.log(editEventResponse);
+      setEventData(editEventResponse.data);
     } catch (error) {
       console.error(error);
     }
