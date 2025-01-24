@@ -125,14 +125,15 @@ exports.removeEvents = async (eventIds) => {
 exports.patchEvent = async (eventId, eventData) => {
   try {
     const fetchedEventResponse = await exports.getEventById(eventId);
-    const originalModifiedAt = eventData.event_modified_at;
-    const currentModifiedAt = fetchedEventResponse.event_modified_at;
-    // console.log(originalModifiedAt, currentModifiedAt);
-    if (originalModifiedAt != currentModifiedAt) {
+    const originalModifiedAtDate = new Date(eventData.event_modified_at);
+    const currentModifiedAtDate = new Date(fetchedEventResponse.event_modified_at);
+    // console.log(originalModifiedAtDate, currentModifiedAtDate);
+    if (originalModifiedAtDate.getTime() !== currentModifiedAtDate.getTime()) {
       return Promise.reject({ code: "DATA_OUT_OF_SYNC", message: "Provided data is out of sync with database" });
     }
-
     delete eventData.event_modified_at;
+
+    await exports.validateAttendeesCapacity(eventData);
 
     const fields = [];
     const values = [];
@@ -183,8 +184,11 @@ exports.increaseEventAttendee = async (eventId) => {
     }
 
     const currentAttendees = tempResult.rows[0].event_attendees;
+    const eventCapacity = tempResult.rows[0].event_capacity;
 
     const newAttendeeCount = currentAttendees + 1;
+
+    await exports.validateAttendeesCapacity({ event_attendees: newAttendeeCount, event_capacity: eventCapacity });
 
     const updateQuery = `
       UPDATE events 
@@ -197,4 +201,15 @@ exports.increaseEventAttendee = async (eventId) => {
   } catch (error) {
     return Promise.reject(error);
   }
+};
+
+exports.validateAttendeesCapacity = ({ event_attendees, event_capacity }) => {
+  if (event_capacity < event_attendees) {
+    return Promise.reject({
+      code: "INVALID_CAPACITY_ATTENDEES",
+      message: "Event capacity cannot be less than the number of attendees.",
+    });
+  }
+
+  return Promise.resolve();
 };

@@ -76,6 +76,13 @@ const errorHandler = (err, req, res, next) => {
       data: null,
       code: err.code,
     });
+  } else if (err.code === "INVALID_CAPACITY_ATTENDEES") {
+    return res.status(409).send({
+      success: false,
+      msg: err.message || "Invalid attendee or capacity data.",
+      data: null,
+      code: err.code,
+    });
   }
 
   next(err);
