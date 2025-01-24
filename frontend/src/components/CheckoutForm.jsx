@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useStripe, useElements, PaymentElement } from "@stripe/react-stripe-js";
-import { moneyFormatter } from "./MoneyFormatter";
+import { moneyFormatter } from "../utils/MoneyFormatter";
 
 const CheckoutForm = ({ eventPrice, eventName }) => {
   const stripe = useStripe();

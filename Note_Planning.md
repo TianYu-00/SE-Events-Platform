@@ -94,6 +94,6 @@ sudo mv stripe /usr/local/bin/
 - Add clickable tags that redirect to the events page with a query parameter search=tag, automatically searching for events that has the same tag.
 
 # 🔴 Urgent TODO
-- Need to handle free events 
-- +1 to attendee when user signs up for an event
-- Make attendee not editable
+- Need to handle free events ✅
+- +1 to attendee when user signs up for an event ✅
+- Make attendee not editable 
