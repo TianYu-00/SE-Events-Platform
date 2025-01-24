@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getEvent } from "../api";
-import { moneyFormatter } from "../components/MoneyFormatter";
-import { dateFormatter } from "../components/DateFormatter";
+import { moneyFormatter } from "../utils/MoneyFormatter";
+import { dateFormatter } from "../utils/DateFormatter";
 import {
   TbBrandFacebook,
   TbBrandReddit,
@@ -21,6 +21,7 @@ import {
 } from "react-icons/tb";
 import AddToCalendar from "../components/AddToCalendar";
 import Modal from "../components/Modal";
+import { useEventPurchase } from "../hooks/useEventPurchase";
 
 function Landing_EventDetails() {
   const [event, setEvent] = useState(null);
@@ -28,6 +29,7 @@ function Landing_EventDetails() {
   const navigate = useNavigate();
   const [showCalendarLinks, setShowCalendarLinks] = useState(false);
   const [showSocialShare, setShowSocialShare] = useState(false);
+  const purchaseEvent = useEventPurchase(event);
 
   useEffect(() => {
     const runFetchEvent = async () => {
@@ -39,14 +41,6 @@ function Landing_EventDetails() {
 
     runFetchEvent();
   }, []);
-
-  const handle_EventPurchase = async () => {
-    if (event.event_cost_in_pence > 0) {
-      navigate(`/payment?event_id=${eventId}`);
-    } else {
-      console.log("ITS FREE!");
-    }
-  };
 
   if (!event) {
     return <div>Loading...</div>;
@@ -181,7 +175,7 @@ function Landing_EventDetails() {
               <div className="flex flex-col justify-center space-y-2">
                 <button
                   className="p-3 bg-cta hover:bg-cta-active text-cta-text rounded-md font-semibold mt-5"
-                  onClick={handle_EventPurchase}
+                  onClick={purchaseEvent}
                 >
                   {event.event_cost_in_pence > 0 ? "Purchase Now" : "Signup Now"}
                 </button>

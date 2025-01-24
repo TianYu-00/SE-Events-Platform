@@ -1,8 +1,8 @@
 import { createColumnHelper } from "@tanstack/react-table";
 import React from "react";
 import { TbArrowsSort } from "react-icons/tb";
-import { dateFormatter } from "./DateFormatter";
-import { moneyFormatter } from "./MoneyFormatter";
+import { dateFormatter } from "../utils/DateFormatter";
+import { moneyFormatter } from "../utils/MoneyFormatter";
 
 const columnHelper = createColumnHelper();
 export const purchaseColumns = [

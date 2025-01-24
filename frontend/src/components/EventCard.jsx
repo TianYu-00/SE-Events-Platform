@@ -1,39 +1,18 @@
 import React, { useState } from "react";
-import { dateFormatter } from "./DateFormatter";
-import { moneyFormatter } from "./MoneyFormatter";
+import { dateFormatter } from "../utils/DateFormatter";
+import { moneyFormatter } from "../utils/MoneyFormatter";
 import { TbCalendar, TbCalendarTime, TbLocation } from "react-icons/tb";
 import AddToCalendar from "./AddToCalendar";
 import { useNavigate } from "react-router-dom";
-import { createFreePurchase } from "../api";
-import { useUser } from "@clerk/clerk-react";
+import { useEventPurchase } from "../hooks/useEventPurchase";
 
 function EventCard({ event }) {
   const navigate = useNavigate();
   const [showCalendarLinks, setShowCalendarLinks] = useState(false);
-  const { user } = useUser();
+  const purchaseEvent = useEventPurchase(event);
 
   const toggleCalendarLinks = () => {
     setShowCalendarLinks((prev) => !prev);
-  };
-
-  const handle_EventPurchase = async () => {
-    if (user === null) {
-      navigate("/auth-signin");
-    } else {
-      if (event.event_cost_in_pence > 0 && event.event_cost_in_pence > 30) {
-        navigate(`/payment?event_id=${event.event_id}`);
-      } else if (event.event_cost_in_pence < 30 && event.event_cost_in_pence > 0) {
-        // need to visualize this for users
-        console.log("CONTACT SUPPORT TO UPDATE THE PRICE OF TICKETS TO BE ABOVE 30 PENCE");
-      } else {
-        const response = await createFreePurchase({
-          userId: user.id,
-          eventName: event.event_name,
-          eventId: event.event_id,
-        });
-        console.log(response);
-      }
-    }
   };
 
   return (
@@ -68,7 +47,7 @@ function EventCard({ event }) {
           <div className="flex h-10">
             <button
               className="bg-cta hover:bg-cta-active p-2 rounded-md text-cta-text w-32 flex justify-center items-center"
-              onClick={handle_EventPurchase}
+              onClick={purchaseEvent}
             >
               {event.event_cost_in_pence > 0 ? "Purchase" : "Free"}
             </button>
