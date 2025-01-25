@@ -2,7 +2,7 @@ const { getAllEvents, createEvent, removeEvents, patchEvent, getEventById } = re
 
 exports.fetchAllEvents = async (req, res, next) => {
   try {
-    const { order_created_at: orderCreatedAt, order_date: orderDate } = req.query;
+    const { order_created_at: orderCreatedAt, order_start_date: orderStartDate } = req.query;
     const validOrderQueries = ["asc", "desc"];
 
     if (orderCreatedAt && !validOrderQueries.includes(orderCreatedAt.toLowerCase())) {
@@ -11,16 +11,16 @@ exports.fetchAllEvents = async (req, res, next) => {
       return next(error);
     }
 
-    if (orderDate && !validOrderQueries.includes(orderDate.toLowerCase())) {
+    if (orderStartDate && !validOrderQueries.includes(orderStartDate.toLowerCase())) {
       const error = new Error("Invalid order_date query");
       error.code = "INVALID_QUERY";
       return next(error);
     }
 
     const validatedOrder = orderCreatedAt ? orderCreatedAt.toUpperCase() : undefined;
-    const validatedOrderDate = orderDate ? orderDate.toUpperCase() : undefined;
+    const validatedOrderStartDate = orderStartDate ? orderStartDate.toUpperCase() : undefined;
 
-    const data = await getAllEvents({ orderCreatedAt: validatedOrder, orderDate: validatedOrderDate });
+    const data = await getAllEvents({ orderCreatedAt: validatedOrder, orderStartDate: validatedOrderStartDate });
     res.json({ success: true, msg: "Events have been fetched", data: data });
   } catch (error) {
     next(error);
