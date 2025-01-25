@@ -5,11 +5,17 @@ function EventsFilter({ originalEvents, filteredEvents, setFilteredEvents }) {
   const [priceOption, setPriceOption] = useState("all");
   const [dayOption, setDayOption] = useState("all");
   const [dateRangeOption, setDateRangeOption] = useState("all");
+  const [searchInputQuery, setSearchInputQuery] = useState("");
 
   useEffect(() => {
     const appliedFilterEvents = applyFilters();
     setFilteredEvents(appliedFilterEvents);
   }, [priceOption, dayOption, dateRangeOption]);
+
+  const updateSearchQuery = () => {
+    const appliedFilterEvents = applyFilters();
+    setFilteredEvents(appliedFilterEvents);
+  };
 
   const applyFilters = () => {
     let tempEvents = [...originalEvents];
@@ -27,13 +33,19 @@ function EventsFilter({ originalEvents, filteredEvents, setFilteredEvents }) {
       });
     }
 
+    if (searchInputQuery) {
+      tempEvents = tempEvents.filter((event) =>
+        event.event_name.toLowerCase().includes(searchInputQuery.toLowerCase())
+      );
+    }
+
     console.log(tempEvents);
     return tempEvents;
   };
 
   return (
     <div className="w-full rounded-md text-copy-primary">
-      <div className="flex flex-col p-4 space-y-4 border border-blue-500">
+      <div className="flex flex-col p-4 space-y-4 border border-blue-500 overflow-x-auto">
         <div className="flex flex-row space-x-4">
           {FilterButton({ option: dayOption, setOption: setDayOption, value: "all", text: "All" })}
           {FilterButton({ option: dayOption, setOption: setDayOption, value: "monday", text: "Monday" })}
@@ -60,16 +72,25 @@ function EventsFilter({ originalEvents, filteredEvents, setFilteredEvents }) {
         </div>
       </div>
 
-      <div className="py-4">
-        <div className="relative">
+      <div className="py-4 flex flex-row space-x-4">
+        <div className="relative flex-grow flex items-center">
           <input
             type="text"
-            value={""}
-            onChange={() => {}}
-            placeholder="Search..."
-            className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md shadow-sm"
+            value={searchInputQuery}
+            onChange={(e) => setSearchInputQuery(e.target.value)}
+            placeholder="Search by name..."
+            className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md shadow-sm bg-card"
           />
           <TbSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+        </div>
+
+        <div className="flex items-center">
+          <button
+            className="p-2 bg-cta text-cta-text hover:bg-cta-active rounded-md"
+            onClick={() => updateSearchQuery()}
+          >
+            Apply Filters
+          </button>
         </div>
       </div>
     </div>
@@ -80,7 +101,10 @@ export default EventsFilter;
 
 function FilterButton({ option, setOption, value, text }) {
   return (
-    <button className={`${option === value ? "bg-cta" : ""} p-1 px-2 rounded-md`} onClick={() => setOption(value)}>
+    <button
+      className={`${option === value ? "bg-cta text-cta-text" : ""} p-1 px-2 rounded-md`}
+      onClick={() => setOption(value)}
+    >
       {text}
     </button>
   );

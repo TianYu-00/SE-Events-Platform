@@ -50,7 +50,7 @@ function EventCard({ event }) {
           <p className="font-bold mb-4">
             {event.event_cost_in_pence > 0 ? `£${moneyFormatter(event.event_cost_in_pence)}` : "Free"}
           </p>
-          <div className="flex h-10">
+          <div className="flex h-10 gap-4">
             <button
               className={`bg-cta hover:bg-cta-active p-2 rounded-md text-cta-text w-32 flex justify-center items-center ${
                 event.event_attendees >= event.event_capacity ? "cursor-not-allowed bg-cta/30 hover:bg-cta/30" : ""
