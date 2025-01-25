@@ -60,4 +60,23 @@ describe("GET /api/events", () => {
     expect(body.success).toBe(false);
     expect(body.code).toBe("INVALID_QUERY");
   });
+
+  test("should return events ordered in ascending order by event_start_date", async () => {
+    const { body } = await request(app).get("/api/events?order_date=asc");
+    const eventStartDates = body.data.map((event) => new Date(event.event_start_date));
+    expect(eventStartDates).toBeSorted({ descending: false });
+  });
+
+  test("should return events ordered in descending order by event_start_date", async () => {
+    const { body } = await request(app).get("/api/events?order_date=desc");
+    const eventStartDates = body.data.map((event) => new Date(event.event_start_date));
+    expect(eventStartDates).toBeSorted({ descending: true });
+  });
+
+  test("should return error if both order_created_at and order_date are provided", async () => {
+    const { body } = await request(app).get("/api/events?order_created_at=asc&order_date=desc").expect(400);
+
+    expect(body.success).toBe(false);
+    expect(body.code).toBe("INVALID_QUERY");
+  });
 });
