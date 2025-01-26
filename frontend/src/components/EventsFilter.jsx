@@ -105,7 +105,7 @@ function EventsFilter({ originalEvents, filteredEvents, setFilteredEvents, setOr
         <div className="flex flex-row space-x-4">
           <button
             className={`${
-              !startDateOrder && !createdAtOrder ? "bg-cta text-cta-text" : ""
+              !startDateOrder && !createdAtOrder ? "bg-cta/50 text-cta-text" : ""
             } p-1 px-2 rounded-md whitespace-nowrap`}
             onClick={() => {
               setStartDateOrder("");
@@ -195,7 +195,7 @@ export default EventsFilter;
 function FilterButton({ option, setOption, value, text }) {
   return (
     <button
-      className={`${option === value ? "bg-cta text-cta-text" : ""} p-1 px-2 rounded-md whitespace-nowrap`}
+      className={`${option === value ? "bg-cta/50 text-cta-text" : ""} p-1 px-2 rounded-md whitespace-nowrap`}
       onClick={() => setOption(value)}
     >
       {text}
