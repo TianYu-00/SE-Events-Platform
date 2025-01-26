@@ -17,12 +17,19 @@ export const testApi = async () => {
   }
 };
 
-export const getAllEvents = async ({ orderCreatedAt = undefined }) => {
+export const getAllEvents = async ({ orderCreatedAt = undefined, orderStartDate = undefined }) => {
   try {
+    console.log(orderCreatedAt, orderStartDate);
+
     const params = new URLSearchParams();
     if (orderCreatedAt) {
       params.append("order_created_at", orderCreatedAt);
     }
+
+    if (orderStartDate) {
+      params.append("order_start_date", orderStartDate);
+    }
+
     const query = `/events${params.toString() ? `?${params.toString()}` : ""}`;
     const response = await api.get(query);
     return response.data;

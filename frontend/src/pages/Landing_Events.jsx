@@ -6,12 +6,21 @@ import EventsFilter from "../components/EventsFilter";
 function Landing_Events() {
   const [originalEvents, setOriginalEvents] = useState([]);
   const [filteredEvents, setFilteredEvents] = useState([]);
+  const [isLoadingEvents, setIsLoadingEvents] = useState(true);
 
   useEffect(() => {
     const runFetchEvents = async () => {
-      const response = await getAllEvents({ orderCreatedAt: "desc" });
-      setOriginalEvents(response.data);
-      setFilteredEvents(response.data);
+      setIsLoadingEvents(true);
+      try {
+        const response = await getAllEvents({});
+        console.log(response.data);
+        setOriginalEvents(response.data);
+        setFilteredEvents(response.data);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsLoadingEvents(false);
+      }
     };
 
     runFetchEvents();
@@ -29,14 +38,23 @@ function Landing_Events() {
             setFilteredEvents={setFilteredEvents}
             filteredEvents={filteredEvents}
             originalEvents={originalEvents}
+            setOriginalEvents={setOriginalEvents}
+            setIsLoadingEvents={setIsLoadingEvents}
           />
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 p-4 ">
-          {filteredEvents.map((event) => (
-            <EventCard event={event} key={event.event_id} />
-          ))}
-        </div>
+        {!isLoadingEvents ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 p-4 ">
+            {filteredEvents.map((event) => (
+              <EventCard event={event} key={event.event_id} />
+            ))}
+          </div>
+        ) : (
+          <div className="flex justify-center items-center space-x-4">
+            <div class="animate-spin inline-block size-5 border-[3px] border-current border-t-transparent text-cta rounded-full" />
+            <span>Loading Events...</span>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -1,24 +1,64 @@
 import React, { useEffect, useState } from "react";
 import { TbSearch } from "react-icons/tb";
+import { getAllEvents } from "../api";
 
-function EventsFilter({ originalEvents, filteredEvents, setFilteredEvents }) {
+function EventsFilter({ originalEvents, filteredEvents, setFilteredEvents, setOriginalEvents, setIsLoadingEvents }) {
   const [priceOption, setPriceOption] = useState("all");
   const [dayOption, setDayOption] = useState("all");
-  const [dateRangeOption, setDateRangeOption] = useState("all");
+  const [startDateOrder, setStartDateOrder] = useState("");
+  const [createdAtOrder, setCreatedAtOrder] = useState("");
   const [searchInputQuery, setSearchInputQuery] = useState("");
 
-  useEffect(() => {
-    const appliedFilterEvents = applyFilters();
-    setFilteredEvents(appliedFilterEvents);
-  }, [priceOption, dayOption, dateRangeOption]);
-
-  const updateSearchQuery = () => {
-    const appliedFilterEvents = applyFilters();
-    setFilteredEvents(appliedFilterEvents);
+  const updateFilter = () => {
+    if (!startDateOrder && !createdAtOrder) {
+      fetchAllEvents();
+    } else {
+      fetchOrderedEvents();
+    }
   };
 
-  const applyFilters = () => {
-    let tempEvents = [...originalEvents];
+  const fetchAllEvents = async () => {
+    try {
+      setIsLoadingEvents(true);
+      const response = await getAllEvents({});
+      setOriginalEvents(response.data);
+      setFilteredEvents(applyFilters(response.data));
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoadingEvents(false);
+    }
+  };
+
+  const fetchOrderedEvents = async () => {
+    try {
+      const query = {};
+      if (startDateOrder) query.orderStartDate = startDateOrder;
+      if (createdAtOrder) query.orderCreatedAt = createdAtOrder;
+
+      setIsLoadingEvents(true);
+      const response = await getAllEvents(query);
+      setOriginalEvents(response.data);
+      setFilteredEvents(applyFilters(response.data));
+    } catch (error) {
+      console.error("Failed to fetch ordered events:", error);
+    } finally {
+      setIsLoadingEvents(false);
+    }
+  };
+
+  const handle_StartDateOrderChange = (value) => {
+    setStartDateOrder(value);
+    if (value) setCreatedAtOrder("");
+  };
+
+  const handle_CreatedAtOrderChange = (value) => {
+    setCreatedAtOrder(value);
+    if (value) setStartDateOrder("");
+  };
+
+  const applyFilters = (events = originalEvents) => {
+    let tempEvents = [...events];
 
     if (priceOption === "free") {
       tempEvents = tempEvents.filter((event) => event.event_cost_in_pence === 0);
@@ -39,7 +79,6 @@ function EventsFilter({ originalEvents, filteredEvents, setFilteredEvents }) {
       );
     }
 
-    console.log(tempEvents);
     return tempEvents;
   };
 
@@ -57,13 +96,41 @@ function EventsFilter({ originalEvents, filteredEvents, setFilteredEvents }) {
           {FilterButton({ option: dayOption, setOption: setDayOption, value: "sunday", text: "Sunday" })}
         </div>
 
-        {/* <div className="flex flex-row space-x-4">
-          {FilterButton({ option: dateRangeOption, setOption: setDateRangeOption, value: "all", text: "All" })}
-          {FilterButton({ option: dateRangeOption, setOption: setDateRangeOption, value: "today", text: "Today" })}
-          {FilterButton({ option: dateRangeOption, setOption: setDateRangeOption, value: "week", text: "This Week" })}
-          {FilterButton({ option: dateRangeOption, setOption: setDateRangeOption, value: "month", text: "This Month" })}
-          {FilterButton({ option: dateRangeOption, setOption: setDateRangeOption, value: "year", text: "This Year" })}
-        </div> */}
+        <div className="flex flex-row space-x-4">
+          <button
+            className={`${!startDateOrder && !createdAtOrder ? "bg-cta text-cta-text" : ""} p-1 px-2 rounded-md`}
+            onClick={() => {
+              setStartDateOrder("");
+              setCreatedAtOrder("");
+            }}
+          >
+            Clear Sorting
+          </button>
+          {FilterButton({
+            option: startDateOrder,
+            setOption: handle_StartDateOrderChange,
+            value: "asc",
+            text: "Start Date: Ascending",
+          })}
+          {FilterButton({
+            option: startDateOrder,
+            setOption: handle_StartDateOrderChange,
+            value: "desc",
+            text: "Start Date: Descending",
+          })}
+          {FilterButton({
+            option: createdAtOrder,
+            setOption: handle_CreatedAtOrderChange,
+            value: "asc",
+            text: "Created At: Ascending",
+          })}
+          {FilterButton({
+            option: createdAtOrder,
+            setOption: handle_CreatedAtOrderChange,
+            value: "desc",
+            text: "Created At: Descending",
+          })}
+        </div>
 
         <div className="flex flex-row space-x-4">
           {FilterButton({ option: priceOption, setOption: setPriceOption, value: "all", text: "All" })}
@@ -85,10 +152,7 @@ function EventsFilter({ originalEvents, filteredEvents, setFilteredEvents }) {
         </div>
 
         <div className="flex items-center">
-          <button
-            className="p-2 bg-cta text-cta-text hover:bg-cta-active rounded-md"
-            onClick={() => updateSearchQuery()}
-          >
+          <button className="p-2 bg-cta text-cta-text hover:bg-cta-active rounded-md" onClick={() => updateFilter()}>
             Apply Filters
           </button>
         </div>
