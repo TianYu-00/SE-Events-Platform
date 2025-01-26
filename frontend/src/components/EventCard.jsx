@@ -27,12 +27,14 @@ function EventCard({ event }) {
             e.target.onerror = null;
             e.target.src = "https://placehold.co/600x400?text=Image+Not+Available";
           }}
+          loading="lazy"
         />
         <div className="p-3 flex flex-col flex-grow">
           <div className="mb-3">
             <h3 className="truncate text-2xl font-medium mb-1">{event.event_name}</h3>
             <p className="truncate text-sm text-copy-secondary flex">
-              <TbMapPin className="mr-2" size={17} /> <span>{event.event_full_address}</span>
+              <TbMapPin className="mr-2" size={17} />
+              <span>{`${event.event_street_address}, ${event.event_city_town}, ${event.event_postcode}`}</span>
             </p>
             <p className="truncate text-sm text-copy-secondary flex">
               <TbCalendarTime className="mr-2" size={17} /> <span>{dateFormatter(event.event_start_date, 4)}</span>
@@ -50,7 +52,7 @@ function EventCard({ event }) {
           <p className="font-bold mb-4">
             {event.event_cost_in_pence > 0 ? `£${moneyFormatter(event.event_cost_in_pence)}` : "Free"}
           </p>
-          <div className="flex h-10">
+          <div className="flex h-10 gap-4">
             <button
               className={`bg-cta hover:bg-cta-active p-2 rounded-md text-cta-text w-32 flex justify-center items-center ${
                 event.event_attendees >= event.event_capacity ? "cursor-not-allowed bg-cta/30 hover:bg-cta/30" : ""

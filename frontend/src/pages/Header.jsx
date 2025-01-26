@@ -77,11 +77,11 @@ function LargeNav() {
             user?.publicMetadata?.role === "admin" ? "" : "hidden"
           } flex flex-row justify-center items-center space-x-4`}
         >
-          <li>
+          {/* <li>
             <Link to="/playground" className="flex flex-row p-2">
               <span className="font-medium text-sm pl-2">Playground</span>
             </Link>
-          </li>
+          </li> */}
           <li>
             <Link to="/create-event" className="flex flex-row p-2">
               <span className="font-medium text-sm pl-2">Create Event</span>
@@ -143,7 +143,7 @@ function MenuNav() {
               </div>
 
               <div className={`${user?.publicMetadata?.role === "admin" ? "" : "hidden"}`}>
-                <li>
+                {/* <li>
                   <Link
                     to="/playground"
                     className="flex flex-col items-start p-4 rounded-md hover:bg-white hover:text-black"
@@ -151,7 +151,7 @@ function MenuNav() {
                     <span className="text-xs text-white/45">Admin</span>
                     <span className="font-medium">Playground</span>
                   </Link>
-                </li>
+                </li> */}
                 <li>
                   <Link
                     to="/create-event"

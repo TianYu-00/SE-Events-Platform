@@ -1,12 +1,18 @@
 const db = require("../../db/connection");
 const { deleteImage, deleteMultipleImages } = require("../../utils/cloudinaryHandler");
 
-exports.getAllEvents = async ({ orderCreatedAt = undefined }) => {
+exports.getAllEvents = async ({ orderCreatedAt = undefined, orderStartDate = undefined }) => {
   try {
     let query = "SELECT * FROM events";
 
+    if (orderCreatedAt && orderStartDate) {
+      return Promise.reject({ code: "INVALID_QUERY", message: "Only one sorting query is allowed at a time." });
+    }
+
     if (orderCreatedAt) {
       query += ` ORDER BY event_created_at ${orderCreatedAt}`;
+    } else if (orderStartDate) {
+      query += ` ORDER BY event_start_date ${orderStartDate}`;
     }
 
     const result = await db.query(query);
@@ -38,7 +44,9 @@ exports.createEvent = async (eventData) => {
         event_name, 
         event_start_date, 
         event_end_date, 
-        event_full_address, 
+        event_street_address, 
+        event_city_town, 
+        event_postcode, 
         event_description, 
         event_organizer_id, 
         event_capacity, 
@@ -51,7 +59,7 @@ exports.createEvent = async (eventData) => {
         event_tags, 
         event_thumbnail
       ) VALUES (
-        $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15
+        $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17
       ) RETURNING *;
     `;
 
@@ -59,7 +67,9 @@ exports.createEvent = async (eventData) => {
       eventData.event_name,
       eventData.event_start_date,
       eventData.event_end_date,
-      eventData.event_full_address,
+      eventData.event_street_address,
+      eventData.event_city_town,
+      eventData.event_postcode,
       eventData.event_description,
       eventData.event_organizer_id,
       eventData.event_capacity,

@@ -12,7 +12,7 @@ function AddToCalendar({ eventData, isOpen, onClose }) {
     description: eventData.event_description,
     start: eventData.event_start_date,
     end: eventData.event_end_date,
-    location: eventData.event_full_address,
+    location: `${eventData.event_street_address}, ${eventData.event_city_town}, ${eventData.event_postcode}`,
   };
 
   return (

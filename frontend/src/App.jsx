@@ -5,6 +5,7 @@ import LazyPageLoader from "./components/LazyPageLoader";
 import { ClerkProvider } from "@clerk/clerk-react";
 import PrivateRoute from "./components/ProtectedRoute";
 import { ThemeProvider } from "./context/ThemeContext";
+import BackToTop from "./components/BackToTop";
 
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
@@ -64,6 +65,8 @@ const App = () => {
                 <Route path="/playground" element={<PrivateRoute element={<Landing_Playground />} />} />
               </Routes>
             </Suspense>
+            <div className="mt-10" />
+            <BackToTop />
           </div>
         </BrowserRouter>
       </ThemeProvider>

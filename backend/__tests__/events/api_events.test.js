@@ -25,7 +25,9 @@ describe("GET /api/events", () => {
         event_name: expect.any(String),
         event_start_date: expect.any(String),
         event_end_date: expect.any(String),
-        event_full_address: expect.any(String),
+        event_street_address: expect.any(String),
+        event_city_town: expect.any(String),
+        event_postcode: expect.any(String),
         event_description: expect.any(String),
         event_organizer_id: expect.any(String),
         event_capacity: expect.any(Number),
@@ -57,6 +59,25 @@ describe("GET /api/events", () => {
 
   test("should return a status code 400 and error if order query was not asc or desc", async () => {
     const { body } = await request(app).get("/api/events?order_created_at=invalidOrder").expect(400);
+    expect(body.success).toBe(false);
+    expect(body.code).toBe("INVALID_QUERY");
+  });
+
+  test("should return events ordered in ascending order by event_start_date", async () => {
+    const { body } = await request(app).get("/api/events?order_start_date=asc");
+    const eventStartDates = body.data.map((event) => new Date(event.event_start_date));
+    expect(eventStartDates).toBeSorted({ descending: false });
+  });
+
+  test("should return events ordered in descending order by event_start_date", async () => {
+    const { body } = await request(app).get("/api/events?order_start_date=desc");
+    const eventStartDates = body.data.map((event) => new Date(event.event_start_date));
+    expect(eventStartDates).toBeSorted({ descending: true });
+  });
+
+  test("should return error if both order_created_at and order_start_date are provided", async () => {
+    const { body } = await request(app).get("/api/events?order_created_at=asc&order_start_date=desc").expect(400);
+
     expect(body.success).toBe(false);
     expect(body.code).toBe("INVALID_QUERY");
   });

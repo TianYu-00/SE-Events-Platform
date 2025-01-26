@@ -17,12 +17,19 @@ export const testApi = async () => {
   }
 };
 
-export const getAllEvents = async ({ orderCreatedAt = undefined }) => {
+export const getAllEvents = async ({ orderCreatedAt = undefined, orderStartDate = undefined }) => {
   try {
+    console.log(orderCreatedAt, orderStartDate);
+
     const params = new URLSearchParams();
     if (orderCreatedAt) {
       params.append("order_created_at", orderCreatedAt);
     }
+
+    if (orderStartDate) {
+      params.append("order_start_date", orderStartDate);
+    }
+
     const query = `/events${params.toString() ? `?${params.toString()}` : ""}`;
     const response = await api.get(query);
     return response.data;
@@ -55,7 +62,9 @@ export const createEvent = async (eventData) => {
     event_name: eventData.event_name,
     event_start_date: eventData.event_start_date,
     event_end_date: eventData.event_end_date,
-    event_full_address: eventData.event_full_address,
+    event_street_address: eventData.event_street_address,
+    event_city_town: eventData.event_city_town,
+    event_postcode: eventData.event_postcode,
     event_description: eventData.event_description,
     event_organizer_id: eventData.event_organizer_id,
     event_capacity: eventData.event_capacity,
@@ -91,7 +100,9 @@ export const updateEvent = async (eventId, eventData) => {
     event_name: eventData.event_name,
     event_start_date: eventData.event_start_date,
     event_end_date: eventData.event_end_date,
-    event_full_address: eventData.event_full_address,
+    event_street_address: eventData.event_street_address,
+    event_city_town: eventData.event_city_town,
+    event_postcode: eventData.event_postcode,
     event_description: eventData.event_description,
     event_capacity: eventData.event_capacity,
     event_attendees: eventData.event_attendees,

@@ -24,7 +24,9 @@ async function createEventsTable() {
       event_name VARCHAR(255) NOT NULL,
       event_start_date TIMESTAMP NOT NULL,
       event_end_date TIMESTAMP NOT NULL,
-      event_full_address VARCHAR(255) NOT NULL,
+      event_street_address VARCHAR(255) NOT NULL,
+      event_city_town VARCHAR(255) NOT NULL,
+      event_postcode VARCHAR(10) NOT NULL,
       event_description TEXT NOT NULL,
       event_organizer_id VARCHAR(255) NOT NULL,
       event_capacity INT NOT NULL,
@@ -69,7 +71,9 @@ async function insertEvents(events) {
     event.eventName,
     event.startDate,
     event.endDate,
-    event.fullAddress,
+    event.streetAddress,
+    event.cityTown,
+    event.postcode,
     event.description,
     event.organizerUserId,
     event.capacity,
@@ -85,10 +89,8 @@ async function insertEvents(events) {
     event.modifiedAt,
   ]);
 
-  // console.log(eventValues);
-
   const query = format(
-    `INSERT INTO events (event_name, event_start_date, event_end_date, event_full_address, event_description, event_organizer_id, event_capacity, event_attendees, event_cost_in_pence, event_contact_email, event_contact_phone_prefix, event_contact_phone, event_website, event_tags, event_thumbnail, event_created_at, event_modified_at) VALUES %L`,
+    `INSERT INTO events (event_name, event_start_date, event_end_date, event_street_address, event_city_town, event_postcode, event_description, event_organizer_id, event_capacity, event_attendees, event_cost_in_pence, event_contact_email, event_contact_phone_prefix, event_contact_phone, event_website, event_tags, event_thumbnail, event_created_at, event_modified_at) VALUES %L`,
     eventValues
   );
 

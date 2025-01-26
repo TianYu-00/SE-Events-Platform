@@ -2,18 +2,25 @@ const { getAllEvents, createEvent, removeEvents, patchEvent, getEventById } = re
 
 exports.fetchAllEvents = async (req, res, next) => {
   try {
-    const { order_created_at: orderCreatedAt } = req.query;
+    const { order_created_at: orderCreatedAt, order_start_date: orderStartDate } = req.query;
     const validOrderQueries = ["asc", "desc"];
 
     if (orderCreatedAt && !validOrderQueries.includes(orderCreatedAt.toLowerCase())) {
-      const error = new Error("Invalid order query");
+      const error = new Error("Invalid order_created_at query");
+      error.code = "INVALID_QUERY";
+      return next(error);
+    }
+
+    if (orderStartDate && !validOrderQueries.includes(orderStartDate.toLowerCase())) {
+      const error = new Error("Invalid order_date query");
       error.code = "INVALID_QUERY";
       return next(error);
     }
 
     const validatedOrder = orderCreatedAt ? orderCreatedAt.toUpperCase() : undefined;
+    const validatedOrderStartDate = orderStartDate ? orderStartDate.toUpperCase() : undefined;
 
-    const data = await getAllEvents({ orderCreatedAt: validatedOrder });
+    const data = await getAllEvents({ orderCreatedAt: validatedOrder, orderStartDate: validatedOrderStartDate });
     res.json({ success: true, msg: "Events have been fetched", data: data });
   } catch (error) {
     next(error);
@@ -43,7 +50,9 @@ exports.postEvent = async (req, res, next) => {
       "event_name",
       "event_start_date",
       "event_end_date",
-      "event_full_address",
+      "event_street_address",
+      "event_city_town",
+      "event_postcode",
       "event_description",
       "event_organizer_id",
       "event_capacity",
@@ -100,7 +109,9 @@ exports.editEvents = async (req, res, next) => {
       "event_name",
       "event_start_date",
       "event_end_date",
-      "event_full_address",
+      "event_street_address",
+      "event_city_town",
+      "event_postcode",
       "event_description",
       "event_capacity",
       "event_attendees",

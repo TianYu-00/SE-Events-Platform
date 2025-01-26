@@ -4,6 +4,7 @@ import CustomInputTag from "../components/CustomInputTag";
 import EventCard from "../components/EventCard";
 import { cloudinaryUploadImage } from "../api_cloudinary";
 import { createEvent, updateEvent } from "../api";
+import UKCitiesList from "../utils/UKCitiesList";
 
 function EventForm({ initialEventData = null, isCreate = true }) {
   const { user } = useUser();
@@ -11,7 +12,9 @@ function EventForm({ initialEventData = null, isCreate = true }) {
     event_name: "",
     event_start_date: "",
     event_end_date: "",
-    event_full_address: "",
+    event_street_address: "",
+    event_city_town: "",
+    event_postcode: "",
     event_description: "",
     event_organizer_id: user?.id || 1,
     event_capacity: "",
@@ -115,10 +118,14 @@ function EventForm({ initialEventData = null, isCreate = true }) {
           event={{
             event_name: eventData.event_name,
             event_thumbnail: imagePreview || eventData.event_thumbnail,
-            event_full_address: eventData.event_full_address,
+            event_street_address: eventData.event_street_address,
+            event_city_town: eventData.event_city_town,
+            event_postcode: eventData.event_postcode,
             event_start_date: eventData.event_start_date,
             event_description: eventData.event_description,
             event_cost_in_pence: eventData.event_cost_in_pence,
+            event_attendees: eventData.event_attendees,
+            event_capacity: eventData.event_capacity,
           }}
         />
       </div>
@@ -141,8 +148,9 @@ function EventForm({ initialEventData = null, isCreate = true }) {
                 type="text"
                 value={eventData.event_name}
                 onChange={handleInputChange}
-                className="block w-full border-gray-300 rounded-md shadow-sm p-2 border focus:outline-none focus:border-border col-span-2"
+                className="block w-full rounded-md shadow-sm p-2 border border-border bg-card text-copy-primary focus:outline-none focus:border-border col-span-2"
                 required
+                autoComplete="new-off"
               />
             </div>
 
@@ -158,7 +166,7 @@ function EventForm({ initialEventData = null, isCreate = true }) {
                 type="text"
                 value={eventData.event_organizer_id}
                 readOnly
-                className="block w-full border-gray-300 rounded-md shadow-sm p-2 border focus:outline-none focus:border-border"
+                className="block w-full rounded-md shadow-sm p-2 border border-border bg-card text-copy-primary focus:outline-none focus:border-border col-span-2"
                 required
               />
             </div>
@@ -177,7 +185,7 @@ function EventForm({ initialEventData = null, isCreate = true }) {
                   eventData.event_start_date ? new Date(eventData.event_start_date).toISOString().slice(0, 16) : ""
                 }
                 onChange={handleInputChange}
-                className="block w-full border-gray-300 rounded-md shadow-sm p-2 border focus:outline-none focus:border-border"
+                className="block w-full rounded-md shadow-sm p-2 border border-border bg-card text-copy-primary focus:outline-none focus:border-border col-span-2"
                 required
               />
             </div>
@@ -194,7 +202,7 @@ function EventForm({ initialEventData = null, isCreate = true }) {
                 type="datetime-local"
                 value={eventData.event_end_date ? new Date(eventData.event_end_date).toISOString().slice(0, 16) : ""}
                 onChange={handleInputChange}
-                className="block w-full border-gray-300 rounded-md shadow-sm p-2 border focus:outline-none focus:border-border"
+                className="block w-full rounded-md shadow-sm p-2 border border-border bg-card text-copy-primary focus:outline-none focus:border-border col-span-2"
                 required
               />
             </div>
@@ -202,18 +210,65 @@ function EventForm({ initialEventData = null, isCreate = true }) {
             <div className="col-span-2">
               <label
                 className="block text-sm font-medium text-copy-primary/80 ml-1 text-nowrap mb-1"
-                htmlFor="event_full_address"
+                htmlFor="event_street_address"
               >
-                Full Address <span className="text-red-500">*</span>
+                Address Line 1 <span className="text-red-500">*</span>
               </label>
               <input
-                id="event_full_address"
+                id="event_street_address"
                 type="text"
-                value={eventData.event_full_address}
+                value={eventData.event_street_address}
                 onChange={handleInputChange}
-                className="block w-full border-gray-300 rounded-md shadow-sm p-2 border focus:outline-none focus:border-border"
+                className="block w-full rounded-md shadow-sm p-2 border border-border bg-card text-copy-primary focus:outline-none focus:border-border col-span-2"
                 required
-                placeholder="04 Placeholder Street Manchester UK M14 TES"
+                placeholder="11 Placeholder Street"
+                autoComplete="new-off"
+              />
+            </div>
+
+            <div className="col-span-2">
+              <label
+                className="block text-sm font-medium text-copy-primary/80 ml-1 text-nowrap mb-1"
+                htmlFor="event_city_town"
+              >
+                City or town <span className="text-red-500">*</span>
+              </label>
+              <div>
+                <input
+                  id="event_city_town"
+                  type="text"
+                  value={eventData.event_city_town}
+                  onChange={handleInputChange}
+                  list="city-list"
+                  className="block w-full rounded-md shadow-sm p-2 border border-border bg-card text-copy-primary focus:outline-none focus:border-border col-span-2"
+                  required
+                  placeholder="Manchester"
+                  autoComplete="new-off"
+                />
+                <datalist id="city-list">
+                  {UKCitiesList.map((city) => (
+                    <option key={city} value={city} />
+                  ))}
+                </datalist>
+              </div>
+            </div>
+
+            <div className="col-span-2">
+              <label
+                className="block text-sm font-medium text-copy-primary/80 ml-1 text-nowrap mb-1"
+                htmlFor="event_postcode"
+              >
+                Post code <span className="text-red-500">*</span>
+              </label>
+              <input
+                id="event_postcode"
+                type="text"
+                value={eventData.event_postcode}
+                onChange={handleInputChange}
+                className="block w-full rounded-md shadow-sm p-2 border border-border bg-card text-copy-primary focus:outline-none focus:border-border col-span-2"
+                required
+                placeholder="M12 345"
+                autoComplete="new-off"
               />
             </div>
 
@@ -229,27 +284,8 @@ function EventForm({ initialEventData = null, isCreate = true }) {
                 type="text"
                 value={eventData.event_description}
                 onChange={handleInputChange}
-                className="block w-full border-gray-300 rounded-md shadow-sm p-2 border focus:outline-none focus:border-border min-h-[84px]"
+                className="block w-full rounded-md shadow-sm p-2 border border-border bg-card text-copy-primary focus:outline-none focus:border-border min-h-[84px]"
                 required
-              />
-            </div>
-
-            <div>
-              <label
-                className="block text-sm font-medium text-copy-primary/80 ml-1 text-nowrap mb-1"
-                htmlFor="event_capacity"
-              >
-                Capacity <span className="text-red-500">*</span>
-              </label>
-              <input
-                id="event_capacity"
-                type="number"
-                value={eventData.event_capacity}
-                onChange={handleInputChange}
-                className="block w-full border-gray-300 rounded-md shadow-sm p-2 border focus:outline-none focus:border-border"
-                min="1"
-                required
-                placeholder="1"
               />
             </div>
 
@@ -265,10 +301,29 @@ function EventForm({ initialEventData = null, isCreate = true }) {
                 type="number"
                 value={eventData.event_attendees}
                 onChange={handleInputChange}
-                className="block w-full border-gray-300 rounded-md shadow-sm p-2 border focus:outline-none focus:border-border"
+                className="block w-full rounded-md shadow-sm p-2 border border-border bg-card text-copy-primary focus:outline-none focus:border-border col-span-2"
                 min="0"
                 required
                 placeholder="0"
+              />
+            </div>
+
+            <div>
+              <label
+                className="block text-sm font-medium text-copy-primary/80 ml-1 text-nowrap mb-1"
+                htmlFor="event_capacity"
+              >
+                Capacity <span className="text-red-500">*</span>
+              </label>
+              <input
+                id="event_capacity"
+                type="number"
+                value={eventData.event_capacity}
+                onChange={handleInputChange}
+                className="block w-full rounded-md shadow-sm p-2 border border-border bg-card text-copy-primary focus:outline-none focus:border-border col-span-2"
+                min="1"
+                required
+                placeholder="1"
               />
             </div>
 
@@ -284,7 +339,7 @@ function EventForm({ initialEventData = null, isCreate = true }) {
                 type="number"
                 value={eventData.event_cost_in_pence}
                 onChange={handleInputChange}
-                className="block w-full border-gray-300 rounded-md shadow-sm p-2 border focus:outline-none focus:border-border"
+                className="block w-full rounded-md shadow-sm p-2 border border-border bg-card text-copy-primary focus:outline-none focus:border-border col-span-2"
                 min="0"
                 required
                 placeholder="100"
@@ -303,9 +358,10 @@ function EventForm({ initialEventData = null, isCreate = true }) {
                 type="email"
                 value={eventData.event_contact_email}
                 onChange={handleInputChange}
-                className="block w-full border-gray-300 rounded-md shadow-sm p-2 border focus:outline-none focus:border-border"
+                className="block w-full rounded-md shadow-sm p-2 border border-border bg-card text-copy-primary focus:outline-none focus:border-border col-span-2"
                 required
                 placeholder="tian@example.com"
+                autoComplete="new-off"
               />
             </div>
 
@@ -340,8 +396,9 @@ function EventForm({ initialEventData = null, isCreate = true }) {
                 type="url"
                 value={eventData.event_website}
                 onChange={handleInputChange}
-                className="block w-full border-gray-300 rounded-md shadow-sm p-2 border focus:outline-none focus:border-border"
+                className="block w-full rounded-md shadow-sm p-2 border border-border bg-card text-copy-primary focus:outline-none focus:border-border col-span-2"
                 placeholder="https://example.com"
+                autoComplete="new-off"
               />
             </div>
 
@@ -356,7 +413,7 @@ function EventForm({ initialEventData = null, isCreate = true }) {
                 id="event_contact_phone_prefix"
                 value={eventData.event_contact_phone_prefix}
                 onChange={handleInputChange}
-                className="block w-full border-gray-300 rounded-md shadow-sm p-2 border focus:outline-none focus:border-border"
+                className="block w-full rounded-md shadow-sm p-2 border border-border bg-card text-copy-primary focus:outline-none focus:border-border col-span-2"
               >
                 <option value="+44">+44 (UK)</option>
               </select>
@@ -374,8 +431,9 @@ function EventForm({ initialEventData = null, isCreate = true }) {
                 type="tel"
                 value={eventData.event_contact_phone}
                 onChange={handleInputChange}
-                className="block w-full border-gray-300 rounded-md shadow-sm p-2 border focus:outline-none focus:border-border"
+                className="block w-full rounded-md shadow-sm p-2 border border-border bg-card text-copy-primary focus:outline-none focus:border-border col-span-2"
                 placeholder="07101010101"
+                autoComplete="new-off"
               />
             </div>
 
