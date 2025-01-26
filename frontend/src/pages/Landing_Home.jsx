@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, lazy, Suspense } from "react";
 import { testApi, getAllEvents } from "../api";
 import { TbArrowNarrowRight, TbCornerRightDown } from "react-icons/tb";
-import EventCard from "../components/EventCard";
 import ImageScroller from "../components/ImageScroller";
 import { useNavigate } from "react-router-dom";
+import EventCardSkeleton from "../components/EventCardSkeleton";
+const EventCard = lazy(() => import("../components/EventCard"));
 
 function Landing_Home() {
   const [events, setEvents] = useState([]);
@@ -51,9 +52,11 @@ function Landing_Home() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 p-4 ">
-          {events.slice(0, showingNewlyCreated).map((event) => (
-            <EventCard event={event} key={event.event_id} />
-          ))}
+          <Suspense fallback={<EventCardSkeleton events={events} minDisplay={3} maxDisplay={3} />}>
+            {events.slice(0, showingNewlyCreated).map((event) => (
+              <EventCard event={event} key={event.event_id} />
+            ))}
+          </Suspense>
         </div>
       </div>
 
@@ -65,9 +68,11 @@ function Landing_Home() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 p-4 ">
-          {events.slice(showingEventsStartingFrom, showingEventsEnding).map((event) => (
-            <EventCard event={event} key={event.event_id} />
-          ))}
+          <Suspense fallback={<EventCardSkeleton events={events} minDisplay={6} maxDisplay={6} />}>
+            {events.slice(showingEventsStartingFrom, showingEventsEnding).map((event) => (
+              <EventCard event={event} key={event.event_id} />
+            ))}
+          </Suspense>
         </div>
 
         <div className="flex justify-center items-center">

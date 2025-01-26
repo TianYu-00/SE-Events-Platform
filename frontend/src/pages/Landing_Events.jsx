@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, lazy, Suspense } from "react";
 import { getAllEvents } from "../api";
-import EventCard from "../components/EventCard";
 import EventsFilter from "../components/EventsFilter";
+import EventCardSkeleton from "../components/EventCardSkeleton";
+const EventCard = lazy(() => import("../components/EventCard"));
 
 function Landing_Events() {
   const [originalEvents, setOriginalEvents] = useState([]);
@@ -45,9 +46,11 @@ function Landing_Events() {
 
         {!isLoadingEvents ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 p-4 ">
-            {filteredEvents.map((event) => (
-              <EventCard event={event} key={event.event_id} />
-            ))}
+            <Suspense fallback={<EventCardSkeleton events={originalEvents} />}>
+              {filteredEvents.map((event) => (
+                <EventCard event={event} key={event.event_id} />
+              ))}
+            </Suspense>
           </div>
         ) : (
           <div className="flex justify-center items-center space-x-4">
