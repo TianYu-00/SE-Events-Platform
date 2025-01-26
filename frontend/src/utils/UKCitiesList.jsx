@@ -1,5 +1,5 @@
 // https://www.gov.uk/government/publications/list-of-cities/list-of-cities-html
-module.exports = [
+const cities = [
   // England
   "Bath",
   "Birmingham",
@@ -59,7 +59,7 @@ module.exports = [
 
   // Northern Ireland
   "Armagh",
-  "Bangor",
+  "Bangor (Northern Ireland)",
   "Belfast",
   "Lisburn",
   "Londonderry",
@@ -76,7 +76,7 @@ module.exports = [
   "Stirling",
 
   // Wales
-  "Bangor",
+  "Bangor (Wales)",
   "Cardiff",
   "Newport",
   "St Asaph",
@@ -84,3 +84,5 @@ module.exports = [
   "Swansea",
   "Wrexham",
 ];
+
+export default cities;

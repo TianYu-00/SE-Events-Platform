@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { TbSearch } from "react-icons/tb";
 import { getAllEvents } from "../api";
+import UKCitiesList from "../utils/UKCitiesList";
 
 function EventsFilter({ originalEvents, filteredEvents, setFilteredEvents, setOriginalEvents, setIsLoadingEvents }) {
   const [priceOption, setPriceOption] = useState("all");
   const [dayOption, setDayOption] = useState("all");
+  const [cityOption, setCityOption] = useState("all");
   const [startDateOrder, setStartDateOrder] = useState("");
   const [createdAtOrder, setCreatedAtOrder] = useState("");
   const [searchInputQuery, setSearchInputQuery] = useState("");
@@ -79,12 +81,16 @@ function EventsFilter({ originalEvents, filteredEvents, setFilteredEvents, setOr
       );
     }
 
+    if (cityOption && cityOption !== "all") {
+      tempEvents = tempEvents.filter((event) => event.event_city_town.toLowerCase() === cityOption.toLowerCase());
+    }
+
     return tempEvents;
   };
 
   return (
     <div className="w-full rounded-md text-copy-primary">
-      <div className="flex flex-col p-4 space-y-4 border border-blue-500 overflow-x-auto">
+      <div className="flex flex-col py-6 p-4 space-y-4 overflow-x-auto bg-card rounded-md">
         <div className="flex flex-row space-x-4">
           {FilterButton({ option: dayOption, setOption: setDayOption, value: "all", text: "All" })}
           {FilterButton({ option: dayOption, setOption: setDayOption, value: "monday", text: "Monday" })}
@@ -98,13 +104,15 @@ function EventsFilter({ originalEvents, filteredEvents, setFilteredEvents, setOr
 
         <div className="flex flex-row space-x-4">
           <button
-            className={`${!startDateOrder && !createdAtOrder ? "bg-cta text-cta-text" : ""} p-1 px-2 rounded-md`}
+            className={`${
+              !startDateOrder && !createdAtOrder ? "bg-cta text-cta-text" : ""
+            } p-1 px-2 rounded-md whitespace-nowrap`}
             onClick={() => {
               setStartDateOrder("");
               setCreatedAtOrder("");
             }}
           >
-            Clear Sorting
+            None
           </button>
           {FilterButton({
             option: startDateOrder,
@@ -139,7 +147,7 @@ function EventsFilter({ originalEvents, filteredEvents, setFilteredEvents, setOr
         </div>
       </div>
 
-      <div className="py-4 flex flex-row space-x-4">
+      <div className="py-4 flex flex-col md:flex-row gap-4">
         <div className="relative flex-grow flex items-center">
           <input
             type="text"
@@ -151,8 +159,29 @@ function EventsFilter({ originalEvents, filteredEvents, setFilteredEvents, setOr
           <TbSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
         </div>
 
+        <select
+          name="locations"
+          id="locations"
+          value={cityOption}
+          onChange={(e) => setCityOption(e.target.value)}
+          className="p-2 rounded-md flex justify-center items-center border border-border bg-card"
+        >
+          <option value="all" disabled>
+            -- Filter By City --
+          </option>
+          <option value="all">-- None --</option>
+          {UKCitiesList.map((city) => (
+            <option key={city} value={city}>
+              {city}
+            </option>
+          ))}
+        </select>
+
         <div className="flex items-center">
-          <button className="p-2 bg-cta text-cta-text hover:bg-cta-active rounded-md" onClick={() => updateFilter()}>
+          <button
+            className="p-2 bg-cta text-cta-text hover:bg-cta-active rounded-md w-full"
+            onClick={() => updateFilter()}
+          >
             Apply Filters
           </button>
         </div>
@@ -166,7 +195,7 @@ export default EventsFilter;
 function FilterButton({ option, setOption, value, text }) {
   return (
     <button
-      className={`${option === value ? "bg-cta text-cta-text" : ""} p-1 px-2 rounded-md`}
+      className={`${option === value ? "bg-cta text-cta-text" : ""} p-1 px-2 rounded-md whitespace-nowrap`}
       onClick={() => setOption(value)}
     >
       {text}

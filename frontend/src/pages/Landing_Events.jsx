@@ -51,7 +51,7 @@ function Landing_Events() {
           </div>
         ) : (
           <div className="flex justify-center items-center space-x-4">
-            <div class="animate-spin inline-block size-5 border-[3px] border-current border-t-transparent text-cta rounded-full" />
+            <div className="animate-spin inline-block size-5 border-[3px] border-current border-t-transparent text-cta rounded-full" />
             <span>Loading Events...</span>
           </div>
         )}

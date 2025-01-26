@@ -27,6 +27,7 @@ function EventCard({ event }) {
             e.target.onerror = null;
             e.target.src = "https://placehold.co/600x400?text=Image+Not+Available";
           }}
+          loading="lazy"
         />
         <div className="p-3 flex flex-col flex-grow">
           <div className="mb-3">

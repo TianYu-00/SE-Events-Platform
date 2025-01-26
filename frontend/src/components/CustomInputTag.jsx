@@ -41,7 +41,7 @@ function CustomInputTag({ tags = [], setTags }) {
         onChange={(e) => setInput(e.target.value)}
         onKeyDown={handle_KeyDownSubmitTag}
         placeholder="Press enter or comma to add tag"
-        className="block w-full border-gray-300 rounded-md shadow-sm p-2 border focus:outline-none focus:border-border"
+        className="block w-full rounded-md shadow-sm p-2 border border-border bg-card text-copy-primary focus:outline-none focus:border-border col-span-2"
       />
     </div>
   );
