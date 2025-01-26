@@ -123,6 +123,8 @@ function EventForm({ initialEventData = null, isCreate = true }) {
             event_start_date: eventData.event_start_date,
             event_description: eventData.event_description,
             event_cost_in_pence: eventData.event_cost_in_pence,
+            event_attendees: eventData.event_attendees,
+            event_capacity: eventData.event_capacity,
           }}
         />
       </div>
@@ -277,25 +279,6 @@ function EventForm({ initialEventData = null, isCreate = true }) {
             <div>
               <label
                 className="block text-sm font-medium text-copy-primary/80 ml-1 text-nowrap mb-1"
-                htmlFor="event_capacity"
-              >
-                Capacity <span className="text-red-500">*</span>
-              </label>
-              <input
-                id="event_capacity"
-                type="number"
-                value={eventData.event_capacity}
-                onChange={handleInputChange}
-                className="block w-full border-gray-300 rounded-md shadow-sm p-2 border focus:outline-none focus:border-border"
-                min="1"
-                required
-                placeholder="1"
-              />
-            </div>
-
-            <div>
-              <label
-                className="block text-sm font-medium text-copy-primary/80 ml-1 text-nowrap mb-1"
                 htmlFor="event_attendees"
               >
                 Attendees <span className="text-red-500">*</span>
@@ -309,6 +292,25 @@ function EventForm({ initialEventData = null, isCreate = true }) {
                 min="0"
                 required
                 placeholder="0"
+              />
+            </div>
+
+            <div>
+              <label
+                className="block text-sm font-medium text-copy-primary/80 ml-1 text-nowrap mb-1"
+                htmlFor="event_capacity"
+              >
+                Capacity <span className="text-red-500">*</span>
+              </label>
+              <input
+                id="event_capacity"
+                type="number"
+                value={eventData.event_capacity}
+                onChange={handleInputChange}
+                className="block w-full border-gray-300 rounded-md shadow-sm p-2 border focus:outline-none focus:border-border"
+                min="1"
+                required
+                placeholder="1"
               />
             </div>
 
