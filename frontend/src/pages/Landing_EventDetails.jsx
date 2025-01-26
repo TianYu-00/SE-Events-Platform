@@ -101,7 +101,7 @@ function Landing_EventDetails() {
             {eventDetailsHelper({
               icon: <TbMapPin size={23} />,
               title: "Location",
-              data: event.event_full_address,
+              data: `${event.event_street_address}, ${event.event_city_town}, ${event.event_postcode}`,
             })}
 
             {/* Attendees */}

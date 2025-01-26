@@ -11,7 +11,9 @@ function EventForm({ initialEventData = null, isCreate = true }) {
     event_name: "",
     event_start_date: "",
     event_end_date: "",
-    event_full_address: "",
+    event_street_address: "",
+    event_city_town: "",
+    event_postcode: "",
     event_description: "",
     event_organizer_id: user?.id || 1,
     event_capacity: "",
@@ -115,7 +117,9 @@ function EventForm({ initialEventData = null, isCreate = true }) {
           event={{
             event_name: eventData.event_name,
             event_thumbnail: imagePreview || eventData.event_thumbnail,
-            event_full_address: eventData.event_full_address,
+            event_street_address: eventData.event_street_address,
+            event_city_town: eventData.event_city_town,
+            event_postcode: eventData.event_postcode,
             event_start_date: eventData.event_start_date,
             event_description: eventData.event_description,
             event_cost_in_pence: eventData.event_cost_in_pence,
@@ -202,18 +206,54 @@ function EventForm({ initialEventData = null, isCreate = true }) {
             <div className="col-span-2">
               <label
                 className="block text-sm font-medium text-copy-primary/80 ml-1 text-nowrap mb-1"
-                htmlFor="event_full_address"
+                htmlFor="event_street_address"
               >
-                Full Address <span className="text-red-500">*</span>
+                Address Line 1 <span className="text-red-500">*</span>
               </label>
               <input
-                id="event_full_address"
+                id="event_street_address"
                 type="text"
-                value={eventData.event_full_address}
+                value={eventData.event_street_address}
                 onChange={handleInputChange}
                 className="block w-full border-gray-300 rounded-md shadow-sm p-2 border focus:outline-none focus:border-border"
                 required
-                placeholder="04 Placeholder Street Manchester UK M14 TES"
+                placeholder="11 Placeholder Street"
+              />
+            </div>
+
+            <div className="col-span-2">
+              <label
+                className="block text-sm font-medium text-copy-primary/80 ml-1 text-nowrap mb-1"
+                htmlFor="event_city_town"
+              >
+                City or town <span className="text-red-500">*</span>
+              </label>
+              <input
+                id="event_city_town"
+                type="text"
+                value={eventData.event_city_town}
+                onChange={handleInputChange}
+                className="block w-full border-gray-300 rounded-md shadow-sm p-2 border focus:outline-none focus:border-border"
+                required
+                placeholder="Manchester"
+              />
+            </div>
+
+            <div className="col-span-2">
+              <label
+                className="block text-sm font-medium text-copy-primary/80 ml-1 text-nowrap mb-1"
+                htmlFor="event_postcode"
+              >
+                Post code <span className="text-red-500">*</span>
+              </label>
+              <input
+                id="event_postcode"
+                type="text"
+                value={eventData.event_postcode}
+                onChange={handleInputChange}
+                className="block w-full border-gray-300 rounded-md shadow-sm p-2 border focus:outline-none focus:border-border"
+                required
+                placeholder="M12 345"
               />
             </div>
 
