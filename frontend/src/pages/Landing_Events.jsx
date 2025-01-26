@@ -126,7 +126,7 @@ function Landing_Events() {
                     onClick={handle_PreviousPage}
                     disabled={currentPage === 1}
                     className={`p-2 px-4 text-cta-text hover:bg-cta-active rounded-md ${
-                      currentPage === 1 ? "hover:bg-cta/40" : ""
+                      currentPage === 1 ? "hover:bg-cta/0" : ""
                     }`}
                   >
                     <TbChevronLeft size={17} strokeWidth={3} />
@@ -143,7 +143,7 @@ function Landing_Events() {
                     onClick={handle_NextPage}
                     disabled={currentPage === Math.ceil(filteredEvents.length / resultsPerPage)}
                     className={`p-2 px-4 hover:bg-cta-active rounded-md ${
-                      currentPage === Math.ceil(filteredEvents.length / resultsPerPage) ? "hover:bg-cta/40" : ""
+                      currentPage === Math.ceil(filteredEvents.length / resultsPerPage) ? "hover:bg-cta/0" : ""
                     }`}
                   >
                     <TbChevronRight size={17} strokeWidth={3} />
