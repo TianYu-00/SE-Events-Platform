@@ -186,6 +186,12 @@ function EventsFilter({ originalEvents, filteredEvents, setFilteredEvents, setOr
           </button>
         </div>
       </div>
+
+      <div className="flex justify-end text-copy-secondary">
+        <span>
+          {filteredEvents.length} Result{filteredEvents.length > 1 && "s"} in total
+        </span>
+      </div>
     </div>
   );
 }
