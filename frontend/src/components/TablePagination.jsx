@@ -7,7 +7,7 @@ const Pagination = ({ table }) => {
       <div className="flex items-center mb-4 sm:mb-0">
         <span className="mr-2 text-copy-primary/70">Events per page</span>
         <select
-          className="border border-gray-300 rounded-md shadow-sm p-2"
+          className="border border-gray-300 rounded-md shadow-sm p-2 bg-card text-copy-primary"
           value={table.getState().pagination.pageSize}
           onChange={(e) => {
             table.setPageSize(Number(e.target.value));
@@ -23,14 +23,14 @@ const Pagination = ({ table }) => {
 
       <div className="flex items-center space-x-2">
         <button
-          className="p-2 rounded-md bg-gray-100 text-gray-600 hover:bg-gray-200 disabled:opacity-50"
+          className="p-2 rounded-md bg-cta text-cta-text hover:bg-cta-active disabled:opacity-50"
           onClick={() => table.setPageIndex(0)}
           disabled={!table.getCanPreviousPage()}
         >
           <TbCaretLeftFilled size={17} />
         </button>
         <button
-          className="p-2 rounded-md bg-gray-100 text-gray-600 hover:bg-gray-200 disabled:opacity-50 px-4"
+          className="p-2 rounded-md bg-cta text-cta-text hover:bg-cta-active disabled:opacity-50 px-4"
           onClick={() => table.previousPage()}
           disabled={!table.getCanPreviousPage()}
         >
@@ -47,12 +47,12 @@ const Pagination = ({ table }) => {
               const page = e.target.value ? Number(e.target.value) - 1 : 0;
               table.setPageIndex(page);
             }}
-            className="w-16 p-2 rounded-md border border-border text-center"
+            className="w-16 p-2 rounded-md border border-border text-center bg-card text-copy-primary"
           />
           <span className="ml-1 text-copy-primary/70">of {table.getPageCount()}</span>
         </span>
         <button
-          className="p-2 rounded-md bg-gray-100 text-gray-600 hover:bg-gray-200 disabled:opacity-50 px-4"
+          className="p-2 rounded-md bg-cta text-cta-text hover:bg-cta-active disabled:opacity-50 px-4"
           onClick={() => table.nextPage()}
           disabled={!table.getCanNextPage()}
         >
@@ -60,7 +60,7 @@ const Pagination = ({ table }) => {
           Next
         </button>
         <button
-          className="p-2 rounded-md bg-gray-100 text-gray-600 hover:bg-gray-200 disabled:opacity-50"
+          className="p-2 rounded-md bg-cta text-cta-text hover:bg-cta-active disabled:opacity-50"
           onClick={() => table.setPageIndex(table.getPageCount() - 1)}
           disabled={!table.getCanNextPage()}
         >
