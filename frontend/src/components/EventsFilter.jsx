@@ -3,7 +3,15 @@ import { TbSearch } from "react-icons/tb";
 import { getAllEvents } from "../api";
 import UKCitiesList from "../utils/UKCitiesList";
 
-function EventsFilter({ originalEvents, filteredEvents, setFilteredEvents, setOriginalEvents, setIsLoadingEvents }) {
+function EventsFilter({
+  originalEvents,
+  filteredEvents,
+  setFilteredEvents,
+  setOriginalEvents,
+  setIsLoadingEvents,
+  paginationOption,
+  setPaginationOption,
+}) {
   const [priceOption, setPriceOption] = useState("all");
   const [dayOption, setDayOption] = useState("all");
   const [cityOption, setCityOption] = useState("all");
@@ -137,6 +145,16 @@ function EventsFilter({ originalEvents, filteredEvents, setFilteredEvents, setOr
             setOption: handle_CreatedAtOrderChange,
             value: "desc",
             text: "Created At: Descending",
+          })}
+        </div>
+
+        <div className="flex flex-row space-x-4">
+          {FilterButton({ option: paginationOption, setOption: setPaginationOption, value: "load", text: "Load More" })}
+          {FilterButton({
+            option: paginationOption,
+            setOption: setPaginationOption,
+            value: "page",
+            text: "Pagination",
           })}
         </div>
 
