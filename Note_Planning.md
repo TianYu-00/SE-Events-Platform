@@ -39,6 +39,10 @@ Main Tools to use:
 - Tailwind
 - React-Icons
 
+# NOTE CLERK
+- https://clerk.com/docs/testing/postman-or-insomnia
+- `await window.Clerk.session.getToken({ template: '<template name>' })`
+
 # NOTE Cloudinary
 - https://api.cloudinary.com/v1_1/:cloudName/upload
 - need formData with
