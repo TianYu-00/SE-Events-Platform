@@ -41,7 +41,7 @@ function Landing_Home() {
   }, [events]);
 
   return (
-    <PageLoader isLoading={isLoading} message="Fetching events">
+    <PageLoader isLoading={isLoading} message="fetching events">
       <div className="text-copy-primary">
         {/* Event scroller */}
         <div className="relative">
