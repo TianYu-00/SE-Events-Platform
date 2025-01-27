@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import HashLoader from "react-spinners/HashLoader";
 
-function PageLoader({ isLoading, timer = 2000, message = "", children }) {
+function PageLoader({ isLoading, timer = 1000, message = "", children }) {
   const [shouldDisplayLoader, setShouldDisplayLoader] = useState(false);
 
   useEffect(() => {
