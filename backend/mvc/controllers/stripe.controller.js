@@ -65,7 +65,6 @@ exports.verifyPayment = async (req, res, next) => {
     }
 
     const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
-    // console.log(paymentIntent);
 
     if (paymentIntent.metadata.user_id !== userId) {
       const error = new Error("Unauthorised Access");
@@ -80,6 +79,12 @@ exports.verifyPayment = async (req, res, next) => {
       res.status(200).json({ success: false, msg: "Payment not successful", data: paymentIntent });
     }
   } catch (error) {
+    if (error?.raw?.code === "resource_missing") {
+      const customError = new Error("Payment not found.");
+      customError.code = "RESOURCE_NOT_FOUND";
+      return next(customError);
+    }
+
     next(error);
   }
 };
