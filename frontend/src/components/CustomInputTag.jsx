@@ -43,7 +43,7 @@ function CustomInputTag({ tags = [], setTags }) {
   return (
     <div>
       {tags.length > 0 && (
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-2 pb-2">
           {tags.map((tag, index) => (
             <div
               key={index}
