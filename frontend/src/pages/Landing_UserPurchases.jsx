@@ -11,13 +11,14 @@ import { purchaseColumns } from "../components/UserPurchaseColumns";
 import Table from "../components/Table";
 import Pagination from "../components/TablePagination";
 import Search from "../components/TableSearch";
-import { useUser } from "@clerk/clerk-react";
+import { useUser, useAuth } from "@clerk/clerk-react";
 import { toast } from "react-toastify";
 import useErrorChecker from "../hooks/useErrorChecker";
 import PageLoader from "../components/PageLoader";
 
 function Landing_ManageEvents() {
   const checkError = useErrorChecker();
+  const { getToken } = useAuth();
 
   const { user } = useUser();
   const [purchases, setPurchases] = useState([]);
@@ -29,7 +30,8 @@ function Landing_ManageEvents() {
   const runFetchAllPurchasesByUser = async () => {
     try {
       setIsLoading(true);
-      const response = await getAllPurchases({ orderCreatedAt: "desc", userId: user.id });
+      const token = await getToken();
+      const response = await getAllPurchases({ orderCreatedAt: "desc", userId: user.id, token: token });
       setPurchases(response.data);
     } catch (error) {
       checkError(error);

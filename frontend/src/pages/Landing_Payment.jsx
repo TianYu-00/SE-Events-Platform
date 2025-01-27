@@ -5,7 +5,7 @@ import CheckoutForm from "../components/CheckoutForm";
 import { createPayment, getEvent } from "../api";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useTheme } from "../context/ThemeContext";
-import { useUser } from "@clerk/clerk-react";
+import { useUser, useAuth } from "@clerk/clerk-react";
 
 import { toast } from "react-toastify";
 import useErrorChecker from "../hooks/useErrorChecker";
@@ -17,6 +17,7 @@ const stripePromise = loadStripe(STRIPE_PUBLISHABLE_KEY);
 
 function Landing_Payment() {
   const checkError = useErrorChecker();
+  const { getToken } = useAuth();
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -67,7 +68,8 @@ function Landing_Payment() {
     const runCreatePaymentIntent = async () => {
       try {
         setIsLoadingPaymentIntent(true);
-        const response = await createPayment({ eventId: eventId, userId: user.id });
+        const token = await getToken();
+        const response = await createPayment({ eventId: eventId, userId: user.id, token: token });
         // console.log(response);
         setClientSecret(response.data.clientSecret);
         setEventPrice(response.data.price);

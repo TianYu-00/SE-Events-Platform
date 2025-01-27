@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useUser } from "@clerk/clerk-react";
+import { useUser, useAuth } from "@clerk/clerk-react";
 import CustomInputTag from "../components/CustomInputTag";
 import EventCard from "../components/EventCard";
 import { cloudinaryUploadImage } from "../api_cloudinary";
@@ -10,6 +10,7 @@ import useErrorChecker from "../hooks/useErrorChecker";
 
 function EventForm({ initialEventData = null, isCreate = true }) {
   const checkError = useErrorChecker();
+  const { getToken } = useAuth();
 
   const { user } = useUser();
   const eventDataTemplate = {
@@ -81,7 +82,8 @@ function EventForm({ initialEventData = null, isCreate = true }) {
       console.log("Upload response:", uploadImageResponse);
       if (uploadImageResponse.secure_url) {
         eventData.event_thumbnail = uploadImageResponse.secure_url;
-        const createEventResponse = await createEvent(eventData);
+        const token = await getToken();
+        const createEventResponse = await createEvent({ eventData: eventData, token: token });
         console.log(createEventResponse);
         setEventData(eventDataTemplate);
         setImagePreview(null);
@@ -116,7 +118,8 @@ function EventForm({ initialEventData = null, isCreate = true }) {
         }
       }
 
-      const editEventResponse = await updateEvent(eventData.event_id, eventData);
+      const token = await getToken();
+      const editEventResponse = await updateEvent({ eventId: eventData.event_id, eventData: eventData, token: token });
       console.log(editEventResponse);
       setEventData(editEventResponse.data);
       toast.success(editEventResponse.msg);

@@ -65,7 +65,7 @@ export const initializeUser = async (userId, publicMetadata) => {
   }
 };
 
-export const createEvent = async (eventData) => {
+export const createEvent = async ({ eventData, token }) => {
   const data = {
     event_name: eventData.event_name,
     event_start_date: eventData.event_start_date,
@@ -85,25 +85,29 @@ export const createEvent = async (eventData) => {
     event_tags: eventData.event_tags,
     event_thumbnail: eventData.event_thumbnail,
   };
+
   try {
-    const response = await api.post(`/events`, data);
+    const headers = token ? { Authorization: `Bearer ${token}` } : {};
+    // console.log(token);
+    const response = await api.post(`/events`, data, { headers });
     return response.data;
   } catch (error) {
     throw error;
   }
 };
 
-export const deleteEvents = async ({ listOfEventIds }) => {
+export const deleteEvents = async ({ listOfEventIds, token }) => {
   try {
+    const headers = token ? { Authorization: `Bearer ${token}` } : {};
     const data = { event_id: listOfEventIds };
-    const response = await api.delete(`/events`, { data });
+    const response = await api.delete(`/events`, { data, headers });
     return response.data;
   } catch (error) {
     throw error;
   }
 };
 
-export const updateEvent = async (eventId, eventData) => {
+export const updateEvent = async ({ eventId, eventData, token }) => {
   const data = {
     event_name: eventData.event_name,
     event_start_date: eventData.event_start_date,
@@ -124,34 +128,37 @@ export const updateEvent = async (eventId, eventData) => {
     event_modified_at: eventData.event_modified_at,
   };
   try {
-    const response = await api.patch(`/events/${eventId}`, data);
+    const headers = token ? { Authorization: `Bearer ${token}` } : {};
+    const response = await api.patch(`/events/${eventId}`, data, { headers });
     return response.data;
   } catch (error) {
     throw error;
   }
 };
 
-export const createPayment = async ({ eventId, userId }) => {
+export const createPayment = async ({ eventId, userId, token }) => {
   try {
     const data = { event_id: eventId, user_id: userId };
-    const response = await api.post(`/stripe/create-payment-intent`, data);
+    const headers = token ? { Authorization: `Bearer ${token}` } : {};
+    const response = await api.post(`/stripe/create-payment-intent`, data, { headers });
     return response.data;
   } catch (error) {
     throw error;
   }
 };
 
-export const verifyPayment = async ({ paymentIntentId, userId }) => {
+export const verifyPayment = async ({ paymentIntentId, userId, token }) => {
   try {
     const data = { paymentIntentId: paymentIntentId, user_id: userId };
-    const response = await api.post(`/stripe/verify-payment-intent`, data);
+    const headers = token ? { Authorization: `Bearer ${token}` } : {};
+    const response = await api.post(`/stripe/verify-payment-intent`, data, { headers });
     return response.data;
   } catch (error) {
     throw error;
   }
 };
 
-export const getAllPurchases = async ({ orderCreatedAt = undefined, userId = undefined }) => {
+export const getAllPurchases = async ({ orderCreatedAt = undefined, userId = undefined, token }) => {
   try {
     const params = new URLSearchParams();
     if (orderCreatedAt) {
@@ -161,17 +168,21 @@ export const getAllPurchases = async ({ orderCreatedAt = undefined, userId = und
       params.append("user_id", userId);
     }
     const query = `/purchases${params.toString() ? `?${params.toString()}` : ""}`;
-    const response = await api.get(query);
+
+    const headers = token ? { Authorization: `Bearer ${token}` } : {};
+    const response = await api.get(query, { headers });
     return response.data;
   } catch (error) {
     throw error;
   }
 };
 
-export const createFreePurchase = async ({ userId, eventName, eventId }) => {
+export const createFreePurchase = async ({ userId, eventName, eventId, token }) => {
   try {
     const data = { user_id: userId, event_name: eventName, event_id: eventId };
-    const response = await api.post(`/purchases/free`, data);
+    const headers = token ? { Authorization: `Bearer ${token}` } : {};
+
+    const response = await api.post(`/purchases/free`, data, { headers });
     return response.data;
   } catch (error) {
     throw error;
