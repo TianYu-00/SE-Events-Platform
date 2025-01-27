@@ -3,9 +3,12 @@ import { getAllEvents } from "../api";
 import EventsFilter from "../components/EventsFilter";
 import EventCardSkeleton from "../components/EventCardSkeleton";
 import { TbChevronLeft, TbChevronRight } from "react-icons/tb";
+import useErrorChecker from "../hooks/useErrorChecker";
 const EventCard = lazy(() => import("../components/EventCard"));
 
 function Landing_Events() {
+  const checkError = useErrorChecker();
+
   const [originalEvents, setOriginalEvents] = useState([]);
   const [filteredEvents, setFilteredEvents] = useState([]);
   const [displayedEvents, setDisplayedEvents] = useState([]);
@@ -22,7 +25,8 @@ function Landing_Events() {
         setOriginalEvents(response.data);
         setFilteredEvents(response.data);
       } catch (error) {
-        console.error(error);
+        // console.error(error);
+        checkError(error);
       } finally {
         setIsLoadingEvents(false);
       }
