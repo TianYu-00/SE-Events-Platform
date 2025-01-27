@@ -30,7 +30,10 @@ exports.addPurchase = async ({ paymentIntent, message = null, isFree = false }) 
         eventId: paymentIntent.metadata.event_id,
       });
       if (isPurchased) {
-        return Promise.reject({ code: "EVENT_ALREADY_PURCHASED", message: "Free event already purchased" });
+        return Promise.reject({
+          code: "EVENT_ALREADY_PURCHASED",
+          message: "You have already signed up for this event",
+        });
       }
     }
 
