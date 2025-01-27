@@ -34,12 +34,18 @@ function Landing_Payment() {
     const getEventDetails = async () => {
       try {
         const response = await getEvent(eventId);
+        if (new Date(response.data.event_start_date) <= new Date()) {
+          const error = new Error("You can not purchase outdated events.");
+          error.code = "OUTDATED_EVENT";
+          throw error;
+        }
         setEvent(response.data);
         console.log("Found event");
       } catch (error) {
-        const errorCode = error.response.data.code;
-        // console.log(errorCode);
-        if (errorCode === "EVENT_NOT_FOUND" || errorCode === "INVALID_PARAMS") {
+        const errorCode = error.response?.data?.code;
+        const clientErrorCode = error.code;
+
+        if (errorCode === "EVENT_NOT_FOUND" || errorCode === "INVALID_PARAMS" || clientErrorCode === "OUTDATED_EVENT") {
           navigate(`/`);
         } else {
           console.error(error);
