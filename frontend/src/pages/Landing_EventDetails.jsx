@@ -22,8 +22,11 @@ import {
 import AddToCalendar from "../components/AddToCalendar";
 import Modal from "../components/Modal";
 import { useEventPurchase } from "../hooks/useEventPurchase";
+import useErrorChecker from "../hooks/useErrorChecker";
 
 function Landing_EventDetails() {
+  const checkError = useErrorChecker();
+
   const [event, setEvent] = useState(null);
   const { eventId } = useParams();
   const navigate = useNavigate();
@@ -33,10 +36,12 @@ function Landing_EventDetails() {
 
   useEffect(() => {
     const runFetchEvent = async () => {
-      const response = await getEvent(eventId);
-      const eventData = response.data;
-      setEvent(eventData);
-      // console.log(eventData);
+      try {
+        const response = await getEvent(eventId);
+        setEvent(response.data);
+      } catch (error) {
+        checkError(error);
+      }
     };
 
     runFetchEvent();

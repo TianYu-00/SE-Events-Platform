@@ -5,8 +5,12 @@ import EventCard from "../components/EventCard";
 import { cloudinaryUploadImage } from "../api_cloudinary";
 import { createEvent, updateEvent } from "../api";
 import UKCitiesList from "../utils/UKCitiesList";
+import { toast } from "react-toastify";
+import useErrorChecker from "../hooks/useErrorChecker";
 
 function EventForm({ initialEventData = null, isCreate = true }) {
+  const checkError = useErrorChecker();
+
   const { user } = useUser();
   const eventDataTemplate = {
     event_name: "",
@@ -85,11 +89,13 @@ function EventForm({ initialEventData = null, isCreate = true }) {
         if (thumbnailInputRef.current) {
           thumbnailInputRef.current.value = "";
         }
+        toast.success(createEventResponse.msg);
       } else {
         console.log("secure url missing");
       }
     } catch (error) {
-      console.error(error);
+      checkError(error);
+      // console.error(error);
     }
   };
 
@@ -113,8 +119,10 @@ function EventForm({ initialEventData = null, isCreate = true }) {
       const editEventResponse = await updateEvent(eventData.event_id, eventData);
       console.log(editEventResponse);
       setEventData(editEventResponse.data);
+      toast.success(editEventResponse.msg);
     } catch (error) {
-      console.error(error);
+      // console.error(error);
+      checkError(error);
     }
   };
 

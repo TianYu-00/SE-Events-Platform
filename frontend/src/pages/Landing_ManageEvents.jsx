@@ -14,16 +14,24 @@ import Landing_EditEvent from "./Landing_EditEvent";
 import Table from "../components/Table";
 import Pagination from "../components/TablePagination";
 import Search from "../components/TableSearch";
+import useErrorChecker from "../hooks/useErrorChecker";
+import { toast } from "react-toastify";
 
 function Landing_ManageEvents() {
+  const checkError = useErrorChecker();
+
   const [events, setEvents] = useState([]);
   const [sorting, setSorting] = useState([]);
   const [globalFilter, setGlobalFilter] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const runFetchEvents = async () => {
-    const response = await getAllEvents({});
-    setEvents(response.data);
+    try {
+      const response = await getAllEvents({});
+      setEvents(response.data);
+    } catch (error) {
+      checkError(error);
+    }
   };
 
   useEffect(() => {
@@ -64,12 +72,15 @@ function Landing_ManageEvents() {
         return;
       }
       const response = await deleteEvents({ listOfEventIds: listOfEventIds });
+      console.log(response);
       if (response.success) {
         setEvents((prevEvents) => prevEvents.filter((event) => !listOfEventIds.includes(event.event_id)));
         table.resetRowSelection();
+        toast.success(response.msg);
       }
     } catch (error) {
-      console.error(error);
+      checkError(error);
+      // console.error(error);
     }
   };
 

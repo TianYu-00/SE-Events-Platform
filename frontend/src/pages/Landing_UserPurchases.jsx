@@ -12,17 +12,24 @@ import Table from "../components/Table";
 import Pagination from "../components/TablePagination";
 import Search from "../components/TableSearch";
 import { useUser } from "@clerk/clerk-react";
+import { toast } from "react-toastify";
+import useErrorChecker from "../hooks/useErrorChecker";
 
 function Landing_ManageEvents() {
+  const checkError = useErrorChecker();
+
   const { user } = useUser();
   const [purchases, setPurchases] = useState([]);
   const [sorting, setSorting] = useState([]);
   const [globalFilter, setGlobalFilter] = useState("");
 
   const runFetchAllPurchasesByUser = async () => {
-    const response = await getAllPurchases({ orderCreatedAt: "desc", userId: user.id });
-    setPurchases(response.data);
-    // console.log(response);
+    try {
+      const response = await getAllPurchases({ orderCreatedAt: "desc", userId: user.id });
+      setPurchases(response.data);
+    } catch (error) {
+      checkError(error);
+    }
   };
 
   useEffect(() => {

@@ -109,7 +109,18 @@ exports.deleteEvents = async (req, res, next) => {
     }
 
     const data = await removeEvents(eventIds);
-    res.json({ success: true, msg: "List of events has been removed", data: data });
+    console.log(data);
+    const deletedEventsLength = data.deletedIds.length;
+    const failedToDeleteEventLength = data.failedToDeleteIds.length;
+    res.json({
+      success: true,
+      msg: `Deleted ${deletedEventsLength} event${deletedEventsLength > 1 ? "s" : ""}. ${
+        failedToDeleteEventLength > 1
+          ? `Failed to delete ${failedToDeleteEventLength} event${failedToDeleteEventLength > 1 ? "s" : ""}`
+          : ""
+      }`,
+      data: data,
+    });
   } catch (error) {
     next(error);
   }
