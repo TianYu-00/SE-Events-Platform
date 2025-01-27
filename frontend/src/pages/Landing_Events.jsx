@@ -17,9 +17,11 @@ function Landing_Events() {
   const [paginationOption, setPaginationOption] = useState("load");
   const [resultsPerPage, setResultsPerPage] = useState(9);
   const [currentPage, setCurrentPage] = useState(1);
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
 
   useEffect(() => {
     const runFetchEvents = async () => {
+      setIsInitialLoad(true);
       setIsLoadingEvents(true);
       try {
         const response = await getAllEvents({ isAllowOutdated: false });
@@ -29,6 +31,7 @@ function Landing_Events() {
         // console.error(error);
         checkError(error);
       } finally {
+        setIsInitialLoad(false);
         setIsLoadingEvents(false);
       }
     };
@@ -87,7 +90,7 @@ function Landing_Events() {
   };
 
   return (
-    <PageLoader isLoading={isLoadingEvents} message="fetching events">
+    <PageLoader isLoading={isInitialLoad} message="fetching events">
       <div className="text-copy-primary">
         <div className="max-w-screen-xl mx-auto mt-10">
           <div className="p-4">
