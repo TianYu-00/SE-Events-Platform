@@ -18,6 +18,7 @@ function EventsFilter({
   const [startDateOrder, setStartDateOrder] = useState("");
   const [createdAtOrder, setCreatedAtOrder] = useState("");
   const [searchInputQuery, setSearchInputQuery] = useState("");
+  const [isAllowOutdatedOption, setIsAllowOutdatedOption] = useState(false);
 
   const updateFilter = () => {
     if (!startDateOrder && !createdAtOrder) {
@@ -30,7 +31,9 @@ function EventsFilter({
   const fetchAllEvents = async () => {
     try {
       setIsLoadingEvents(true);
-      const response = await getAllEvents({});
+      const response = await getAllEvents({
+        isAllowOutdated: isAllowOutdatedOption,
+      });
       setOriginalEvents(response.data);
       setFilteredEvents(applyFilters(response.data));
     } catch (error) {
@@ -42,7 +45,9 @@ function EventsFilter({
 
   const fetchOrderedEvents = async () => {
     try {
-      const query = {};
+      const query = {
+        isAllowOutdated: isAllowOutdatedOption,
+      };
       if (startDateOrder) query.orderStartDate = startDateOrder;
       if (createdAtOrder) query.orderCreatedAt = createdAtOrder;
 
@@ -145,6 +150,21 @@ function EventsFilter({
             setOption: handle_CreatedAtOrderChange,
             value: "desc",
             text: "Created At: Descending",
+          })}
+        </div>
+
+        <div className="flex flex-row space-x-4">
+          {FilterButton({
+            option: isAllowOutdatedOption,
+            setOption: setIsAllowOutdatedOption,
+            value: false,
+            text: "Hide past events",
+          })}
+          {FilterButton({
+            option: isAllowOutdatedOption,
+            setOption: setIsAllowOutdatedOption,
+            value: true,
+            text: "Show past events",
           })}
         </div>
 
