@@ -97,6 +97,13 @@ const errorHandler = (err, req, res, next) => {
       data: null,
       code: err.code,
     });
+  } else if (err.code === "ACCESS_DENIED") {
+    return res.status(403).send({
+      success: false,
+      msg: err.message || "Access denied.",
+      data: null,
+      code: err.code,
+    });
   }
 
   next(err);
