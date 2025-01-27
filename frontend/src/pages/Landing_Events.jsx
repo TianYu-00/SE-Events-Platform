@@ -18,7 +18,7 @@ function Landing_Events() {
     const runFetchEvents = async () => {
       setIsLoadingEvents(true);
       try {
-        const response = await getAllEvents({});
+        const response = await getAllEvents({ isAllowOutdated: false });
         setOriginalEvents(response.data);
         setFilteredEvents(response.data);
       } catch (error) {

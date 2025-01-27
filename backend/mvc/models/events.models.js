@@ -1,12 +1,27 @@
 const db = require("../../db/connection");
 const { deleteImage, deleteMultipleImages } = require("../../utils/cloudinaryHandler");
 
-exports.getAllEvents = async ({ orderCreatedAt = undefined, orderStartDate = undefined }) => {
+exports.getAllEvents = async ({
+  orderCreatedAt = undefined,
+  orderStartDate = undefined,
+  isAllowOutdated = undefined,
+}) => {
   try {
+    // console.log(isAllowOutdated);
+
     let query = "SELECT * FROM events";
+    const queryConditions = [];
 
     if (orderCreatedAt && orderStartDate) {
       return Promise.reject({ code: "INVALID_QUERY", message: "Only one sorting query is allowed at a time." });
+    }
+
+    if (isAllowOutdated === false) {
+      queryConditions.push("event_start_date >= NOW()");
+    }
+
+    if (queryConditions.length > 0) {
+      query += ` WHERE ${queryConditions.join(" AND ")}`;
     }
 
     if (orderCreatedAt) {

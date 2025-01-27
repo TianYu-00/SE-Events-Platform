@@ -17,7 +17,11 @@ export const testApi = async () => {
   }
 };
 
-export const getAllEvents = async ({ orderCreatedAt = undefined, orderStartDate = undefined }) => {
+export const getAllEvents = async ({
+  orderCreatedAt = undefined,
+  orderStartDate = undefined,
+  isAllowOutdated = undefined,
+}) => {
   try {
     console.log(orderCreatedAt, orderStartDate);
 
@@ -28,6 +32,10 @@ export const getAllEvents = async ({ orderCreatedAt = undefined, orderStartDate 
 
     if (orderStartDate) {
       params.append("order_start_date", orderStartDate);
+    }
+
+    if (isAllowOutdated) {
+      params.append("is_allow_outdated", isAllowOutdated);
     }
 
     const query = `/events${params.toString() ? `?${params.toString()}` : ""}`;

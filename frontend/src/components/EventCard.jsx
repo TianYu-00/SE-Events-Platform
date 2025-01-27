@@ -55,10 +55,12 @@ function EventCard({ event }) {
           <div className="flex h-10 gap-4">
             <button
               className={`bg-cta hover:bg-cta-active p-2 rounded-md text-cta-text w-32 flex justify-center items-center ${
-                event.event_attendees >= event.event_capacity ? "cursor-not-allowed bg-cta/30 hover:bg-cta/30" : ""
+                event.event_attendees >= event.event_capacity || new Date(event.event_start_date) <= new Date()
+                  ? "cursor-not-allowed bg-cta/30 hover:bg-cta/30"
+                  : ""
               }`}
               onClick={purchaseEvent}
-              disabled={event.event_attendees >= event.event_capacity}
+              disabled={event.event_attendees >= event.event_capacity || new Date(event.event_start_date) <= new Date()}
             >
               {event.event_cost_in_pence > 0 ? "Purchase" : "Free"}
             </button>

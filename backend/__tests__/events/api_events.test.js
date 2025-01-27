@@ -81,4 +81,27 @@ describe("GET /api/events", () => {
     expect(body.success).toBe(false);
     expect(body.code).toBe("INVALID_QUERY");
   });
+
+  test("should return events excluding outdated ones when isAllowOutdated is false", async () => {
+    const { body } = await request(app).get("/api/events?is_allow_outdated=false");
+    const now = new Date();
+    const filteredEvents = body.data.filter((event) => new Date(event.event_start_date) >= now);
+    expect(filteredEvents.length).toBe(body.data.length);
+  });
+
+  test("should return events including outdated ones when isAllowOutdated is true", async () => {
+    const { body } = await request(app).get("/api/events?is_allow_outdated=true");
+    expect(body.data.length).toBeGreaterThan(0);
+  });
+
+  test("should return all events when isAllowOutdated is null or undefined", async () => {
+    const { body } = await request(app).get("/api/events");
+    expect(body.data.length).toBeGreaterThan(0);
+  });
+
+  test("should return error for invalid isAllowOutdated value", async () => {
+    const { body } = await request(app).get("/api/events?is_allow_outdated=invalid").expect(400);
+    expect(body.success).toBe(false);
+    expect(body.code).toBe("INVALID_QUERY");
+  });
 });

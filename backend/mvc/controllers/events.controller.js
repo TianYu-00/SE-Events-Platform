@@ -2,7 +2,11 @@ const { getAllEvents, createEvent, removeEvents, patchEvent, getEventById } = re
 
 exports.fetchAllEvents = async (req, res, next) => {
   try {
-    const { order_created_at: orderCreatedAt, order_start_date: orderStartDate } = req.query;
+    const {
+      order_created_at: orderCreatedAt,
+      order_start_date: orderStartDate,
+      is_allow_outdated: isAllowOutdated,
+    } = req.query;
     const validOrderQueries = ["asc", "desc"];
 
     if (orderCreatedAt && !validOrderQueries.includes(orderCreatedAt.toLowerCase())) {
@@ -17,10 +21,26 @@ exports.fetchAllEvents = async (req, res, next) => {
       return next(error);
     }
 
+    if (
+      isAllowOutdated !== undefined &&
+      isAllowOutdated !== null &&
+      isAllowOutdated !== "true" &&
+      isAllowOutdated !== "false"
+    ) {
+      const error = new Error("Invalid isAllowOutdated query");
+      error.code = "INVALID_QUERY";
+      return next(error);
+    }
+
     const validatedOrder = orderCreatedAt ? orderCreatedAt.toUpperCase() : undefined;
     const validatedOrderStartDate = orderStartDate ? orderStartDate.toUpperCase() : undefined;
+    const parsedIsAllowOutdated = isAllowOutdated === "true";
 
-    const data = await getAllEvents({ orderCreatedAt: validatedOrder, orderStartDate: validatedOrderStartDate });
+    const data = await getAllEvents({
+      orderCreatedAt: validatedOrder,
+      orderStartDate: validatedOrderStartDate,
+      isAllowOutdated: parsedIsAllowOutdated,
+    });
     res.json({ success: true, msg: "Events have been fetched", data: data });
   } catch (error) {
     next(error);
