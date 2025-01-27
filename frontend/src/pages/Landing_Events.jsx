@@ -3,9 +3,13 @@ import { getAllEvents } from "../api";
 import EventsFilter from "../components/EventsFilter";
 import EventCardSkeleton from "../components/EventCardSkeleton";
 import { TbChevronLeft, TbChevronRight } from "react-icons/tb";
+import useErrorChecker from "../hooks/useErrorChecker";
+import PageLoader from "../components/PageLoader";
 const EventCard = lazy(() => import("../components/EventCard"));
 
 function Landing_Events() {
+  const checkError = useErrorChecker();
+
   const [originalEvents, setOriginalEvents] = useState([]);
   const [filteredEvents, setFilteredEvents] = useState([]);
   const [displayedEvents, setDisplayedEvents] = useState([]);
@@ -13,17 +17,21 @@ function Landing_Events() {
   const [paginationOption, setPaginationOption] = useState("load");
   const [resultsPerPage, setResultsPerPage] = useState(9);
   const [currentPage, setCurrentPage] = useState(1);
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
 
   useEffect(() => {
     const runFetchEvents = async () => {
+      setIsInitialLoad(true);
       setIsLoadingEvents(true);
       try {
         const response = await getAllEvents({ isAllowOutdated: false });
         setOriginalEvents(response.data);
         setFilteredEvents(response.data);
       } catch (error) {
-        console.error(error);
+        // console.error(error);
+        checkError(error);
       } finally {
+        setIsInitialLoad(false);
         setIsLoadingEvents(false);
       }
     };
@@ -82,84 +90,86 @@ function Landing_Events() {
   };
 
   return (
-    <div className="text-copy-primary">
-      <div className="max-w-screen-xl mx-auto mt-10">
-        <div className="p-4">
-          <EventsFilter
-            setFilteredEvents={setFilteredEvents}
-            filteredEvents={filteredEvents}
-            originalEvents={originalEvents}
-            setOriginalEvents={setOriginalEvents}
-            setIsLoadingEvents={setIsLoadingEvents}
-            paginationOption={paginationOption}
-            setPaginationOption={setPaginationOption}
-          />
-        </div>
-
-        {!isLoadingEvents ? (
-          <>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 p-4">
-              <Suspense fallback={<EventCardSkeleton events={originalEvents} maxDisplay={resultsPerPage} />}>
-                {displayedEvents.map((event) => (
-                  <EventCard event={event} key={event.event_id} />
-                ))}
-              </Suspense>
-            </div>
-
-            <div className="my-10 flex justify-center items-center">
-              {paginationOption === "load" && (
-                <div className="flex justify-center">
-                  {resultsPerPage < filteredEvents.length && (
-                    <button
-                      onClick={handle_LoadMore}
-                      className="p-2 px-4 bg-cta text-cta-text hover:bg-cta-active rounded-md"
-                    >
-                      Load More
-                    </button>
-                  )}
-                </div>
-              )}
-
-              {paginationOption === "page" && (
-                <div className="flex justify-center items-center space-x-2">
-                  <button
-                    onClick={handle_PreviousPage}
-                    disabled={currentPage === 1}
-                    className={`p-2 px-4 text-cta-text hover:bg-cta-active rounded-md ${
-                      currentPage === 1 ? "hover:bg-cta/0" : ""
-                    }`}
-                  >
-                    <TbChevronLeft size={17} strokeWidth={3} />
-                  </button>
-                  <input
-                    type="number"
-                    value={currentPage}
-                    onChange={handle_PageInput}
-                    min="1"
-                    max={Math.ceil(filteredEvents.length / resultsPerPage)}
-                    className="w-16 text-center border rounded text-copy-primary bg-card"
-                  />
-                  <button
-                    onClick={handle_NextPage}
-                    disabled={currentPage === Math.ceil(filteredEvents.length / resultsPerPage)}
-                    className={`p-2 px-4 hover:bg-cta-active rounded-md ${
-                      currentPage === Math.ceil(filteredEvents.length / resultsPerPage) ? "hover:bg-cta/0" : ""
-                    }`}
-                  >
-                    <TbChevronRight size={17} strokeWidth={3} />
-                  </button>
-                </div>
-              )}
-            </div>
-          </>
-        ) : (
-          <div className="flex justify-center items-center space-x-4">
-            <div className="animate-spin inline-block size-5 border-[3px] border-current border-t-transparent text-cta rounded-full" />
-            <span>Loading Events...</span>
+    <PageLoader isLoading={isInitialLoad} message="fetching events">
+      <div className="text-copy-primary">
+        <div className="max-w-screen-xl mx-auto mt-10">
+          <div className="p-4">
+            <EventsFilter
+              setFilteredEvents={setFilteredEvents}
+              filteredEvents={filteredEvents}
+              originalEvents={originalEvents}
+              setOriginalEvents={setOriginalEvents}
+              setIsLoadingEvents={setIsLoadingEvents}
+              paginationOption={paginationOption}
+              setPaginationOption={setPaginationOption}
+            />
           </div>
-        )}
+
+          {!isLoadingEvents ? (
+            <>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 p-4">
+                <Suspense fallback={<EventCardSkeleton events={originalEvents} maxDisplay={resultsPerPage} />}>
+                  {displayedEvents.map((event) => (
+                    <EventCard event={event} key={event.event_id} />
+                  ))}
+                </Suspense>
+              </div>
+
+              <div className="my-10 flex justify-center items-center">
+                {paginationOption === "load" && (
+                  <div className="flex justify-center">
+                    {resultsPerPage < filteredEvents.length && (
+                      <button
+                        onClick={handle_LoadMore}
+                        className="p-2 px-4 bg-cta text-cta-text hover:bg-cta-active rounded-md"
+                      >
+                        Load More
+                      </button>
+                    )}
+                  </div>
+                )}
+
+                {paginationOption === "page" && (
+                  <div className="flex justify-center items-center space-x-2">
+                    <button
+                      onClick={handle_PreviousPage}
+                      disabled={currentPage === 1}
+                      className={`p-2 px-4 text-cta-text hover:bg-cta-active rounded-md ${
+                        currentPage === 1 ? "hover:bg-cta/0" : ""
+                      }`}
+                    >
+                      <TbChevronLeft size={17} strokeWidth={3} />
+                    </button>
+                    <input
+                      type="number"
+                      value={currentPage}
+                      onChange={handle_PageInput}
+                      min="1"
+                      max={Math.ceil(filteredEvents.length / resultsPerPage)}
+                      className="w-16 text-center border rounded text-copy-primary bg-card"
+                    />
+                    <button
+                      onClick={handle_NextPage}
+                      disabled={currentPage === Math.ceil(filteredEvents.length / resultsPerPage)}
+                      className={`p-2 px-4 hover:bg-cta-active rounded-md ${
+                        currentPage === Math.ceil(filteredEvents.length / resultsPerPage) ? "hover:bg-cta/0" : ""
+                      }`}
+                    >
+                      <TbChevronRight size={17} strokeWidth={3} />
+                    </button>
+                  </div>
+                )}
+              </div>
+            </>
+          ) : (
+            <div className="flex justify-center items-center space-x-4">
+              <div className="animate-spin inline-block size-5 border-[3px] border-current border-t-transparent text-cta rounded-full" />
+              <span>Loading Events...</span>
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+    </PageLoader>
   );
 }
 

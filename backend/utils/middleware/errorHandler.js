@@ -90,6 +90,13 @@ const errorHandler = (err, req, res, next) => {
       data: null,
       code: err.code,
     });
+  } else if (err.code === "RESOURCE_NOT_FOUND") {
+    return res.status(404).send({
+      success: false,
+      msg: err.message || "Resource not found.",
+      data: null,
+      code: err.code,
+    });
   }
 
   next(err);

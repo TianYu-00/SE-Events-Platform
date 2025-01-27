@@ -12,17 +12,30 @@ import Table from "../components/Table";
 import Pagination from "../components/TablePagination";
 import Search from "../components/TableSearch";
 import { useUser } from "@clerk/clerk-react";
+import { toast } from "react-toastify";
+import useErrorChecker from "../hooks/useErrorChecker";
+import PageLoader from "../components/PageLoader";
 
 function Landing_ManageEvents() {
+  const checkError = useErrorChecker();
+
   const { user } = useUser();
   const [purchases, setPurchases] = useState([]);
   const [sorting, setSorting] = useState([]);
   const [globalFilter, setGlobalFilter] = useState("");
 
+  const [isLoading, setIsLoading] = useState(true);
+
   const runFetchAllPurchasesByUser = async () => {
-    const response = await getAllPurchases({ orderCreatedAt: "desc", userId: user.id });
-    setPurchases(response.data);
-    // console.log(response);
+    try {
+      setIsLoading(true);
+      const response = await getAllPurchases({ orderCreatedAt: "desc", userId: user.id });
+      setPurchases(response.data);
+    } catch (error) {
+      checkError(error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -53,14 +66,16 @@ function Landing_ManageEvents() {
   });
 
   return (
-    <div>
-      <Search globalFilter={globalFilter} setGlobalFilter={setGlobalFilter} />
+    <PageLoader isLoading={isLoading} message="fetching purchases">
+      <div>
+        <Search globalFilter={globalFilter} setGlobalFilter={setGlobalFilter} />
 
-      <div className="flex space-x-4 px-4 pb-4"></div>
+        <div className="flex space-x-4 px-4 pb-4"></div>
 
-      <Table table={table} />
-      <Pagination table={table} />
-    </div>
+        <Table table={table} />
+        <Pagination table={table} />
+      </div>
+    </PageLoader>
   );
 }
 

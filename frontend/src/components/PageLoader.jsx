@@ -1,24 +1,30 @@
 import React, { useState, useEffect } from "react";
 import HashLoader from "react-spinners/HashLoader";
 
-function PageLoader({ isLoading, timer = 2000, message = "", children }) {
+function PageLoader({ isLoading, delay = 100, timer = 300, message = "", children }) {
   const [shouldDisplayLoader, setShouldDisplayLoader] = useState(false);
 
   useEffect(() => {
+    let delayTimeout;
+    let hideTimeout;
+
     if (isLoading) {
-      setShouldDisplayLoader(true);
+      delayTimeout = setTimeout(() => {
+        setShouldDisplayLoader(true);
+      }, delay);
     } else {
-      const timeoutId = setTimeout(() => {
+      hideTimeout = setTimeout(() => {
         setShouldDisplayLoader(false);
       }, timer);
-
-      return () => {
-        clearTimeout(timeoutId);
-      };
     }
-  }, [isLoading, timer]);
 
-  if (shouldDisplayLoader || isLoading) {
+    return () => {
+      clearTimeout(delayTimeout);
+      clearTimeout(hideTimeout);
+    };
+  }, [isLoading, delay, timer]);
+
+  if (shouldDisplayLoader) {
     return (
       <div className="fixed top-0 left-0 h-screen w-screen z-50 flex items-center justify-center bg-background overflow-hidden flex flex-col">
         <HashLoader color="#1764FF" />

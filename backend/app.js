@@ -33,12 +33,12 @@ app.use("/api", apiRouter);
 app.use(errorHandler);
 
 app.all("*", (req, res) => {
-  res.status(404).send({ success: false, msg: "ROUTE NOT FOUND", data: null });
+  res.status(404).send({ success: false, msg: "ROUTE NOT FOUND", code: "ROUTE_NOT_FOUND", data: null });
 });
 
 app.use((err, req, res, next) => {
   console.error(err);
-  res.status(500).send({ success: false, msg: "INTERNAL SERVER ERROR", data: null });
+  res.status(500).send({ success: false, msg: "INTERNAL SERVER ERROR", code: "INTERNAL_SERVER_ERROR", data: null });
 });
 
 module.exports = app;

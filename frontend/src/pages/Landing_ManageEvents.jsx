@@ -14,16 +14,30 @@ import Landing_EditEvent from "./Landing_EditEvent";
 import Table from "../components/Table";
 import Pagination from "../components/TablePagination";
 import Search from "../components/TableSearch";
+import useErrorChecker from "../hooks/useErrorChecker";
+import { toast } from "react-toastify";
+import PageLoader from "../components/PageLoader";
 
 function Landing_ManageEvents() {
+  const checkError = useErrorChecker();
+
   const [events, setEvents] = useState([]);
   const [sorting, setSorting] = useState([]);
   const [globalFilter, setGlobalFilter] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const [isLoading, setIsLoading] = useState(true);
+
   const runFetchEvents = async () => {
-    const response = await getAllEvents({});
-    setEvents(response.data);
+    try {
+      setIsLoading(true);
+      const response = await getAllEvents({});
+      setEvents(response.data);
+    } catch (error) {
+      checkError(error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -64,63 +78,68 @@ function Landing_ManageEvents() {
         return;
       }
       const response = await deleteEvents({ listOfEventIds: listOfEventIds });
+      console.log(response);
       if (response.success) {
         setEvents((prevEvents) => prevEvents.filter((event) => !listOfEventIds.includes(event.event_id)));
         table.resetRowSelection();
+        toast.success(response.msg);
       }
     } catch (error) {
-      console.error(error);
+      checkError(error);
+      // console.error(error);
     }
   };
 
   return (
-    <div>
-      <Search globalFilter={globalFilter} setGlobalFilter={setGlobalFilter} />
+    <PageLoader isLoading={isLoading} message="fetching events">
+      <div>
+        <Search globalFilter={globalFilter} setGlobalFilter={setGlobalFilter} />
 
-      <div className="flex space-x-4 px-4 pb-4">
-        <button
-          onClick={handle_LogSelectedRows}
-          className="mt-4 px-4 py-2 bg-cta text-cta-text rounded hover:bg-cta-active"
+        <div className="flex space-x-4 px-4 pb-4">
+          <button
+            onClick={handle_LogSelectedRows}
+            className="mt-4 px-4 py-2 bg-cta text-cta-text rounded hover:bg-cta-active"
+          >
+            Log Selected
+          </button>
+
+          {table.getSelectedRowModel().rows.length > 0 && (
+            <button
+              onClick={handle_DeleteEvents}
+              className="mt-4 px-4 py-2 bg-cta text-cta-text rounded hover:bg-cta-active flex justify-center items-center space-x-2"
+            >
+              <TbTrash size={17} />
+              <span>Delete</span>
+            </button>
+          )}
+
+          {table.getSelectedRowModel().rows.length === 1 && (
+            <button
+              onClick={() => setIsModalOpen(true)}
+              className="mt-4 px-4 py-2 bg-cta text-cta-text rounded hover:bg-cta-active flex justify-center items-center space-x-2"
+            >
+              <TbEdit size={17} />
+              <span>Edit</span>
+            </button>
+          )}
+        </div>
+
+        <Modal
+          isOpen={isModalOpen}
+          onClose={() => {
+            setIsModalOpen(false);
+            runFetchEvents();
+            table.resetRowSelection();
+          }}
+          modalTitle={`Test Modal`}
         >
-          Log Selected
-        </button>
+          <Landing_EditEvent eventData={table.getSelectedRowModel().rows[0]?.original} />
+        </Modal>
 
-        {table.getSelectedRowModel().rows.length > 0 && (
-          <button
-            onClick={handle_DeleteEvents}
-            className="mt-4 px-4 py-2 bg-cta text-cta-text rounded hover:bg-cta-active flex justify-center items-center space-x-2"
-          >
-            <TbTrash size={17} />
-            <span>Delete</span>
-          </button>
-        )}
-
-        {table.getSelectedRowModel().rows.length === 1 && (
-          <button
-            onClick={() => setIsModalOpen(true)}
-            className="mt-4 px-4 py-2 bg-cta text-cta-text rounded hover:bg-cta-active flex justify-center items-center space-x-2"
-          >
-            <TbEdit size={17} />
-            <span>Edit</span>
-          </button>
-        )}
+        <Table table={table} />
+        <Pagination table={table} />
       </div>
-
-      <Modal
-        isOpen={isModalOpen}
-        onClose={() => {
-          setIsModalOpen(false);
-          runFetchEvents();
-          table.resetRowSelection();
-        }}
-        modalTitle={`Test Modal`}
-      >
-        <Landing_EditEvent eventData={table.getSelectedRowModel().rows[0]?.original} />
-      </Modal>
-
-      <Table table={table} />
-      <Pagination table={table} />
-    </div>
+    </PageLoader>
   );
 }
 

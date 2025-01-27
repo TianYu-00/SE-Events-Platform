@@ -1,12 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useUser } from "@clerk/clerk-react";
 import CustomInputTag from "../components/CustomInputTag";
 import EventCard from "../components/EventCard";
 import { cloudinaryUploadImage } from "../api_cloudinary";
 import { createEvent, updateEvent } from "../api";
 import UKCitiesList from "../utils/UKCitiesList";
+import { toast } from "react-toastify";
+import useErrorChecker from "../hooks/useErrorChecker";
 
 function EventForm({ initialEventData = null, isCreate = true }) {
+  const checkError = useErrorChecker();
+
   const { user } = useUser();
   const eventDataTemplate = {
     event_name: "",
@@ -31,6 +35,7 @@ function EventForm({ initialEventData = null, isCreate = true }) {
   const [eventData, setEventData] = useState(initialEventData || eventDataTemplate);
   const [selectedImageFile, setSelectedImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
+  const thumbnailInputRef = useRef(null);
 
   useEffect(() => {
     // console.log(eventData);
@@ -78,11 +83,19 @@ function EventForm({ initialEventData = null, isCreate = true }) {
         eventData.event_thumbnail = uploadImageResponse.secure_url;
         const createEventResponse = await createEvent(eventData);
         console.log(createEventResponse);
+        setEventData(eventDataTemplate);
+        setImagePreview(null);
+        setSelectedImageFile(null);
+        if (thumbnailInputRef.current) {
+          thumbnailInputRef.current.value = "";
+        }
+        toast.success(createEventResponse.msg);
       } else {
         console.log("secure url missing");
       }
     } catch (error) {
-      console.error(error);
+      checkError(error);
+      // console.error(error);
     }
   };
 
@@ -106,8 +119,10 @@ function EventForm({ initialEventData = null, isCreate = true }) {
       const editEventResponse = await updateEvent(eventData.event_id, eventData);
       console.log(editEventResponse);
       setEventData(editEventResponse.data);
+      toast.success(editEventResponse.msg);
     } catch (error) {
-      console.error(error);
+      // console.error(error);
+      checkError(error);
     }
   };
 
@@ -151,6 +166,7 @@ function EventForm({ initialEventData = null, isCreate = true }) {
                 className="block w-full rounded-md shadow-sm p-2 border border-border bg-card text-copy-primary focus:outline-none focus:border-border col-span-2"
                 required
                 autoComplete="new-off"
+                maxLength="255"
               />
             </div>
 
@@ -168,6 +184,7 @@ function EventForm({ initialEventData = null, isCreate = true }) {
                 readOnly
                 className="block w-full rounded-md shadow-sm p-2 border border-border bg-card text-copy-primary focus:outline-none focus:border-border col-span-2"
                 required
+                maxLength="255"
               />
             </div>
 
@@ -187,6 +204,7 @@ function EventForm({ initialEventData = null, isCreate = true }) {
                 onChange={handleInputChange}
                 className="block w-full rounded-md shadow-sm p-2 border border-border bg-card text-copy-primary focus:outline-none focus:border-border col-span-2"
                 required
+                min={new Date(Date.now() + 15 * 60 * 1000).toISOString().slice(0, 16)}
               />
             </div>
 
@@ -204,6 +222,7 @@ function EventForm({ initialEventData = null, isCreate = true }) {
                 onChange={handleInputChange}
                 className="block w-full rounded-md shadow-sm p-2 border border-border bg-card text-copy-primary focus:outline-none focus:border-border col-span-2"
                 required
+                min={new Date(Date.now() + 20 * 60 * 1000).toISOString().slice(0, 16)}
               />
             </div>
 
@@ -223,6 +242,7 @@ function EventForm({ initialEventData = null, isCreate = true }) {
                 required
                 placeholder="11 Placeholder Street"
                 autoComplete="new-off"
+                maxLength="255"
               />
             </div>
 
@@ -244,6 +264,7 @@ function EventForm({ initialEventData = null, isCreate = true }) {
                   required
                   placeholder="Manchester"
                   autoComplete="new-off"
+                  maxLength="255"
                 />
                 <datalist id="city-list">
                   {UKCitiesList.map((city) => (
@@ -269,6 +290,7 @@ function EventForm({ initialEventData = null, isCreate = true }) {
                 required
                 placeholder="M12 345"
                 autoComplete="new-off"
+                maxLength="10"
               />
             </div>
 
@@ -300,7 +322,15 @@ function EventForm({ initialEventData = null, isCreate = true }) {
                 id="event_attendees"
                 type="number"
                 value={eventData.event_attendees}
-                onChange={handleInputChange}
+                onChange={(e) => {
+                  if (parseInt(e.target.value) > parseInt(eventData.event_capacity)) {
+                    e.target.setCustomValidity("Attendees cannot exceed the event capacity.");
+                  } else {
+                    e.target.setCustomValidity("");
+                  }
+
+                  handleInputChange(e);
+                }}
                 className="block w-full rounded-md shadow-sm p-2 border border-border bg-card text-copy-primary focus:outline-none focus:border-border col-span-2"
                 min="0"
                 required
@@ -319,7 +349,14 @@ function EventForm({ initialEventData = null, isCreate = true }) {
                 id="event_capacity"
                 type="number"
                 value={eventData.event_capacity}
-                onChange={handleInputChange}
+                onChange={(e) => {
+                  if (parseInt(e.target.value) < parseInt(eventData.event_attendees)) {
+                    e.target.setCustomValidity("Event capacity cannot be less than the number of attendees.");
+                  } else {
+                    e.target.setCustomValidity("");
+                  }
+                  handleInputChange(e);
+                }}
                 className="block w-full rounded-md shadow-sm p-2 border border-border bg-card text-copy-primary focus:outline-none focus:border-border col-span-2"
                 min="1"
                 required
@@ -343,6 +380,14 @@ function EventForm({ initialEventData = null, isCreate = true }) {
                 min="0"
                 required
                 placeholder="100"
+                onInput={(e) => {
+                  const value = parseInt(e.target.value);
+                  if (value >= 1 && value <= 30) {
+                    e.target.setCustomValidity("Values between 1 and 30 are not allowed.");
+                  } else {
+                    e.target.setCustomValidity("");
+                  }
+                }}
               />
             </div>
 
@@ -362,6 +407,7 @@ function EventForm({ initialEventData = null, isCreate = true }) {
                 required
                 placeholder="tian@example.com"
                 autoComplete="new-off"
+                maxLength="255"
               />
             </div>
 
@@ -376,11 +422,13 @@ function EventForm({ initialEventData = null, isCreate = true }) {
               {/* {imagePreview && <img src={imagePreview} className="mb-2" />} */}
 
               <input
+                ref={thumbnailInputRef}
                 id="event_thumbnail"
                 type="file"
                 onChange={handleFileChange}
                 className="block w-full border-gray-300 rounded-md shadow-sm p-2 border focus:outline-none focus:border-border text-copy-primary"
                 required={isCreate}
+                maxLength="255"
               />
             </div>
 
@@ -399,6 +447,7 @@ function EventForm({ initialEventData = null, isCreate = true }) {
                 className="block w-full rounded-md shadow-sm p-2 border border-border bg-card text-copy-primary focus:outline-none focus:border-border col-span-2"
                 placeholder="https://example.com"
                 autoComplete="new-off"
+                maxLength="255"
               />
             </div>
 
@@ -434,6 +483,7 @@ function EventForm({ initialEventData = null, isCreate = true }) {
                 className="block w-full rounded-md shadow-sm p-2 border border-border bg-card text-copy-primary focus:outline-none focus:border-border col-span-2"
                 placeholder="07101010101"
                 autoComplete="new-off"
+                maxLength="15"
               />
             </div>
 
