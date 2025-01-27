@@ -4,9 +4,13 @@ import { TbArrowNarrowRight, TbCornerRightDown } from "react-icons/tb";
 import ImageScroller from "../components/ImageScroller";
 import { useNavigate } from "react-router-dom";
 import EventCardSkeleton from "../components/EventCardSkeleton";
+import { toast } from "react-toastify";
+import useErrorChecker from "../hooks/useErrorChecker";
 const EventCard = lazy(() => import("../components/EventCard"));
 
 function Landing_Home() {
+  const checkError = useErrorChecker();
+
   const [events, setEvents] = useState([]);
   const showingNewlyCreated = 3;
   const showingEventsStartingFrom = 3;
@@ -15,8 +19,12 @@ function Landing_Home() {
 
   useEffect(() => {
     const runFetchEvents = async () => {
-      const response = await getAllEvents({ orderCreatedAt: "desc" });
-      setEvents(response.data);
+      try {
+        const response = await getAllEvents({ orderCreatedAt: "desc" });
+        setEvents(response.data);
+      } catch (error) {
+        checkError(error);
+      }
     };
 
     runFetchEvents();

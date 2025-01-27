@@ -4,8 +4,10 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LazyPageLoader from "./components/LazyPageLoader";
 import { ClerkProvider } from "@clerk/clerk-react";
 import PrivateRoute from "./components/ProtectedRoute";
-import { ThemeProvider } from "./context/ThemeContext";
+import { ThemeProvider, useTheme } from "./context/ThemeContext";
 import BackToTop from "./components/BackToTop";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
@@ -45,6 +47,7 @@ const App = () => {
     >
       <ThemeProvider>
         <BrowserRouter>
+          <ThemedToastContainer />
           <div className="min-h-screen">
             <Header />
             <Suspense fallback={<LazyPageLoader delay={300} />}>
@@ -75,3 +78,23 @@ const App = () => {
 };
 
 export default App;
+
+const ThemedToastContainer = () => {
+  const { theme } = useTheme();
+  return (
+    <ToastContainer
+      position="bottom-right"
+      autoClose={3200}
+      limit={3}
+      hideProgressBar={false}
+      newestOnTop
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss={false}
+      draggable={false}
+      pauseOnHover={true}
+      theme={theme}
+      transition:Bounce
+    />
+  );
+};
