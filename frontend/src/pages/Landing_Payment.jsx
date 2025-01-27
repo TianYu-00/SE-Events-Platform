@@ -9,6 +9,7 @@ import { useUser } from "@clerk/clerk-react";
 
 import { toast } from "react-toastify";
 import useErrorChecker from "../hooks/useErrorChecker";
+import PageLoader from "../components/PageLoader";
 
 // Stripe
 const STRIPE_PUBLISHABLE_KEY = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY;
@@ -32,9 +33,13 @@ function Landing_Payment() {
 
   const { user } = useUser();
 
+  const [isLoadingEvent, setIsLoadingEvent] = useState(true);
+  const [isLoadingPaymentIntent, setIsLoadingPaymentIntent] = useState(true);
+
   useEffect(() => {
     const getEventDetails = async () => {
       try {
+        setIsLoadingEvent(true);
         const response = await getEvent(eventId);
         if (new Date(response.data.event_start_date) <= new Date()) {
           const error = new Error("You can not purchase outdated events.");
@@ -50,6 +55,8 @@ function Landing_Payment() {
         if (errorCode === "EVENT_NOT_FOUND" || errorCode === "INVALID_PARAMS" || clientErrorCode === "OUTDATED_EVENT") {
           navigate(`/`);
         }
+      } finally {
+        setIsLoadingEvent(false);
       }
     };
 
@@ -59,6 +66,7 @@ function Landing_Payment() {
   useEffect(() => {
     const runCreatePaymentIntent = async () => {
       try {
+        setIsLoadingPaymentIntent(true);
         const response = await createPayment({ eventId: eventId, userId: user.id });
         // console.log(response);
         setClientSecret(response.data.clientSecret);
@@ -69,6 +77,8 @@ function Landing_Payment() {
         if (errorCode === "NO_TICKETS_AVAILABLE") {
           navigate(`/`);
         }
+      } finally {
+        setIsLoadingPaymentIntent(false);
       }
     };
 
@@ -78,15 +88,17 @@ function Landing_Payment() {
   }, [event, user]);
 
   return (
-    <div className="w-full min-h-[calc(100vh-5rem)] flex justify-center items-center">
-      <div className="w-full h-full">
-        {clientSecret && stripePromise && eventPrice && (
-          <Elements stripe={stripePromise} options={elementOptions}>
-            <CheckoutForm eventPrice={eventPrice} eventName={event.event_name} />
-          </Elements>
-        )}
+    <PageLoader isLoading={isLoadingEvent || isLoadingPaymentIntent} message="creating payment intent">
+      <div className="w-full min-h-[calc(100vh-5rem)] flex justify-center items-center">
+        <div className="w-full h-full">
+          {clientSecret && stripePromise && eventPrice && (
+            <Elements stripe={stripePromise} options={elementOptions}>
+              <CheckoutForm eventPrice={eventPrice} eventName={event.event_name} />
+            </Elements>
+          )}
+        </div>
       </div>
-    </div>
+    </PageLoader>
   );
 }
 

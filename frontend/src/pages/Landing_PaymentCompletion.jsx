@@ -7,6 +7,7 @@ import successAnimation from "../assets/lotties/Animation_Success - 173708752520
 import failAnimation from "../assets/lotties/Animation_Fail - 1737087453027.json";
 import { toast } from "react-toastify";
 import useErrorChecker from "../hooks/useErrorChecker";
+import PageLoader from "../components/PageLoader";
 
 function Landing_PaymentCompletion() {
   const checkError = useErrorChecker();
@@ -23,6 +24,7 @@ function Landing_PaymentCompletion() {
   useEffect(() => {
     const verifyPaymentSuccessful = async () => {
       try {
+        setIsLoading(true);
         const response = await verifyPayment({ paymentIntentId: paymentIntentId, userId: user.id });
         // console.log(response.data);
         setPaymentData(response.data);
@@ -55,36 +57,34 @@ function Landing_PaymentCompletion() {
     }
   }, [user, paymentIntentId]);
 
-  if (isLoading) {
-    return <>{console.log("Loading")}</>;
-  }
-
   return (
-    <div className="text-copy-primary w-full min-h-[calc(100vh-5rem)] flex justify-center items-center flex-col">
-      <div className="w-40">
+    <PageLoader isLoading={isLoading} message="verifying payment">
+      <div className="text-copy-primary w-full min-h-[calc(100vh-5rem)] flex justify-center items-center flex-col">
+        <div className="w-40">
+          {paymentData?.status === "succeeded" ? (
+            <Lottie animationData={successAnimation} loop autoplay />
+          ) : (
+            <Lottie animationData={failAnimation} loop autoplay />
+          )}
+        </div>
+        <h2 className="font-bold text-xl">{paymentMessage}</h2>
         {paymentData?.status === "succeeded" ? (
-          <Lottie animationData={successAnimation} loop autoplay />
+          <button
+            className="p-2 bg-cta text-cta-text rounded-md hover:bg-cta-active mt-6"
+            onClick={() => navigate("/", { replace: true })}
+          >
+            Return To Home
+          </button>
         ) : (
-          <Lottie animationData={failAnimation} loop autoplay />
+          <button
+            className="p-2 bg-cta text-cta-text rounded-md hover:bg-cta-active mt-6"
+            onClick={() => navigate(`/payment?event_id=${paymentData?.metadata?.event_id}`, { replace: true })}
+          >
+            Try again
+          </button>
         )}
       </div>
-      <h2 className="font-bold text-xl">{paymentMessage}</h2>
-      {paymentData?.status === "succeeded" ? (
-        <button
-          className="p-2 bg-cta text-cta-text rounded-md hover:bg-cta-active mt-6"
-          onClick={() => navigate("/", { replace: true })}
-        >
-          Return To Home
-        </button>
-      ) : (
-        <button
-          className="p-2 bg-cta text-cta-text rounded-md hover:bg-cta-active mt-6"
-          onClick={() => navigate(`/payment?event_id=${paymentData?.metadata?.event_id}`, { replace: true })}
-        >
-          Try again
-        </button>
-      )}
-    </div>
+    </PageLoader>
   );
 }
 
