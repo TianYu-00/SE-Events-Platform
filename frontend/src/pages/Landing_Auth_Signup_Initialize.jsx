@@ -3,8 +3,12 @@ import { initializeUser } from "../api";
 import { useUser } from "@clerk/clerk-react";
 import { useNavigate } from "react-router-dom";
 import PageLoader from "../components/PageLoader";
+import { toast } from "react-toastify";
+import useErrorChecker from "../hooks/useErrorChecker";
 
 function Landing_Auth_Signup_Initialize() {
+  const checkError = useErrorChecker();
+
   const [isInitializing, setIsInitializing] = useState(true);
   const { user, isSignedIn, isLoaded } = useUser();
   const navigate = useNavigate();
@@ -15,7 +19,7 @@ function Landing_Auth_Signup_Initialize() {
         setIsInitializing(true);
         await initializeUser(user.id, user.publicMetadata);
       } catch (error) {
-        console.error("User initialization failed:", error);
+        checkError(error);
       } finally {
         setIsInitializing(false);
       }
