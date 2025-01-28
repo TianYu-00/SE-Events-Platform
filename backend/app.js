@@ -8,7 +8,7 @@ const errorHandler = require("./utils/middleware/errorHandler");
 const app = express();
 const allowedCorsOrigin = ["http://127.0.0.1:5173", "http://localhost:5173"];
 const corsConfigOptions = {
-  origin: allowedCorsOrigin,
+  origin: process.env.FRONTEND_URL || allowedCorsOrigin,
   credentials: true,
 };
 const globalLimiter = rateLimit({

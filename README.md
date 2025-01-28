@@ -12,6 +12,11 @@ Project that allows community memebers to view, sign up for and add events to th
 
 ![Image](https://github.com/user-attachments/assets/e2e31252-3215-4acb-adc8-5e96ab9557b5)
 
+|                  **Frontend**                  |                     **Backend**                      |      **Database**      |
+|:----------------------------------------------:|:----------------------------------------------------:|:----------------------:|
+|              _https://vercel.com_              |                 _https://render.com_                 | _https://supabase.com_ |
+| _https://se-events-platform-tianyu.vercel.app_ | _https://se-events-platform-tianyu.onrender.com/api_ |       _Private_        |
+
 </div>
 
 # Prerequisites
@@ -28,10 +33,10 @@ cd backend
 npm install
 ```
 ```
-npm test
-```
-```
 npm start
+```
+```
+npm test
 ```
 
 # Frontend
@@ -79,9 +84,36 @@ PGDATABASE=
 # Clerk
 CLERK_PUBLISHABLE_KEY=
 CLERK_SECRET_KEY=
+CLERK_TESTING_ADMIN_TOKEN=
+CLERK_TESTING_USER_TOKEN=
+
 
 #Stripe
 STRIPE_SECRET_KEY=
+```
+
+### Backend `.env.production`
+``` 
+# Express
+PORT=
+FRONTEND_URL=
+
+# Database
+DATABASE_URL=
+
+# Clerk
+CLERK_PUBLISHABLE_KEY=
+CLERK_SECRET_KEY=
+
+# Cloudinary
+CLOUDINARY_CLOUD_NAME=
+CLOUDINARY_API_KEY=
+CLOUDINARY_API_SECRET=
+
+#Stripe
+STRIPE_SECRET_KEY=
+STRIPE_WEBHOOK_SECRET=
+
 ```
 
 ### Frontend `.env.local`
@@ -92,6 +124,26 @@ VITE_CLERK_PUBLISHABLE_KEY=
 #Cloudinary
 VITE_CLOUDINARY_CLOUD_NAME=
 VITE_CLOUDINARY_UPLOAD_PRESET_NAME=
+VITE_CLOUDINARY_API_KEY=
+
+
+#Stripe
+VITE_STRIPE_PUBLISHABLE_KEY=
+```
+
+### Frontend `.env.production`
+```
+#
+VITE_BACKEND_URL=
+
+#Clerk
+VITE_CLERK_PUBLISHABLE_KEY=
+
+#Cloudinary
+VITE_CLOUDINARY_CLOUD_NAME=
+VITE_CLOUDINARY_UPLOAD_PRESET_NAME=
+VITE_CLOUDINARY_API_KEY=
+
 
 #Stripe
 VITE_STRIPE_PUBLISHABLE_KEY=

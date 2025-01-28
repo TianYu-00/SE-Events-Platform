@@ -95,7 +95,7 @@ function Landing_ManageEvents() {
   };
 
   return (
-    <PageLoader isLoading={isLoading} message="fetching events">
+    <PageLoader isLoading={isLoading} message="fetching events" delay={0}>
       <div>
         <Search globalFilter={globalFilter} setGlobalFilter={setGlobalFilter} />
 
