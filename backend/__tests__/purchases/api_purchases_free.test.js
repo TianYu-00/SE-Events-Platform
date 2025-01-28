@@ -1,5 +1,4 @@
 const { app, request, db, seed, data, userToken } = require("../../utils/test-utils/index");
-require("jest-sorted");
 
 afterAll(() => {
   return db.end();
