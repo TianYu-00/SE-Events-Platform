@@ -41,11 +41,14 @@ function Landing_Home() {
   }, [events]);
 
   return (
-    <PageLoader isLoading={isLoading} message="fetching events">
+    <PageLoader isLoading={isLoading} message="fetching events" delay={0}>
       <div className="text-copy-primary">
         {/* Event scroller */}
         <div className="relative">
-          <ImageScroller events={events} />
+          <div className="h-full">
+            <ImageScroller events={events} />
+          </div>
+
           <div className="absolute inset-0 flex flex-col items-center justify-center bg-black opacity-40"></div>
           <div className="absolute inset-0 flex flex-col items-center justify-center">
             <h2 className="text-white font-bold text-2xl md:text-5xl mb-4">Lorem ipsum dolor sit amet.</h2>

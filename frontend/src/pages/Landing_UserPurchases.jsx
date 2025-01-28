@@ -68,7 +68,7 @@ function Landing_ManageEvents() {
   });
 
   return (
-    <PageLoader isLoading={isLoading} message="fetching purchases">
+    <PageLoader isLoading={isLoading} message="fetching purchases" delay={0}>
       <div>
         <Search globalFilter={globalFilter} setGlobalFilter={setGlobalFilter} />
 
