@@ -101,6 +101,5 @@ sudo mv stripe /usr/local/bin/
 - Have event card live preview float down when scrolling down
 
 # TODO
-- Make sure user specific api calls have user validation
 
 # 🔴 Urgent TODO
