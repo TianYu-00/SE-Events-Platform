@@ -131,22 +131,27 @@ function EventForm({ initialEventData = null, isCreate = true }) {
 
   return (
     <div className="flex justify-center">
-      <div className="hidden md:block w-[450px] mr-10">
-        <EventCard
-          event={{
-            event_name: eventData.event_name,
-            event_thumbnail: imagePreview || eventData.event_thumbnail,
-            event_street_address: eventData.event_street_address,
-            event_city_town: eventData.event_city_town,
-            event_postcode: eventData.event_postcode,
-            event_start_date: eventData.event_start_date,
-            event_description: eventData.event_description,
-            event_cost_in_pence: eventData.event_cost_in_pence,
-            event_attendees: eventData.event_attendees,
-            event_capacity: eventData.event_capacity,
-          }}
-        />
+      {/* Event live preview */}
+      <div className="hidden md:block min-w-[450px] px-4">
+        <div className="w-full sticky top-10 z-10">
+          <EventCard
+            event={{
+              event_name: eventData.event_name,
+              event_thumbnail: imagePreview || eventData.event_thumbnail,
+              event_street_address: eventData.event_street_address,
+              event_city_town: eventData.event_city_town,
+              event_postcode: eventData.event_postcode,
+              event_start_date: eventData.event_start_date,
+              event_description: eventData.event_description,
+              event_cost_in_pence: eventData.event_cost_in_pence,
+              event_attendees: eventData.event_attendees,
+              event_capacity: eventData.event_capacity,
+            }}
+          />
+        </div>
       </div>
+
+      {/* Event form */}
       <div className="max-w-screen-md flex justify-center w-full">
         <div className="w-full p-4 border border-border bg-card/70 rounded-lg shadow-lg">
           <form onSubmit={isCreate ? handle_createEvent : handle_editEvent} className="grid gap-7 grid-cols-2 mt-6">
