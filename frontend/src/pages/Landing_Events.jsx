@@ -5,10 +5,12 @@ import EventCardSkeleton from "../components/EventCardSkeleton";
 import { TbChevronLeft, TbChevronRight } from "react-icons/tb";
 import useErrorChecker from "../hooks/useErrorChecker";
 import PageLoader from "../components/PageLoader";
+import { useSearchParams } from "react-router-dom";
 const EventCard = lazy(() => import("../components/EventCard"));
 
 function Landing_Events() {
   const checkError = useErrorChecker();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const [originalEvents, setOriginalEvents] = useState([]);
   const [filteredEvents, setFilteredEvents] = useState([]);
@@ -36,7 +38,11 @@ function Landing_Events() {
       }
     };
 
-    runFetchEvents();
+    if (searchParams <= 0) {
+      runFetchEvents();
+    } else {
+      setIsInitialLoad(false);
+    }
   }, []);
 
   useEffect(() => {
