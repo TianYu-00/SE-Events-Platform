@@ -6,11 +6,11 @@ const ImageScroller = ({ events }) => {
   const responsive = {
     superLarge: {
       breakpoint: { max: 4000, min: 3000 },
-      items: 5,
+      items: 3,
     },
     large: {
       breakpoint: { max: 3000, min: 1200 },
-      items: 4,
+      items: 3,
     },
     medium: {
       breakpoint: { max: 1200, min: 900 },

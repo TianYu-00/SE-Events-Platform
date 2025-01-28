@@ -9,7 +9,7 @@ function PageLoader({ isLoading, delay = 100, timer = 300, message = "", childre
   useEffect(() => {
     const tempNote =
       process.env.NODE_ENV === "production"
-        ? "Note: my server may spin down during inactivity, causing delays of 50+ seconds on the first request."
+        ? "Please note The server may take 50+ seconds to spin back up and respond after periods of inactivity"
         : "";
     setNote(`${tempNote}`);
   }, []);
