@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useUser } from "@clerk/clerk-react";
+import { useUser, useAuth } from "@clerk/clerk-react";
 import { createFreePurchase } from "../api";
 import { toast } from "react-toastify";
 import useErrorChecker from "../hooks/useErrorChecker";
@@ -8,6 +8,7 @@ import useErrorChecker from "../hooks/useErrorChecker";
 export const useEventPurchase = (event) => {
   const navigate = useNavigate();
   const { user } = useUser();
+  const { getToken } = useAuth();
 
   const purchaseEvent = async () => {
     const checkError = useErrorChecker();
@@ -22,10 +23,12 @@ export const useEventPurchase = (event) => {
           toast.warn("Please contact support to update the price of this ticket to not be between 1-30 pence");
         } else {
           try {
+            const token = await getToken();
             const response = await createFreePurchase({
               userId: user.id,
               eventName: event.event_name,
               eventId: event.event_id,
+              token: token,
             });
             toast.success(response.msg);
           } catch (error) {

@@ -18,8 +18,11 @@ import useErrorChecker from "../hooks/useErrorChecker";
 import { toast } from "react-toastify";
 import PageLoader from "../components/PageLoader";
 
+import { useAuth } from "@clerk/clerk-react";
+
 function Landing_ManageEvents() {
   const checkError = useErrorChecker();
+  const { getToken } = useAuth();
 
   const [events, setEvents] = useState([]);
   const [sorting, setSorting] = useState([]);
@@ -77,7 +80,8 @@ function Landing_ManageEvents() {
         console.error("Delete rejected, no row selected");
         return;
       }
-      const response = await deleteEvents({ listOfEventIds: listOfEventIds });
+      const token = await getToken();
+      const response = await deleteEvents({ listOfEventIds: listOfEventIds, token: token });
       console.log(response);
       if (response.success) {
         setEvents((prevEvents) => prevEvents.filter((event) => !listOfEventIds.includes(event.event_id)));

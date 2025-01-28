@@ -1,4 +1,4 @@
-const { app, request, db, seed, data } = require("../../utils/test-utils/index");
+const { app, request, db, seed, data, adminToken, userToken } = require("../../utils/test-utils/index");
 afterAll(() => {
   return db.end();
 });
@@ -29,7 +29,11 @@ describe("POST /api/events", () => {
   };
 
   test("should return 200 and success message when valid event data is provided", async () => {
-    const { body } = await request(app).post("/api/events").send(validEventData).expect(200);
+    const { body } = await request(app)
+      .post("/api/events")
+      .auth(adminToken, { type: "bearer" })
+      .send(validEventData)
+      .expect(200);
 
     expect(body.success).toBe(true);
     expect(body.data).toHaveProperty("event_name", validEventData.event_name);
@@ -42,14 +46,28 @@ describe("POST /api/events", () => {
       event_start_date: null,
     };
 
-    const { body } = await request(app).post("/api/events").send(incompleteEventData).expect(400);
+    const { body } = await request(app)
+      .post("/api/events")
+      .auth(adminToken, { type: "bearer" })
+      .send(incompleteEventData)
+      .expect(400);
     expect(body.success).toBe(false);
     expect(body.code).toBe("BODY_CONTENT_INCOMPLETE");
   });
 
   test("should return 400 and error message when request body is empty", async () => {
-    const { body } = await request(app).post("/api/events").send({}).expect(400);
+    const { body } = await request(app).post("/api/events").auth(adminToken, { type: "bearer" }).send({}).expect(400);
     expect(body.success).toBe(false);
     expect(body.code).toBe("BODY_CONTENT_INCOMPLETE");
+  });
+
+  test("user should not have access to this route", async () => {
+    const { body } = await request(app)
+      .post("/api/events")
+      .auth(userToken, { type: "bearer" })
+      .send(validEventData)
+      .expect(403);
+
+    expect(body.code).toBe("ACCESS_DENIED");
   });
 });

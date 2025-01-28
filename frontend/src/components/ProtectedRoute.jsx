@@ -13,7 +13,7 @@ const PrivateRoute = ({ element }) => {
   }, [isLoaded]);
 
   if (!loading) {
-    return user.publicMetadata.role === "admin" ? element : <Navigate to="/" replace />;
+    return user?.publicMetadata?.role === "admin" ? element : <Navigate to="/" replace />;
   }
 };
 

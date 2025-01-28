@@ -1,4 +1,4 @@
-const { app, request, db, seed, data } = require("../../utils/test-utils/index");
+const { app, request, db, seed, data, userToken } = require("../../utils/test-utils/index");
 require("jest-sorted");
 afterAll(() => {
   return db.end();
@@ -10,16 +10,16 @@ beforeEach(async () => {
 
 describe("GET /api/purchases", () => {
   test("should return a 200 status code", async () => {
-    await request(app).get("/api/purchases").expect(200);
+    await request(app).get("/api/purchases").auth(userToken, { type: "bearer" }).expect(200);
   });
 
   test("should return success = true", async () => {
-    const { body } = await request(app).get("/api/purchases");
+    const { body } = await request(app).get("/api/purchases").auth(userToken, { type: "bearer" });
     expect(body.success).toBe(true);
   });
 
   test("should return correct purchase object", async () => {
-    const { body } = await request(app).get("/api/purchases");
+    const { body } = await request(app).get("/api/purchases").auth(userToken, { type: "bearer" });
     for (const user of body.data) {
       expect(user).toMatchObject({
         purchase_user_id: expect.any(String),
@@ -40,19 +40,22 @@ describe("GET /api/purchases", () => {
 
   // test order
   test("should return purchases ordered in ascending order by purchase_created_at", async () => {
-    const { body } = await request(app).get("/api/purchases?order_created_at=asc");
+    const { body } = await request(app).get("/api/purchases?order_created_at=asc").auth(userToken, { type: "bearer" });
     const purchaseDates = body.data.map((purchase) => new Date(purchase.purchase_created_at));
     expect(purchaseDates).toBeSorted({ descending: false });
   });
 
   test("should return purchases ordered in descending order by purchase_created_at", async () => {
-    const { body } = await request(app).get("/api/purchases?order_created_at=desc");
+    const { body } = await request(app).get("/api/purchases?order_created_at=desc").auth(userToken, { type: "bearer" });
     const purchaseDates = body.data.map((purchase) => new Date(purchase.purchase_created_at));
     expect(purchaseDates).toBeSorted({ descending: true });
   });
 
   test("should return a status code 400 and error if order query was not asc or desc", async () => {
-    const { body } = await request(app).get("/api/purchases?order_created_at=invalidOrder").expect(400);
+    const { body } = await request(app)
+      .get("/api/purchases?order_created_at=invalidOrder")
+      .auth(userToken, { type: "bearer" })
+      .expect(400);
     expect(body.success).toBe(false);
     expect(body.code).toBe("INVALID_QUERY");
   });
@@ -60,7 +63,7 @@ describe("GET /api/purchases", () => {
   // test user_id
   test("should return purchases only for the specified user_id", async () => {
     const userId = "user_2rPTtagNORnIeB0T5rMsFOnlzxc";
-    const { body } = await request(app).get(`/api/purchases?user_id=${userId}`);
+    const { body } = await request(app).get(`/api/purchases?user_id=${userId}`).auth(userToken, { type: "bearer" });
     expect(body.success).toBe(true);
     for (const purchase of body.data) {
       expect(purchase.purchase_user_id).toBe(userId);
@@ -69,14 +72,16 @@ describe("GET /api/purchases", () => {
 
   test("should return an empty array if no purchases are found for the user_id", async () => {
     const userId = "non_existent_user";
-    const { body } = await request(app).get(`/api/purchases?user_id=${userId}`);
+    const { body } = await request(app).get(`/api/purchases?user_id=${userId}`).auth(userToken, { type: "bearer" });
     expect(body.success).toBe(true);
     expect(body.data).toEqual([]);
   });
 
   test("should return purchases filtered by user_id and ordered in ascending order by purchase_created_at", async () => {
     const userId = "user_2rPTtagNORnIeB0T5rMsFOnlzxc";
-    const { body } = await request(app).get(`/api/purchases?user_id=${userId}&order_created_at=asc`);
+    const { body } = await request(app)
+      .get(`/api/purchases?user_id=${userId}&order_created_at=asc`)
+      .auth(userToken, { type: "bearer" });
     expect(body.success).toBe(true);
     const purchaseDates = body.data.map((purchase) => new Date(purchase.purchase_created_at));
     expect(purchaseDates).toBeSorted({ descending: false });
@@ -85,7 +90,9 @@ describe("GET /api/purchases", () => {
 
   test("should return purchases filtered by user_id and ordered in descending order by purchase_created_at", async () => {
     const userId = "user_2rPTtagNORnIeB0T5rMsFOnlzxc";
-    const { body } = await request(app).get(`/api/purchases?user_id=${userId}&order_created_at=desc`);
+    const { body } = await request(app)
+      .get(`/api/purchases?user_id=${userId}&order_created_at=desc`)
+      .auth(userToken, { type: "bearer" });
     expect(body.success).toBe(true);
     const purchaseDates = body.data.map((purchase) => new Date(purchase.purchase_created_at));
     expect(purchaseDates).toBeSorted({ descending: true });
@@ -93,7 +100,7 @@ describe("GET /api/purchases", () => {
   });
 
   test("should ignore invalid user_id query and return all purchases", async () => {
-    const { body } = await request(app).get("/api/purchases?user_id=");
+    const { body } = await request(app).get("/api/purchases?user_id=").auth(userToken, { type: "bearer" });
     expect(body.success).toBe(true);
     expect(body.data.length).toBeGreaterThan(0);
   });

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { verifyPayment } from "../api";
-import { useUser } from "@clerk/clerk-react";
+import { useUser, useAuth } from "@clerk/clerk-react";
 import Lottie from "lottie-react";
 import successAnimation from "../assets/lotties/Animation_Success - 1737087525207.json";
 import failAnimation from "../assets/lotties/Animation_Fail - 1737087453027.json";
@@ -11,6 +11,7 @@ import PageLoader from "../components/PageLoader";
 
 function Landing_PaymentCompletion() {
   const checkError = useErrorChecker();
+  const { getToken } = useAuth();
 
   const { user } = useUser();
   const location = useLocation();
@@ -25,7 +26,8 @@ function Landing_PaymentCompletion() {
     const verifyPaymentSuccessful = async () => {
       try {
         setIsLoading(true);
-        const response = await verifyPayment({ paymentIntentId: paymentIntentId, userId: user.id });
+        const token = await getToken();
+        const response = await verifyPayment({ paymentIntentId: paymentIntentId, userId: user.id, token: token });
         // console.log(response.data);
         setPaymentData(response.data);
         if (response.data?.status === "succeeded") {

@@ -1,4 +1,4 @@
-const { app, request, db, seed, data } = require("../../utils/test-utils/index");
+const { app, request, db, seed, data, adminToken, userToken } = require("../../utils/test-utils/index");
 
 const validEventData = {
   event_name: "Test Event",
@@ -34,11 +34,16 @@ describe("PATCH /api/events/:event_id", () => {
       event_name: "Test 123",
     };
 
-    const { body: createEventResponse } = await request(app).post("/api/events").send(validEventData).expect(200);
+    const { body: createEventResponse } = await request(app)
+      .post("/api/events")
+      .auth(adminToken, { type: "bearer" })
+      .send(validEventData)
+      .expect(200);
     updateData.event_modified_at = createEventResponse.data.event_modified_at;
 
     const { body } = await request(app)
       .patch(`/api/events/${createEventResponse.data.event_id}`)
+      .auth(adminToken, { type: "bearer" })
       .send(updateData)
       .expect(200);
     expect(body.success).toBe(true);
@@ -51,7 +56,11 @@ describe("PATCH /api/events/:event_id", () => {
       event_name: "Test 123",
     };
 
-    const { body } = await request(app).patch(`/api/events/99999`).send(updateData).expect(404);
+    const { body } = await request(app)
+      .patch(`/api/events/99999`)
+      .auth(adminToken, { type: "bearer" })
+      .send(updateData)
+      .expect(404);
 
     expect(body.success).toBe(false);
     expect(body.code).toBe("EVENT_NOT_FOUND");
@@ -62,7 +71,11 @@ describe("PATCH /api/events/:event_id", () => {
       invalid_field: "Invalid field data",
     };
 
-    const { body } = await request(app).patch(`/api/events/1`).send(updateData).expect(400);
+    const { body } = await request(app)
+      .patch(`/api/events/1`)
+      .auth(adminToken, { type: "bearer" })
+      .send(updateData)
+      .expect(400);
 
     expect(body.success).toBe(false);
     expect(body.code).toBe("BODY_CONTENT_INVALID");
@@ -75,11 +88,16 @@ describe("PATCH /api/events/:event_id", () => {
       event_capacity: 100,
     };
 
-    const { body: createEventResponse } = await request(app).post("/api/events").send(validEventData).expect(200);
+    const { body: createEventResponse } = await request(app)
+      .post("/api/events")
+      .auth(adminToken, { type: "bearer" })
+      .send(validEventData)
+      .expect(200);
     updateData.event_modified_at = createEventResponse.data.event_modified_at;
 
     const { body } = await request(app)
       .patch(`/api/events/${createEventResponse.data.event_id}`)
+      .auth(adminToken, { type: "bearer" })
       .send(updateData)
       .expect(200);
 
@@ -94,11 +112,16 @@ describe("PATCH /api/events/:event_id", () => {
       event_name: "Test 123",
     };
 
-    const { body: createEventResponse } = await request(app).post("/api/events").send(validEventData).expect(200);
+    const { body: createEventResponse } = await request(app)
+      .post("/api/events")
+      .auth(adminToken, { type: "bearer" })
+      .send(validEventData)
+      .expect(200);
     updateData.event_modified_at = createEventResponse.data.event_modified_at;
 
     const { body } = await request(app)
       .patch(`/api/events/${createEventResponse.data.event_id}`)
+      .auth(adminToken, { type: "bearer" })
       .send(updateData)
       .expect(200);
 
@@ -111,9 +134,34 @@ describe("PATCH /api/events/:event_id", () => {
       event_name: "Invalid Event ID Type",
     };
 
-    const { body } = await request(app).patch(`/api/events/abc`).send(updateData).expect(400);
+    const { body } = await request(app)
+      .patch(`/api/events/abc`)
+      .auth(adminToken, { type: "bearer" })
+      .send(updateData)
+      .expect(400);
 
     expect(body.success).toBe(false);
     expect(body.code).toBe("INVALID_PARAMS");
+  });
+
+  test("user should not have access to this route", async () => {
+    const updateData = {
+      event_name: "Test 123",
+    };
+
+    const { body: createEventResponse } = await request(app)
+      .post("/api/events")
+      .auth(adminToken, { type: "bearer" })
+      .send(validEventData)
+      .expect(200);
+    updateData.event_modified_at = createEventResponse.data.event_modified_at;
+
+    const { body } = await request(app)
+      .patch(`/api/events/${createEventResponse.data.event_id}`)
+      .auth(userToken, { type: "bearer" })
+      .send(updateData)
+      .expect(403);
+
+    expect(body.code).toBe("ACCESS_DENIED");
   });
 });

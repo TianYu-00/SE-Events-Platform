@@ -39,6 +39,13 @@ Main Tools to use:
 - Tailwind
 - React-Icons
 
+# NOTE CLERK
+- https://clerk.com/docs/testing/postman-or-insomnia
+- `await window.Clerk.session.getToken({ template: '<template name>' })`
+- https://clerk.com/docs/references/express/overview#require-auth
+- https://clerk.com/docs/references/express/overview#example-use-clerk-client-to-get-a-users-information
+- https://dev.to/mad/api-testing-with-clerk-and-express-2i56
+
 # NOTE Cloudinary
 - https://api.cloudinary.com/v1_1/:cloudName/upload
 - need formData with

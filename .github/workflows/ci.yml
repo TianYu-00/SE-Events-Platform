@@ -26,6 +26,8 @@ jobs:
           echo "PGDATABASE=${{ secrets.PGDATABASE }}" >> $GITHUB_ENV
           echo "CLERK_PUBLISHABLE_KEY=${{ secrets.CLERK_PUBLISHABLE_KEY }}" >> $GITHUB_ENV
           echo "CLERK_SECRET_KEY=${{ secrets.CLERK_SECRET_KEY }}" >> $GITHUB_ENV
+          echo "CLERK_TESTING_ADMIN_TOKEN=${{ secrets.CLERK_TESTING_ADMIN_TOKEN }}" >> $GITHUB_ENV
+          echo "CLERK_TESTING_USER_TOKEN=${{ secrets.CLERK_TESTING_USER_TOKEN }}" >> $GITHUB_ENV
           echo "STRIPE_SECRET_KEY=${{ secrets.STRIPE_SECRET_KEY }}" >> $GITHUB_ENV
 
       - name: Start and wait for PostgreSQL container
