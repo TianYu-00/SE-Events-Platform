@@ -4,6 +4,16 @@ import HashLoader from "react-spinners/HashLoader";
 function PageLoader({ isLoading, delay = 100, timer = 300, message = "", children }) {
   const [shouldDisplayLoader, setShouldDisplayLoader] = useState(false);
 
+  const [note, setNote] = useState("");
+
+  useEffect(() => {
+    const tempNote =
+      process.env.NODE_ENV === "production"
+        ? "Note: my server may spin down during inactivity, causing delays of 50+ seconds on the first request."
+        : "";
+    setNote(`${tempNote}`);
+  }, []);
+
   useEffect(() => {
     let delayTimeout;
     let hideTimeout;
@@ -29,6 +39,7 @@ function PageLoader({ isLoading, delay = 100, timer = 300, message = "", childre
       <div className="fixed top-0 left-0 h-screen w-screen z-50 flex items-center justify-center bg-background overflow-hidden flex flex-col">
         <HashLoader color="#1764FF" />
         <p className="text-copy-secondary pt-4 animate-pulse">{message}</p>
+        <p className="text-copy-secondary pt-10">{note}</p>
       </div>
     );
   } else {
