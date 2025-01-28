@@ -45,10 +45,7 @@ function Landing_Home() {
       <div className="text-copy-primary">
         {/* Event scroller */}
         <div className="relative">
-          <div className="h-full">
-            <ImageScroller events={events} />
-          </div>
-
+          <ImageScroller events={events} />
           <div className="absolute inset-0 flex flex-col items-center justify-center bg-black opacity-40"></div>
           <div className="absolute inset-0 flex flex-col items-center justify-center">
             <h2 className="text-white font-bold text-2xl md:text-5xl mb-4">Lorem ipsum dolor sit amet.</h2>
