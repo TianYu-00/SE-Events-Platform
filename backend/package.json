@@ -6,7 +6,9 @@
     "test": "jest --runInBand",
     "start": "nodemon listen.js",
     "setup-db": "psql -f ./db/create_database.sql",
-    "seed": "node db/run_seed.js"
+    "seed": "node db/run_seed.js",
+    "seed-prod": "NODE_ENV=production node db/run_seed.js",
+    "start-prod": "NODE_ENV=production node db/run_seed.js && nodemon listen.js"
   },
   "keywords": [],
   "author": "",
