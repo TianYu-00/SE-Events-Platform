@@ -96,10 +96,14 @@ sudo mv stripe /usr/local/bin/
 - Need to sort out my naming conventions later to be more consistent i.e handleXXX to handle_WhatEverItDoes
 
 # SOME TODO LIST (Optional):
+- when selecting filter, add it to url query
+- when searching, add it to url query
+- when selecting city, add it to url query
 - Add clickable tags that redirect to the events page with a query parameter search=tag, automatically searching for events that has the same tag.
+
 - Add Clerk Webhook to assign user role on registration
-- Have event card live preview float down when scrolling down
 
 # TODO
+- Have event card live preview float down when scrolling down
 
 # 🔴 Urgent TODO
