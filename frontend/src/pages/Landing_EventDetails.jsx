@@ -306,16 +306,3 @@ function ShareToSocial({ isOpen, onClose, url: shareUrl, title: shareTitle, text
     </Modal>
   );
 }
-
-/*
-
-- Get event id from link
-- Fetch event by id
-- Display event info
-- Add to calendar
-- Pay for the event
-
-Optional:
-- Share event
-
-*/
