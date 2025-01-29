@@ -46,11 +46,13 @@ function Landing_Home() {
         {/* Event scroller */}
         <div className="relative">
           <ImageScroller events={events} />
-          <div className="absolute inset-0 flex flex-col items-center justify-center bg-black opacity-40"></div>
+          <div className="absolute inset-0 flex flex-col items-center justify-center bg-black opacity-80"></div>
           <div className="absolute inset-0 flex flex-col items-center justify-center">
-            <h2 className="text-white font-bold text-2xl md:text-5xl mb-4">Lorem ipsum dolor sit amet.</h2>
+            <h2 className="text-white font-bold text-2xl md:text-5xl mb-4 w-2/3 text-center">
+              Discover and grab your tickets for amazing events happening across the UK!
+            </h2>
             <button
-              className="text-cta-text bg-cta hover:bg-cta-active py-3 px-4 rounded-md font-semibold flex items-center space-x-2"
+              className="text-cta-text bg-cta hover:bg-cta-active py-3 px-4 rounded-full font-semibold flex items-center space-x-2"
               onClick={() => navigate("/events")}
             >
               <span>Explore Events</span>
