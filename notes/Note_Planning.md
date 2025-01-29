@@ -93,11 +93,11 @@ sudo mv stripe /usr/local/bin/
 
 
 # NOTE
-- Need to sort out my naming conventions later to be more consistent i.e handleXXX to handle_WhatEverItDoes
 
 # SOME TODO LIST (Optional):
 - Add Clerk Webhook to assign user role on registration
 
 # TODO
+- Need to sort out my naming conventions later to be more consistent i.e handleXXX to handle_WhatEverItDoes
 
 # 🔴 Urgent TODO

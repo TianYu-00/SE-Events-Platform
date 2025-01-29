@@ -42,7 +42,7 @@ function EventForm({ initialEventData = null, isCreate = true }) {
     // console.log(eventData);
   }, [eventData]);
 
-  const handleInputChange = (e) => {
+  const handle_InputChange = (e) => {
     const { id, value } = e.target;
     setEventData((prevData) => ({
       ...prevData,
@@ -50,7 +50,7 @@ function EventForm({ initialEventData = null, isCreate = true }) {
     }));
   };
 
-  const handleFileChange = (e) => {
+  const handle_FileChange = (e) => {
     const file = e.target.files[0];
 
     if (file) {
@@ -64,7 +64,7 @@ function EventForm({ initialEventData = null, isCreate = true }) {
     }
   };
 
-  const handle_createEvent = async (event) => {
+  const handle_CreateEvent = async (event) => {
     event.preventDefault();
     // console.log(eventData);
     try {
@@ -101,7 +101,7 @@ function EventForm({ initialEventData = null, isCreate = true }) {
     }
   };
 
-  const handle_editEvent = async (event) => {
+  const handle_EditEvent = async (event) => {
     event.preventDefault();
     try {
       if (selectedImageFile) {
@@ -154,7 +154,7 @@ function EventForm({ initialEventData = null, isCreate = true }) {
       {/* Event form */}
       <div className="max-w-screen-md flex justify-center w-full">
         <div className="w-full p-4 border border-border bg-card/70 rounded-lg shadow-lg">
-          <form onSubmit={isCreate ? handle_createEvent : handle_editEvent} className="grid gap-7 grid-cols-2 mt-6">
+          <form onSubmit={isCreate ? handle_CreateEvent : handle_EditEvent} className="grid gap-7 grid-cols-2 mt-6">
             <div className="col-span-2">
               <h2 className="text-2xl font-semibold text-copy-primary">{isCreate ? "Create Event" : "Edit Event"}</h2>
             </div>
@@ -170,7 +170,7 @@ function EventForm({ initialEventData = null, isCreate = true }) {
                 id="event_name"
                 type="text"
                 value={eventData.event_name}
-                onChange={handleInputChange}
+                onChange={handle_InputChange}
                 className="block w-full rounded-md shadow-sm p-2 border border-border bg-card text-copy-primary focus:outline-none focus:border-border col-span-2"
                 required
                 autoComplete="new-off"
@@ -209,7 +209,7 @@ function EventForm({ initialEventData = null, isCreate = true }) {
                 value={
                   eventData.event_start_date ? new Date(eventData.event_start_date).toISOString().slice(0, 16) : ""
                 }
-                onChange={handleInputChange}
+                onChange={handle_InputChange}
                 className="block w-full rounded-md shadow-sm p-2 border border-border bg-card text-copy-primary focus:outline-none focus:border-border col-span-2"
                 required
                 min={new Date(Date.now() + 15 * 60 * 1000).toISOString().slice(0, 16)}
@@ -227,7 +227,7 @@ function EventForm({ initialEventData = null, isCreate = true }) {
                 id="event_end_date"
                 type="datetime-local"
                 value={eventData.event_end_date ? new Date(eventData.event_end_date).toISOString().slice(0, 16) : ""}
-                onChange={handleInputChange}
+                onChange={handle_InputChange}
                 className="block w-full rounded-md shadow-sm p-2 border border-border bg-card text-copy-primary focus:outline-none focus:border-border col-span-2"
                 required
                 min={new Date(Date.now() + 20 * 60 * 1000).toISOString().slice(0, 16)}
@@ -245,7 +245,7 @@ function EventForm({ initialEventData = null, isCreate = true }) {
                 id="event_street_address"
                 type="text"
                 value={eventData.event_street_address}
-                onChange={handleInputChange}
+                onChange={handle_InputChange}
                 className="block w-full rounded-md shadow-sm p-2 border border-border bg-card text-copy-primary focus:outline-none focus:border-border col-span-2"
                 required
                 placeholder="11 Placeholder Street"
@@ -266,7 +266,7 @@ function EventForm({ initialEventData = null, isCreate = true }) {
                   id="event_city_town"
                   type="text"
                   value={eventData.event_city_town}
-                  onChange={handleInputChange}
+                  onChange={handle_InputChange}
                   list="city-list"
                   className="block w-full rounded-md shadow-sm p-2 border border-border bg-card text-copy-primary focus:outline-none focus:border-border col-span-2"
                   required
@@ -293,7 +293,7 @@ function EventForm({ initialEventData = null, isCreate = true }) {
                 id="event_postcode"
                 type="text"
                 value={eventData.event_postcode}
-                onChange={handleInputChange}
+                onChange={handle_InputChange}
                 className="block w-full rounded-md shadow-sm p-2 border border-border bg-card text-copy-primary focus:outline-none focus:border-border col-span-2"
                 required
                 placeholder="M12 345"
@@ -313,7 +313,7 @@ function EventForm({ initialEventData = null, isCreate = true }) {
                 id="event_description"
                 type="text"
                 value={eventData.event_description}
-                onChange={handleInputChange}
+                onChange={handle_InputChange}
                 className="block w-full rounded-md shadow-sm p-2 border border-border bg-card text-copy-primary focus:outline-none focus:border-border min-h-[84px]"
                 required
               />
@@ -337,7 +337,7 @@ function EventForm({ initialEventData = null, isCreate = true }) {
                     e.target.setCustomValidity("");
                   }
 
-                  handleInputChange(e);
+                  handle_InputChange(e);
                 }}
                 className="block w-full rounded-md shadow-sm p-2 border border-border bg-card text-copy-primary focus:outline-none focus:border-border col-span-2"
                 min="0"
@@ -363,7 +363,7 @@ function EventForm({ initialEventData = null, isCreate = true }) {
                   } else {
                     e.target.setCustomValidity("");
                   }
-                  handleInputChange(e);
+                  handle_InputChange(e);
                 }}
                 className="block w-full rounded-md shadow-sm p-2 border border-border bg-card text-copy-primary focus:outline-none focus:border-border col-span-2"
                 min="1"
@@ -383,7 +383,7 @@ function EventForm({ initialEventData = null, isCreate = true }) {
                 id="event_cost_in_pence"
                 type="number"
                 value={eventData.event_cost_in_pence}
-                onChange={handleInputChange}
+                onChange={handle_InputChange}
                 className="block w-full rounded-md shadow-sm p-2 border border-border bg-card text-copy-primary focus:outline-none focus:border-border col-span-2"
                 min="0"
                 required
@@ -410,7 +410,7 @@ function EventForm({ initialEventData = null, isCreate = true }) {
                 id="event_contact_email"
                 type="email"
                 value={eventData.event_contact_email}
-                onChange={handleInputChange}
+                onChange={handle_InputChange}
                 className="block w-full rounded-md shadow-sm p-2 border border-border bg-card text-copy-primary focus:outline-none focus:border-border col-span-2"
                 required
                 placeholder="tian@example.com"
@@ -433,7 +433,7 @@ function EventForm({ initialEventData = null, isCreate = true }) {
                 ref={thumbnailInputRef}
                 id="event_thumbnail"
                 type="file"
-                onChange={handleFileChange}
+                onChange={handle_FileChange}
                 className="block w-full border-gray-300 rounded-md shadow-sm p-2 border focus:outline-none focus:border-border text-copy-primary"
                 required={isCreate}
                 maxLength="255"
@@ -451,7 +451,7 @@ function EventForm({ initialEventData = null, isCreate = true }) {
                 id="event_website"
                 type="url"
                 value={eventData.event_website}
-                onChange={handleInputChange}
+                onChange={handle_InputChange}
                 className="block w-full rounded-md shadow-sm p-2 border border-border bg-card text-copy-primary focus:outline-none focus:border-border col-span-2"
                 placeholder="https://example.com"
                 autoComplete="new-off"
@@ -469,7 +469,7 @@ function EventForm({ initialEventData = null, isCreate = true }) {
               <select
                 id="event_contact_phone_prefix"
                 value={eventData.event_contact_phone_prefix}
-                onChange={handleInputChange}
+                onChange={handle_InputChange}
                 className="block w-full rounded-md shadow-sm p-2 border border-border bg-card text-copy-primary focus:outline-none focus:border-border col-span-2"
               >
                 <option value="+44">+44 (UK)</option>
@@ -487,7 +487,7 @@ function EventForm({ initialEventData = null, isCreate = true }) {
                 id="event_contact_phone"
                 type="tel"
                 value={eventData.event_contact_phone}
-                onChange={handleInputChange}
+                onChange={handle_InputChange}
                 className="block w-full rounded-md shadow-sm p-2 border border-border bg-card text-copy-primary focus:outline-none focus:border-border col-span-2"
                 placeholder="07101010101"
                 autoComplete="new-off"
