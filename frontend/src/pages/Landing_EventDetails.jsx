@@ -24,6 +24,7 @@ import Modal from "../components/Modal";
 import { useEventPurchase } from "../hooks/useEventPurchase";
 import useErrorChecker from "../hooks/useErrorChecker";
 import PageLoader from "../components/PageLoader";
+import TagDisplayHelper from "../components/TagDisplayHelper";
 
 function Landing_EventDetails() {
   const checkError = useErrorChecker();
@@ -169,7 +170,9 @@ function Landing_EventDetails() {
                   </div>
                   <div>
                     <p className="font-semibold">Tags</p>
-                    <div className="text-copy-secondary flex flex-wrap gap-2">{tagDisplayHelper(event.event_tags)}</div>
+                    <div className="text-copy-secondary flex flex-wrap gap-2">
+                      <TagDisplayHelper tags={event.event_tags} />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -235,16 +238,6 @@ function eventDetailsHelper({ icon, title, data }) {
       </div>
     </div>
   );
-}
-
-function tagDisplayHelper(tags) {
-  return tags.map((tag, index) => {
-    return (
-      <span key={index} className="p-1 px-2 bg-background rounded-md">
-        {tag}
-      </span>
-    );
-  });
 }
 
 function ShareToSocial({ isOpen, onClose, url: shareUrl, title: shareTitle, text: shareText }) {

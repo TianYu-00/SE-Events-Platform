@@ -148,9 +148,12 @@ function EventsFilter({
     }
 
     if (searchInputQuery) {
-      tempEvents = tempEvents.filter((event) =>
-        event.event_name.toLowerCase().includes(searchInputQuery.toLowerCase())
-      );
+      tempEvents = tempEvents.filter((event) => {
+        const nameMatches = event.event_name.toLowerCase().includes(searchInputQuery.toLowerCase());
+        const tagsMatch = event.event_tags.some((tag) => tag.toLowerCase().includes(searchInputQuery.toLowerCase()));
+
+        return nameMatches || tagsMatch;
+      });
     }
 
     if (cityOption && cityOption !== "all") {
