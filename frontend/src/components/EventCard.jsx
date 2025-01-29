@@ -17,7 +17,7 @@ function EventCard({ event }) {
 
   return (
     <div className="text-copy-primary">
-      <div className="w-full h-full bg-card rounded-t-lg border border-border/40 shadow-lg flex flex-col">
+      <div className="w-full h-full bg-card rounded-t-lg border border-border/40 shadow-lg flex flex-col transition-transform duration-300 transform hover:scale-105">
         <img
           src={event.event_thumbnail}
           className="rounded-t-lg w-full h-64 object-cover cursor-pointer"

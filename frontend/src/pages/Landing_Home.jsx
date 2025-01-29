@@ -60,7 +60,7 @@ function Landing_Home() {
         </div>
 
         {/* Latest created */}
-        <div className="max-w-screen-xl mx-auto mt-10 ">
+        <div className="max-w-screen-2xl mx-auto mt-10 ">
           <div className="flex items-center space-x-2 px-4">
             <h3 className="font-semibold text-lg md:text-3xl">Latest Events Created</h3>
             <TbCornerRightDown size={22} strokeWidth={3} />
@@ -76,7 +76,7 @@ function Landing_Home() {
         </div>
 
         {/* Rest of some of the events */}
-        <div className="max-w-screen-xl mx-auto mt-10">
+        <div className="max-w-screen-2xl mx-auto mt-10">
           <div className="flex items-center space-x-2 px-4">
             <h3 className="font-semibold text-lg md:text-3xl">Events</h3>
             <TbCornerRightDown size={22} strokeWidth={3} />
