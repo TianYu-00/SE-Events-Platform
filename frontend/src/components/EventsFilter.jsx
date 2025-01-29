@@ -255,7 +255,7 @@ function EventsFilter({
             type="text"
             value={searchInputQuery}
             onChange={(e) => setSearchInputQuery(e.target.value)}
-            placeholder="Search by name..."
+            placeholder="Search by name or tag..."
             className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md shadow-sm bg-card"
           />
           <TbSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
@@ -310,14 +310,3 @@ function FilterButton({ option, setOption, value, text }) {
     </button>
   );
 }
-
-/*
-
-- ALL, PAID, FREE
-- ALL, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY
-- ALL, TODAY, THIS WEEK, THIS MONTH, THIS YEAR
-
-- SEARCH BY NAME / TAG
-- LOCATION? 
-
-*/

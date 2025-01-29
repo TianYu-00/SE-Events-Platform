@@ -90,12 +90,6 @@ function Landing_Home() {
             </Suspense>
           </div>
 
-          <div className="flex justify-center items-center">
-            <p className="text-copy-secondary text-sm">
-              {showingEventsStartingFrom} - {showingEventsEnding} of {events.length} events
-            </p>
-          </div>
-
           <div className="flex flex-row items-center justify-center p-10">
             <button
               className="text-cta-text bg-cta hover:bg-cta-active py-3 px-4 rounded-md font-semibold flex items-center space-x-2"
