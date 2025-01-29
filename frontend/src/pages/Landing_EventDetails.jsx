@@ -10,11 +10,11 @@ import {
   TbCalendar,
   TbCalendarClock,
   TbCash,
+  TbLink,
   TbMail,
   TbMapPin,
   TbPhone,
   TbShare,
-  TbSocial,
   TbTags,
   TbUsers,
   TbWorld,
@@ -25,6 +25,7 @@ import { useEventPurchase } from "../hooks/useEventPurchase";
 import useErrorChecker from "../hooks/useErrorChecker";
 import PageLoader from "../components/PageLoader";
 import TagDisplayHelper from "../components/TagDisplayHelper";
+import { toast } from "react-toastify";
 
 function Landing_EventDetails() {
   const checkError = useErrorChecker();
@@ -243,23 +244,23 @@ function eventDetailsHelper({ icon, title, data }) {
 function ShareToSocial({ isOpen, onClose, url: shareUrl, title: shareTitle, text: shareText }) {
   return (
     <Modal isOpen={isOpen} onClose={onClose} modalTitle={"Share Event On Social Media"}>
-      <div className="flex flex-col space-y-2">
+      <div className="flex flex-col space-y-4 p-4 max-w-96">
         <button
           onClick={() =>
             window.open(`https://twitter.com/share?url=${shareUrl}&text=${shareText}`, "_blank", "noopener,noreferrer")
           }
-          className="bg-cta hover:bg-cta-active text-cta-text p-2 rounded-md flex items-center space-x-2"
+          className="bg-neutral-950 hover:bg-neutral-900 text-white p-3 rounded-md flex items-center space-x-2 transition duration-200"
         >
-          <TbBrandTwitter size={17} />
+          <TbBrandTwitter size={20} />
           <span>Twitter</span>
         </button>
         <button
           onClick={() =>
             window.open(`https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`, "_blank", "noopener,noreferrer")
           }
-          className="bg-cta hover:bg-cta-active text-cta-text p-2 rounded-md flex items-center space-x-2"
+          className="bg-blue-700 hover:bg-blue-800 text-white p-3 rounded-md flex items-center space-x-2 transition duration-200"
         >
-          <TbBrandFacebook size={17} />
+          <TbBrandFacebook size={20} />
           <span>Facebook</span>
         </button>
         <button
@@ -270,11 +271,37 @@ function ShareToSocial({ isOpen, onClose, url: shareUrl, title: shareTitle, text
               "noopener,noreferrer"
             )
           }
-          className="bg-cta hover:bg-cta-active text-cta-text p-2 rounded-md flex items-center space-x-2"
+          className="bg-red-700 hover:bg-red-800 text-white p-3 rounded-md flex items-center space-x-2 transition duration-200"
         >
-          <TbBrandReddit size={17} />
+          <TbBrandReddit size={20} />
           <span>Reddit</span>
         </button>
+
+        <div className="text-copy-primary flex flex-row items-center space-x-2">
+          <input
+            type="text"
+            id="event_link_input"
+            className="bg-card border border-border focus:outline-none p-2 w-full rounded-md"
+            value={shareUrl}
+            readOnly
+          />
+          <button
+            className="bg-cta text-cta-text p-2 rounded-md hover:bg-cta-active flex items-center space-x-2 text-nowrap"
+            onClick={() => {
+              const copyText = document.getElementById("event_link_input");
+
+              copyText.select();
+              copyText.setSelectionRange(0, 99999);
+
+              navigator.clipboard.writeText(copyText.value);
+
+              toast.success("Link copied to clipboard");
+            }}
+          >
+            <TbLink size={20} />
+            <span>Copy link</span>
+          </button>
+        </div>
       </div>
     </Modal>
   );
