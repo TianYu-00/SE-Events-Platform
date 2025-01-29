@@ -42,9 +42,11 @@ exports.updateRole = async (req, res, next) => {
 
 exports.initializeUser = async (req, res, next) => {
   try {
-    const { user_id, user_publicMetadata } = req.body;
+    const { user_id, user_publicMetadata: user_PublicMetadata } = req.body;
+    console.log(user_PublicMetadata);
 
-    if (user_publicMetadata && Object.keys(user_publicMetadata).length > 0) {
+    if (user_PublicMetadata && Object.keys(user_PublicMetadata).length > 0) {
+      // console.log("No need to re-initialize");
       const error = new Error("No need to re-initialize");
       error.code = "INITIALIZATION_NOT_REQUIRED";
       return next(error);

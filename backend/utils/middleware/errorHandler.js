@@ -104,6 +104,20 @@ const errorHandler = (err, req, res, next) => {
       data: null,
       code: err.code,
     });
+  } else if (err.code === "ENV_MISSING") {
+    return res.status(404).send({
+      success: false,
+      msg: err.message || "Environment variable is missing, please contact support.",
+      data: null,
+      code: err.code,
+    });
+  } else if (err.code === "HEADER_MISSING") {
+    return res.status(400).send({
+      success: false,
+      msg: err.message || "Header missing.",
+      data: null,
+      code: err.code,
+    });
   }
 
   next(err);

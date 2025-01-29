@@ -15,11 +15,15 @@ const globalLimiter = rateLimit({
   windowMs: 1 * 60 * 1000,
   limit: 100,
 });
+
+app.set("trust proxy", 1);
 app.use(cors(corsConfigOptions));
 app.use(
   express.json({
     verify: (req, res, buf) => {
       if (req.originalUrl.startsWith("/api/stripe/webhook")) {
+        req.rawBody = buf.toString();
+      } else if (req.originalUrl.startsWith("/api/clerk/webhook")) {
         req.rawBody = buf.toString();
       }
     },
