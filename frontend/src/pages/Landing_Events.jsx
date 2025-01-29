@@ -127,7 +127,7 @@ function Landing_Events() {
                     {resultsPerPage < filteredEvents.length && (
                       <button
                         onClick={handle_LoadMore}
-                        className="p-2 px-4 bg-cta text-cta-text hover:bg-cta-active rounded-md"
+                        className="text-cta-text bg-cta hover:bg-cta-active py-3 px-4 rounded-full font-semibold flex items-center space-x-2"
                       >
                         Load More
                       </button>

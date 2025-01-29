@@ -54,7 +54,7 @@ function EventCard({ event }) {
           </p>
           <div className="flex h-10 gap-4">
             <button
-              className={`bg-cta hover:bg-cta-active p-2 rounded-md text-cta-text w-32 flex justify-center items-center ${
+              className={`bg-cta hover:bg-cta-active p-2 rounded-md text-cta-text w-32 flex justify-center items-center font-semibold ${
                 event.event_attendees >= event.event_capacity || new Date(event.event_start_date) <= new Date()
                   ? "cursor-not-allowed bg-cta/30 hover:bg-cta/30"
                   : ""
@@ -67,9 +67,9 @@ function EventCard({ event }) {
 
             <button
               onClick={toggleCalendarLinks}
-              className="hover:bg-cta-active hover:text-cta-text p-2 rounded-md text-copy-primary border border-border w-40 ml-auto flex justify-center items-center hover:border-0"
+              className="hover:bg-cta-active hover:text-cta-text p-2 rounded-md text-copy-primary border border-border w-40 ml-auto flex justify-center items-center hover:border-0 space-x-2"
             >
-              <TbCalendar className="mr-2" size={17} />
+              <TbCalendar size={17} />
               <span>Add to calendar</span>
             </button>
           </div>

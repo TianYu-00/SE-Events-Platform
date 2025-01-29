@@ -92,7 +92,7 @@ function Landing_Home() {
 
           <div className="flex flex-row items-center justify-center p-10">
             <button
-              className="text-cta-text bg-cta hover:bg-cta-active py-3 px-4 rounded-md font-semibold flex items-center space-x-2"
+              className="text-cta-text bg-cta hover:bg-cta-active py-3 px-4 rounded-full font-semibold flex items-center space-x-2"
               onClick={() => navigate("/events")}
             >
               <span>Browse More</span>
