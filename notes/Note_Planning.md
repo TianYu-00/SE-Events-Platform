@@ -95,9 +95,8 @@ sudo mv stripe /usr/local/bin/
 # NOTE
 
 # SOME TODO LIST (Optional):
-- Add Clerk Webhook to assign user role on registration
 
 # TODO
-- Need to sort out my naming conventions later to be more consistent i.e handleXXX to handle_WhatEverItDoes
+- Add Clerk Webhook to assign user role on registration
 
 # 🔴 Urgent TODO
