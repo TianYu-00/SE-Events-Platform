@@ -32,7 +32,7 @@ A project that allows community members to view, sign up for, and add events to 
 - [Cloudinary](https://cloudinary.com/)
 
 
-To save you some time, I have written some [instructions](#environment-variables-guide) to hopefully help you out with getting some of these keys and variables.
+To save you some time, I have written some [instructions](#environment-variables-guide) to hopefully help you out with installing and getting these environment variable keys.
 
 # Getting Started
 ### Clone the repo
