@@ -31,7 +31,7 @@ exports.createFreePurchase = async (req, res, next) => {
     const { user_id: userId, event_name: eventName, event_id: eventId } = req.body;
     if (userId === undefined || eventName === undefined || eventId === undefined) {
       const error = new Error("Some fields are missing");
-      error.code = "BODY_CONTENT_INCOMPLETE";
+      error.code = "INVALID_REQUEST_BODY";
       return next(error);
     }
 

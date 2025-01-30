@@ -51,6 +51,6 @@ describe("GET /api/events", () => {
 
   test("should return a 404 status code when event not found", async () => {
     const { body } = await request(app).get("/api/events/9999").expect(404);
-    expect(body.code).toBe("EVENT_NOT_FOUND");
+    expect(body.code).toBe("RESOURCE_NOT_FOUND");
   });
 });

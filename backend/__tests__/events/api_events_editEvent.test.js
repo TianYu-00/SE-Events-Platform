@@ -63,7 +63,7 @@ describe("PATCH /api/events/:event_id", () => {
       .expect(404);
 
     expect(body.success).toBe(false);
-    expect(body.code).toBe("EVENT_NOT_FOUND");
+    expect(body.code).toBe("RESOURCE_NOT_FOUND");
   });
 
   test("should return 400 if the provided data has invalid fields", async () => {
@@ -78,7 +78,7 @@ describe("PATCH /api/events/:event_id", () => {
       .expect(400);
 
     expect(body.success).toBe(false);
-    expect(body.code).toBe("BODY_CONTENT_INVALID");
+    expect(body.code).toBe("INVALID_REQUEST_BODY");
   });
 
   test("should return 200 and updated event with multiple fields", async () => {

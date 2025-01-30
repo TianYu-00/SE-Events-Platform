@@ -97,5 +97,6 @@ sudo mv stripe /usr/local/bin/
 # SOME TODO LIST (Optional):
 
 # TODO
+- Clean up code + refactor
 
 # 🔴 Urgent TODO

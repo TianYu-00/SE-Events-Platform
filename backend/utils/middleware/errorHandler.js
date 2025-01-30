@@ -24,10 +24,10 @@ const errorHandler = (err, req, res, next) => {
         code: err.code,
       });
 
-    case "BODY_CONTENT_INCOMPLETE":
+    case "INVALID_REQUEST_BODY":
       return res.status(400).send({
         success: false,
-        msg: err.message || "Request body is incomplete",
+        msg: err.message || "Invalid request body",
         data: null,
         code: err.code,
       });
@@ -40,34 +40,10 @@ const errorHandler = (err, req, res, next) => {
         code: err.code,
       });
 
-    case "BODY_CONTENT_INVALID":
-      return res.status(400).send({
-        success: false,
-        msg: err.message || "Body content invalid",
-        data: null,
-        code: err.code,
-      });
-
-    case "EVENT_NOT_FOUND":
-      return res.status(404).send({
-        success: false,
-        msg: err.message || "Event not found",
-        data: null,
-        code: err.code,
-      });
-
     case "INVALID_PARAMS":
       return res.status(400).send({
         success: false,
         msg: err.message || "Invalid params",
-        data: null,
-        code: err.code,
-      });
-
-    case "UNAUTHORISED_ACCESS":
-      return res.status(403).send({
-        success: false,
-        msg: err.message || "Unauthorised Access",
         data: null,
         code: err.code,
       });

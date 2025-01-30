@@ -88,7 +88,7 @@ exports.postEvent = async (req, res, next) => {
 
     if (missingFields.length > 0) {
       const error = new Error("Some fields are missing");
-      error.code = "BODY_CONTENT_INCOMPLETE";
+      error.code = "INVALID_REQUEST_BODY";
       return next(error);
     }
 
@@ -104,7 +104,7 @@ exports.deleteEvents = async (req, res, next) => {
     const { event_id: eventIds } = req.body;
     if (!eventIds || eventIds.length <= 0) {
       const error = new Error("Some fields are missing");
-      error.code = "BODY_CONTENT_INCOMPLETE";
+      error.code = "INVALID_REQUEST_BODY";
       return next(error);
     }
 
@@ -158,7 +158,7 @@ exports.editEvents = async (req, res, next) => {
     const isValid = Object.keys(eventData).every((key) => allowedFields.includes(key));
     if (!isValid) {
       const error = new Error("Some object keys are invalid");
-      error.code = "BODY_CONTENT_INVALID";
+      error.code = "INVALID_REQUEST_BODY";
       return next(error);
     }
 

@@ -27,7 +27,7 @@ describe("POST /api/purchases/free", () => {
       .send(invalidData)
       .expect(400);
 
-    expect(body.code).toBe("BODY_CONTENT_INCOMPLETE");
+    expect(body.code).toBe("INVALID_REQUEST_BODY");
   });
 
   test("should return a 400 status code if event_name is missing", async () => {
@@ -39,7 +39,7 @@ describe("POST /api/purchases/free", () => {
       .send(invalidData)
       .expect(400);
 
-    expect(body.code).toBe("BODY_CONTENT_INCOMPLETE");
+    expect(body.code).toBe("INVALID_REQUEST_BODY");
   });
 
   test("should return a 400 status code if event_id is missing", async () => {
@@ -51,7 +51,7 @@ describe("POST /api/purchases/free", () => {
       .send(invalidData)
       .expect(400);
 
-    expect(body.code).toBe("BODY_CONTENT_INCOMPLETE");
+    expect(body.code).toBe("INVALID_REQUEST_BODY");
   });
 
   test("should not allow multiple same free ticket purchases", async () => {

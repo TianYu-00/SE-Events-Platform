@@ -9,13 +9,13 @@ exports.createPayment = async (req, res, next) => {
     const { event_id: eventId, user_id: userId } = req.body;
     if (isNaN(eventId) || Number(eventId) <= 0) {
       const error = new Error("Event id is not valid");
-      error.code = "BODY_CONTENT_INVALID";
+      error.code = "INVALID_REQUEST_BODY";
       return next(error);
     }
 
     if (userId.trim().length === 0) {
       const error = new Error("User id is not valid");
-      error.code = "BODY_CONTENT_INVALID";
+      error.code = "INVALID_REQUEST_BODY";
       return next(error);
     }
 
@@ -54,13 +54,13 @@ exports.verifyPayment = async (req, res, next) => {
     const { paymentIntentId, user_id: userId } = req.body;
     if (paymentIntentId.trim().length === 0) {
       const error = new Error("Payment intent id is not valid");
-      error.code = "BODY_CONTENT_INVALID";
+      error.code = "INVALID_REQUEST_BODY";
       return next(error);
     }
 
     if (userId.trim().length === 0) {
       const error = new Error("User id is not valid");
-      error.code = "BODY_CONTENT_INVALID";
+      error.code = "INVALID_REQUEST_BODY";
       return next(error);
     }
 
@@ -68,7 +68,7 @@ exports.verifyPayment = async (req, res, next) => {
 
     if (paymentIntent.metadata.user_id !== userId) {
       const error = new Error("Unauthorised Access");
-      error.code = "UNAUTHORISED_ACCESS";
+      error.code = "ACCESS_DENIED";
       console.log("error");
       return next(error);
     }

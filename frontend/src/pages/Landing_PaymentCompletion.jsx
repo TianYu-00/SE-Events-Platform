@@ -41,7 +41,7 @@ function Landing_PaymentCompletion() {
         checkError(error);
         const errorCode = error.response?.data?.code;
         if (
-          errorCode === "UNAUTHORISED_ACCESS" ||
+          errorCode === "ACCESS_DENIED" ||
           errorCode === "INTERNAL_SERVER_ERROR" ||
           errorCode === "RESOURCE_NOT_FOUND"
         ) {

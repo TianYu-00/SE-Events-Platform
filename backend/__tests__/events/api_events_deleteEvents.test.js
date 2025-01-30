@@ -32,14 +32,14 @@ describe("DELETE /api/events", () => {
       .expect(400);
 
     expect(body.success).toBe(false);
-    expect(body.code).toBe("BODY_CONTENT_INCOMPLETE");
+    expect(body.code).toBe("INVALID_REQUEST_BODY");
   });
 
   test("should return 400 and error code when eventIds are missing", async () => {
     const { body } = await request(app).delete("/api/events").auth(adminToken, { type: "bearer" }).send({}).expect(400);
 
     expect(body.success).toBe(false);
-    expect(body.code).toBe("BODY_CONTENT_INCOMPLETE");
+    expect(body.code).toBe("INVALID_REQUEST_BODY");
   });
 
   test("should return 400 and error code when no events are deleted", async () => {
