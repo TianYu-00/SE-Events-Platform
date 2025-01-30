@@ -57,14 +57,14 @@ sudo mv stripe /usr/local/bin/
 ```
 - `stripe --version`
 - `stripe login` or `stripe login --interactive` or `stripe login --api-key <api key here without brackets>`
-- `stripe listen --forward-to localhost:port/api/webhook-route`
-- `stripe listen --forward-to localhost:9090/api/payment/webhook`
+<!-- - `stripe listen --forward-to localhost:port/api/webhook-route` -->
+- `stripe listen --forward-to localhost:9090/api/stripe/webhook`
 - https://docs.stripe.com/webhooks/quickstart
 ```
     // webhook payload needs to be a string or buffer not json
     app.use(express.json({
     verify: (req, res, buf) => {
-    if (req.originalUrl.startsWith('/api/payment/webhook')) {
+    if (req.originalUrl.startsWith('/api/stripe/webhook')) {
         req.rawBody = buf.toString();
     }
     },
