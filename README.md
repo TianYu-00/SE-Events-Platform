@@ -6,7 +6,7 @@ Project that allows community members to view, sign up for and add events to the
 [![madewithlove](https://img.shields.io/badge/made_with-❤-red?style=for-the-badge&labelColor=orange
 )](https://github.com/Tianyu-00)
 
-[Prerequisites](#prerequisites) | [Backend](#backend) | [Frontend](#frontend) | [Environment Variables](#environment-variables) | [Environment Variables Guide](#environment-variables-guide)
+[Prerequisites](#prerequisites) | [Getting Started](#getting-started) | [Environment Variables](#environment-variables) | [Testing](#testing)
 
 [![Tests](https://github.com/TianYu-00/SE-Events-Platform/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/TianYu-00/SE-Events-Platform/actions/workflows/ci.yml)
 
