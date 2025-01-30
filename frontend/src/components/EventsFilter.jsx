@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { TbSearch } from "react-icons/tb";
+import { TbSearch, TbX } from "react-icons/tb";
 import { getAllEvents } from "../api";
 import UKCitiesList from "../utils/UKCitiesList";
 import { useSearchParams } from "react-router-dom";
@@ -24,6 +24,29 @@ function EventsFilter({
   const [isAllowOutdatedOption, setIsAllowOutdatedOption] = useState(
     searchParams.get("allow_outdated") === "true" || false
   );
+  const [isResetFilter, setIsResetFilter] = useState(false);
+
+  const clearFilter = () => {
+    setPriceOption("all");
+    setDayOption("all");
+    setCityOption("all");
+    setStartDateOrder("");
+    setCreatedAtOrder("");
+    setSearchInputQuery("");
+    setIsAllowOutdatedOption(false);
+    setIsResetFilter(true);
+  };
+
+  useEffect(() => {
+    if (isResetFilter) {
+      updateFilter();
+      setIsResetFilter(false);
+    }
+  }, [isResetFilter]);
+
+  // useEffect(() => {
+  //   addFilterToQuery();
+  // }, [priceOption, dayOption, cityOption, startDateOrder, createdAtOrder, searchInputQuery, isAllowOutdatedOption]);
 
   const addFilterToQuery = () => {
     if (priceOption === "all") {
@@ -80,6 +103,8 @@ function EventsFilter({
   }, []);
 
   const updateFilter = () => {
+    addFilterToQuery();
+
     if (!startDateOrder && !createdAtOrder) {
       fetchAllEvents();
     } else {
@@ -159,8 +184,6 @@ function EventsFilter({
     if (cityOption && cityOption !== "all") {
       tempEvents = tempEvents.filter((event) => event.event_city_town.toLowerCase() === cityOption.toLowerCase());
     }
-
-    addFilterToQuery();
 
     return tempEvents;
   };
@@ -256,9 +279,14 @@ function EventsFilter({
             value={searchInputQuery}
             onChange={(e) => setSearchInputQuery(e.target.value)}
             placeholder="Search by name or tag..."
-            className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md shadow-sm bg-card"
+            className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-md shadow-sm bg-card"
           />
           <TbSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+          <TbX
+            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-red-500 cursor-pointer"
+            size={20}
+            onClick={() => clearFilter()}
+          />
         </div>
 
         <select
