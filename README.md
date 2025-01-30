@@ -1,6 +1,6 @@
 <div align="center">
 <h1> SE - Events Platform</h1> 
-Project that allows community members to view, sign up for and add events to their own personal calender. Staff members have additional functionality to create and manage events.
+A project that allows community members to view, sign up for, and add events to their own personal calendar. Staff members have additional functionality to create and manage events.
 <br><br>
 
 [![madewithlove](https://img.shields.io/badge/made_with-❤-red?style=for-the-badge&labelColor=orange
@@ -135,7 +135,6 @@ CLOUDINARY_API_SECRET=
 #Stripe
 STRIPE_SECRET_KEY=
 STRIPE_WEBHOOK_SECRET=
-
 ```
 
 ### Frontend `.env.local`
@@ -169,18 +168,18 @@ VITE_CLOUDINARY_API_KEY=
 VITE_STRIPE_PUBLISHABLE_KEY=
 ```
 
-# Environment variables guide
-Please refer to docs instead if any of these instructions are outdated in the future.
+# Environment Variables Guide
+Please refer to the documentation instead if any of these instructions are outdated in the future.
 ## Clerk
 #### Publisher Key and API Key
 ![Clerk Publisher and API Key](./sources/images/clerk_secrets.png)
 
-#### Signing secret
-Please refer to Clerk's [set-up-ngrok](https://clerk.com/docs/webhooks/sync-data#set-up-ngrok) to setup your ngrok tunnel forwarding to your local backend server.
-![Clerk Signing Secret](./sources//images/clerk_signing_secret.png)
+#### Signing Secret
+Please refer to Clerk's [set-up-ngrok](https://clerk.com/docs/webhooks/sync-data#set-up-ngrok) to set up your ngrok tunnel forwarding to your local backend server.
+![Clerk Signing Secret](./sources/images/clerk_signing_secret.png)
 
-#### User & Admin test tokens
-Please refer to this clerk's [documentation](https://clerk.com/docs/testing/postman-or-insomnia#generate-long-lived-jwt-template) to create your user and admin long lived JWT tokens.
+#### User & Admin Test Tokens
+Please refer to this Clerk's [documentation](https://clerk.com/docs/testing/postman-or-insomnia#generate-long-lived-jwt-template) to create your user and admin long-lived JWT tokens.
 
 
 ## Stripe
@@ -188,11 +187,11 @@ Please refer to this clerk's [documentation](https://clerk.com/docs/testing/post
 ![Stripe Publisher and API Key](./sources/images/stripe_secrets.png)
 
 #### Signing Secret
-Please refer to this documentation to setup Stripe CLI on your machine to get your webhook secret.
+Please refer to this documentation to set up Stripe CLI on your machine to get your webhook secret.
 https://docs.stripe.com/stripe-cli
 
-For me on ubuntu this is what i have done:
-1) Download stripe's linux build v1.23.3. https://github.com/stripe/stripe-cli/releases
+For me on Ubuntu, this is what I have done:
+1) Download Stripe's Linux build v1.23.3. https://github.com/stripe/stripe-cli/releases
 ```
 wget https://github.com/stripe/stripe-cli/releases/download/v1.23.3/stripe_1.23.3_linux_x86_64.tar.gz
 ```
@@ -202,12 +201,12 @@ wget https://github.com/stripe/stripe-cli/releases/download/v1.23.3/stripe_1.23.
 tar -xvzf stripe_1.23.3_linux_x86_64.tar.gz
 ```
 
-3) Move the files over to system directory
+3) Move the files over to the system directory
 ```
 sudo mv stripe /usr/local/bin/
 ```
 
-4) Check the version to make sure its installed properly
+4) Check the version to make sure it's installed properly
 ```
 stripe --version
 ```
@@ -224,8 +223,8 @@ stripe listen --forward-to localhost:9090/api/stripe/webhook
 
 
 ## Cloudinary
-#### Cloud Name, API Key and API secret
-![Cloud Name, API Key and API secret](./sources/images/cloudinary_cloudname_apikey_apisecret.png)
+#### Cloud Name, API Key, and API Secret
+![Cloud Name, API Key, and API Secret](./sources/images/cloudinary_cloudname_apikey_apisecret.png)
 
 #### Upload Preset Name
 ![alt text](./sources/images/cloudinary_upload_preset_name.png)
@@ -234,7 +233,7 @@ stripe listen --forward-to localhost:9090/api/stripe/webhook
 ## Database
 #### PGDatabase (database name)
 Please refer to the file located at: `backend`/`db`/`create_database.sql`.
-Here is an example of how it would look like at the time of writing this:
+Here is an example of how it would look at the time of writing this:
 ```
 DROP DATABASE IF EXISTS se_events_platform;
 CREATE DATABASE se_events_platform;
@@ -244,15 +243,15 @@ CREATE DATABASE se_events_platform_test;
 ```
 
 #### Database URL
-You don't need this unless if you are deploying this project. It usually looks like this:
+You don't need this unless you are deploying this project. It usually looks like this:
 ```
 postgresql://<username>:<password>@<host>:<port>/<database>
 ```
 
 # Testing
 ## Backend
-#### Test API endpoints
-1) Navigate to backend:
+#### Test API Endpoints
+1) Navigate to the backend:
 ```
 cd backend
 ```
