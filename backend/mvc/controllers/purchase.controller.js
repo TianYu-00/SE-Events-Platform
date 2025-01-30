@@ -7,7 +7,7 @@ exports.getAllPurchases = async (req, res, next) => {
 
     if (orderCreatedAt && !validOrderQueries.includes(orderCreatedAt.toLowerCase())) {
       const error = new Error("Invalid order query");
-      error.code = "INVALID_QUERY";
+      error.code = "INVALID_REQUEST";
       return next(error);
     }
 
@@ -15,7 +15,7 @@ exports.getAllPurchases = async (req, res, next) => {
 
     if (userId && typeof userId !== "string") {
       const error = new Error("Invalid user_id query");
-      error.code = "INVALID_QUERY";
+      error.code = "INVALID_REQUEST";
       return next(error);
     }
 

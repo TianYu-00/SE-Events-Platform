@@ -46,7 +46,7 @@ describe("GET /api/events", () => {
 
   test("should return a 400 status code when passed invalid event id", async () => {
     const { body } = await request(app).get("/api/events/invalid-id").expect(400);
-    expect(body.code).toBe("INVALID_PARAMS");
+    expect(body.code).toBe("INVALID_REQUEST");
   });
 
   test("should return a 404 status code when event not found", async () => {

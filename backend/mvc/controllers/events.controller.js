@@ -11,13 +11,13 @@ exports.fetchAllEvents = async (req, res, next) => {
 
     if (orderCreatedAt && !validOrderQueries.includes(orderCreatedAt.toLowerCase())) {
       const error = new Error("Invalid order_created_at query");
-      error.code = "INVALID_QUERY";
+      error.code = "INVALID_REQUEST";
       return next(error);
     }
 
     if (orderStartDate && !validOrderQueries.includes(orderStartDate.toLowerCase())) {
       const error = new Error("Invalid order_date query");
-      error.code = "INVALID_QUERY";
+      error.code = "INVALID_REQUEST";
       return next(error);
     }
 
@@ -28,7 +28,7 @@ exports.fetchAllEvents = async (req, res, next) => {
       isAllowOutdated !== "false"
     ) {
       const error = new Error("Invalid isAllowOutdated query");
-      error.code = "INVALID_QUERY";
+      error.code = "INVALID_REQUEST";
       return next(error);
     }
 
@@ -52,7 +52,7 @@ exports.getSingleEvent = async (req, res, next) => {
     const { event_id: eventId } = req.params;
     if (isNaN(eventId) || Number(eventId) <= 0) {
       const error = new Error("Event id is not valid");
-      error.code = "INVALID_PARAMS";
+      error.code = "INVALID_REQUEST";
       return next(error);
     }
 
@@ -131,7 +131,7 @@ exports.editEvents = async (req, res, next) => {
     const { event_id: eventId } = req.params;
     if (isNaN(eventId) || Number(eventId) <= 0) {
       const error = new Error("Event id is not valid");
-      error.code = "INVALID_PARAMS";
+      error.code = "INVALID_REQUEST";
       return next(error);
     }
 

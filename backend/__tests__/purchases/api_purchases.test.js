@@ -57,7 +57,7 @@ describe("GET /api/purchases", () => {
       .auth(userToken, { type: "bearer" })
       .expect(400);
     expect(body.success).toBe(false);
-    expect(body.code).toBe("INVALID_QUERY");
+    expect(body.code).toBe("INVALID_REQUEST");
   });
 
   // test user_id

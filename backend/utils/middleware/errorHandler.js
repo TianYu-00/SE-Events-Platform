@@ -16,10 +16,10 @@ const errorHandler = (err, req, res, next) => {
         code: err.code,
       });
 
-    case "INVALID_QUERY":
+    case "INVALID_REQUEST":
       return res.status(400).send({
         success: false,
-        msg: err.message || "Invalid query has been provided",
+        msg: err.message || "Invalid request",
         data: null,
         code: err.code,
       });
@@ -36,14 +36,6 @@ const errorHandler = (err, req, res, next) => {
       return res.status(400).send({
         success: false,
         msg: err.message || "No event was deleted",
-        data: null,
-        code: err.code,
-      });
-
-    case "INVALID_PARAMS":
-      return res.status(400).send({
-        success: false,
-        msg: err.message || "Invalid params",
         data: null,
         code: err.code,
       });
@@ -92,22 +84,6 @@ const errorHandler = (err, req, res, next) => {
       return res.status(403).send({
         success: false,
         msg: err.message || "Access denied.",
-        data: null,
-        code: err.code,
-      });
-
-    case "ENV_MISSING":
-      return res.status(404).send({
-        success: false,
-        msg: err.message || "Environment variable is missing, please contact support.",
-        data: null,
-        code: err.code,
-      });
-
-    case "HEADER_MISSING":
-      return res.status(400).send({
-        success: false,
-        msg: err.message || "Header missing.",
         data: null,
         code: err.code,
       });

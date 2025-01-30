@@ -55,7 +55,7 @@ function Landing_Payment() {
         checkError(error);
         if (
           errorCode === "RESOURCE_NOT_FOUND" ||
-          errorCode === "INVALID_PARAMS" ||
+          errorCode === "INVALID_REQUEST" ||
           clientErrorCode === "OUTDATED_EVENT"
         ) {
           navigate(`/`);

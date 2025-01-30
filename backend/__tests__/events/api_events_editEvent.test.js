@@ -141,7 +141,7 @@ describe("PATCH /api/events/:event_id", () => {
       .expect(400);
 
     expect(body.success).toBe(false);
-    expect(body.code).toBe("INVALID_PARAMS");
+    expect(body.code).toBe("INVALID_REQUEST");
   });
 
   test("user should not have access to this route", async () => {

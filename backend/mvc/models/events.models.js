@@ -13,7 +13,7 @@ exports.getAllEvents = async ({
     const queryConditions = [];
 
     if (orderCreatedAt && orderStartDate) {
-      return Promise.reject({ code: "INVALID_QUERY", message: "Only one sorting query is allowed at a time." });
+      return Promise.reject({ code: "INVALID_REQUEST", message: "Only one sorting query is allowed at a time." });
     }
 
     if (isAllowOutdated === false) {
