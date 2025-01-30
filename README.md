@@ -179,6 +179,9 @@ Please refer to docs instead if any of these instructions are outdated in the fu
 Please refer to Clerk's [set-up-ngrok](https://clerk.com/docs/webhooks/sync-data#set-up-ngrok) to setup your ngrok tunnel forwarding to your local backend server.
 ![Clerk Signing Secret](./sources//images/clerk_signing_secret.png)
 
+#### User & Admin test tokens
+Please refer to this clerk's [documentation](https://clerk.com/docs/testing/postman-or-insomnia#generate-long-lived-jwt-template) to create your user and admin long lived JWT tokens.
+
 
 ## Stripe
 #### Publisher Key and Secret Key
