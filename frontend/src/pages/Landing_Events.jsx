@@ -98,7 +98,7 @@ function Landing_Events() {
   return (
     <PageLoader isLoading={isInitialLoad} message="fetching events">
       <div className="text-copy-primary">
-        <div className="max-w-screen-2xl mx-auto mt-10">
+        <div className="max-w-screen-2xl mx-auto">
           <div className="p-4">
             <EventsFilter
               setFilteredEvents={setFilteredEvents}
