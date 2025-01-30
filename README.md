@@ -20,10 +20,13 @@ Project that allows community memebers to view, sign up for and add events to th
 </div>
 
 # Prerequisites
-- **Node.js** v21.7.2
-- **PostgreSQL** v14.15
-- **Clerk API Keys**
-- **Stripe API Keys**
+### These versions are used during development
+- **Node.js** v21.7.2: https://nodejs.org/en/download
+- **PostgreSQL** v14.15: https://www.postgresql.org/download/
+### You need the relevant API and publisher keys (see env for specifics).
+- **Clerk Keys**: https://clerk.com/
+- **Stripe Keys**: https://stripe.com/
+- **Cloudinary Keys**: https://cloudinary.com/
 
 # Backend
 ```
