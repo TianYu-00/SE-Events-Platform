@@ -1,5 +1,6 @@
 const { Webhook } = require("svix");
 const { clerkClient } = require("@clerk/express");
+const { cleanupUser } = require("../models/users.models");
 
 exports.clerkWebhook = async (req, res, next) => {
   const CLERK_SIGNING_SECRET = process.env.CLERK_SIGNING_SECRET;
@@ -68,6 +69,18 @@ exports.clerkWebhook = async (req, res, next) => {
       }
 
       break;
+    }
+    case "user.deleted": {
+      try {
+        const response = await cleanupUser(evt.data.id);
+        // console.log(response);
+      } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+          success: false,
+          message: `Failed to clean up user: ${evt.data.id}.`,
+        });
+      }
     }
     default:
       console.log(`Unhandled event type ${eventType}.`);

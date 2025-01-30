@@ -1,10 +1,17 @@
 const db = require("../../db/connection");
 
-exports.getAllUsers = async () => {
+exports.cleanupUser = async (userId) => {
   try {
-    const result = await db.query(`SELECT * FROM users;`);
+    const query = `
+    UPDATE purchases
+    SET purchase_user_id = 'deleted-user'
+    WHERE purchase_user_id = $1
+    RETURNING *;
+    `;
+
+    const result = await db.query(query, [userId]);
     return result.rows;
-  } catch (err) {
+  } catch (error) {
     return Promise.reject(err);
   }
 };
