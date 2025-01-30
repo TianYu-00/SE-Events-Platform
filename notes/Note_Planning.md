@@ -79,8 +79,6 @@ sudo mv stripe /usr/local/bin/
     event = stripe.webhooks.constructEvent(payload, signature, endpointSecret);
 ```
 
-# TODO LIST (Optional):
-
 # 🔴 Urgent TODO
 
 # TODO
