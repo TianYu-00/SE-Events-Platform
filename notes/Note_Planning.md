@@ -97,6 +97,6 @@ sudo mv stripe /usr/local/bin/
 # SOME TODO LIST (Optional):
 
 # TODO
-- Clean up code + refactor
+- update docs and complete read me with video demo, instructions to run the project locally
 
 # 🔴 Urgent TODO
