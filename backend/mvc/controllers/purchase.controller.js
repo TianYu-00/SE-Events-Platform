@@ -7,7 +7,7 @@ exports.getAllPurchases = async (req, res, next) => {
 
     if (orderCreatedAt && !validOrderQueries.includes(orderCreatedAt.toLowerCase())) {
       const error = new Error("Invalid order query");
-      error.code = "INVALID_QUERY";
+      error.code = "INVALID_REQUEST";
       return next(error);
     }
 
@@ -15,7 +15,7 @@ exports.getAllPurchases = async (req, res, next) => {
 
     if (userId && typeof userId !== "string") {
       const error = new Error("Invalid user_id query");
-      error.code = "INVALID_QUERY";
+      error.code = "INVALID_REQUEST";
       return next(error);
     }
 
@@ -31,7 +31,7 @@ exports.createFreePurchase = async (req, res, next) => {
     const { user_id: userId, event_name: eventName, event_id: eventId } = req.body;
     if (userId === undefined || eventName === undefined || eventId === undefined) {
       const error = new Error("Some fields are missing");
-      error.code = "BODY_CONTENT_INCOMPLETE";
+      error.code = "INVALID_REQUEST_BODY";
       return next(error);
     }
 

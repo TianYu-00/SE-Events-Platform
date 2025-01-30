@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { TbSearch } from "react-icons/tb";
+import { TbSearch, TbX } from "react-icons/tb";
 import { getAllEvents } from "../api";
 import UKCitiesList from "../utils/UKCitiesList";
+import { useSearchParams } from "react-router-dom";
 
 function EventsFilter({
   originalEvents,
@@ -12,15 +13,98 @@ function EventsFilter({
   paginationOption,
   setPaginationOption,
 }) {
-  const [priceOption, setPriceOption] = useState("all");
-  const [dayOption, setDayOption] = useState("all");
-  const [cityOption, setCityOption] = useState("all");
-  const [startDateOrder, setStartDateOrder] = useState("");
-  const [createdAtOrder, setCreatedAtOrder] = useState("");
-  const [searchInputQuery, setSearchInputQuery] = useState("");
-  const [isAllowOutdatedOption, setIsAllowOutdatedOption] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const [priceOption, setPriceOption] = useState(searchParams.get("price_option") || "all");
+  const [dayOption, setDayOption] = useState(searchParams.get("day_option") || "all");
+  const [cityOption, setCityOption] = useState(searchParams.get("city_option") || "all");
+  const [startDateOrder, setStartDateOrder] = useState(searchParams.get("start_date_order") || "");
+  const [createdAtOrder, setCreatedAtOrder] = useState(searchParams.get("created_at_order") || "");
+  const [searchInputQuery, setSearchInputQuery] = useState(searchParams.get("search") || "");
+  const [isAllowOutdatedOption, setIsAllowOutdatedOption] = useState(
+    searchParams.get("allow_outdated") === "true" || false
+  );
+  const [isResetFilter, setIsResetFilter] = useState(false);
+
+  const clearFilter = () => {
+    setPriceOption("all");
+    setDayOption("all");
+    setCityOption("all");
+    setStartDateOrder("");
+    setCreatedAtOrder("");
+    setSearchInputQuery("");
+    setIsAllowOutdatedOption(false);
+    setIsResetFilter(true);
+  };
+
+  useEffect(() => {
+    if (isResetFilter) {
+      updateFilter();
+      setIsResetFilter(false);
+    }
+  }, [isResetFilter]);
+
+  // useEffect(() => {
+  //   addFilterToQuery();
+  // }, [priceOption, dayOption, cityOption, startDateOrder, createdAtOrder, searchInputQuery, isAllowOutdatedOption]);
+
+  const addFilterToQuery = () => {
+    if (priceOption === "all") {
+      searchParams.delete("price_option");
+    } else {
+      searchParams.set("price_option", priceOption);
+    }
+
+    if (dayOption === "all") {
+      searchParams.delete("day_option");
+    } else {
+      searchParams.set("day_option", dayOption);
+    }
+
+    if (cityOption === "all") {
+      searchParams.delete("city_option");
+    } else {
+      searchParams.set("city_option", cityOption);
+    }
+
+    if (isAllowOutdatedOption === false) {
+      searchParams.delete("allow_outdated");
+    } else {
+      searchParams.set("allow_outdated", isAllowOutdatedOption);
+    }
+
+    if (searchInputQuery === "") {
+      searchParams.delete("search");
+    } else {
+      searchParams.set("search", searchInputQuery);
+    }
+
+    // console.log(startDateOrder, createdAtOrder);
+
+    if (startDateOrder === "") {
+      searchParams.delete("start_date_order");
+    } else {
+      searchParams.set("start_date_order", startDateOrder);
+    }
+
+    if (createdAtOrder === "") {
+      searchParams.delete("created_at_order");
+    } else {
+      searchParams.set("created_at_order", createdAtOrder);
+    }
+
+    setSearchParams(searchParams);
+  };
+
+  useEffect(() => {
+    if (searchParams.size > 0) {
+      updateFilter();
+    }
+  }, []);
 
   const updateFilter = () => {
+    addFilterToQuery();
+
     if (!startDateOrder && !createdAtOrder) {
       fetchAllEvents();
     } else {
@@ -89,9 +173,12 @@ function EventsFilter({
     }
 
     if (searchInputQuery) {
-      tempEvents = tempEvents.filter((event) =>
-        event.event_name.toLowerCase().includes(searchInputQuery.toLowerCase())
-      );
+      tempEvents = tempEvents.filter((event) => {
+        const nameMatches = event.event_name.toLowerCase().includes(searchInputQuery.toLowerCase());
+        const tagsMatch = event.event_tags.some((tag) => tag.toLowerCase().includes(searchInputQuery.toLowerCase()));
+
+        return nameMatches || tagsMatch;
+      });
     }
 
     if (cityOption && cityOption !== "all") {
@@ -191,10 +278,15 @@ function EventsFilter({
             type="text"
             value={searchInputQuery}
             onChange={(e) => setSearchInputQuery(e.target.value)}
-            placeholder="Search by name..."
-            className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md shadow-sm bg-card"
+            placeholder="Search by name or tag..."
+            className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-md shadow-sm bg-card"
           />
           <TbSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+          <TbX
+            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-red-500 cursor-pointer"
+            size={20}
+            onClick={() => clearFilter()}
+          />
         </div>
 
         <select
@@ -246,14 +338,3 @@ function FilterButton({ option, setOption, value, text }) {
     </button>
   );
 }
-
-/*
-
-- ALL, PAID, FREE
-- ALL, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY
-- ALL, TODAY, THIS WEEK, THIS MONTH, THIS YEAR
-
-- SEARCH BY NAME / TAG
-- LOCATION? 
-
-*/

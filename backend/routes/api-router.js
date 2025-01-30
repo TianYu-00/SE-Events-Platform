@@ -4,6 +4,7 @@ const userRouter = require("./user-router");
 const eventRouter = require("./event-router");
 const paymentRouter = require("./payment-router");
 const purchaseRouter = require("./purchase-router");
+const clerkRouter = require("./clerk-router");
 
 //
 apisRouter.get("/", controller_apis.getApis);
@@ -13,5 +14,6 @@ apisRouter.use("/users", userRouter);
 apisRouter.use("/events", eventRouter);
 apisRouter.use("/stripe", paymentRouter);
 apisRouter.use("/purchases", purchaseRouter);
+apisRouter.use("/clerk", clerkRouter);
 
 module.exports = apisRouter;

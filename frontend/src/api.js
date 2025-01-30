@@ -23,7 +23,7 @@ export const getAllEvents = async ({
   isAllowOutdated = undefined,
 }) => {
   try {
-    console.log(orderCreatedAt, orderStartDate);
+    // console.log(orderCreatedAt, orderStartDate);
 
     const params = new URLSearchParams();
     if (orderCreatedAt) {

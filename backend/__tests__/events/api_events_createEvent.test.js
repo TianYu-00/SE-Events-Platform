@@ -52,13 +52,13 @@ describe("POST /api/events", () => {
       .send(incompleteEventData)
       .expect(400);
     expect(body.success).toBe(false);
-    expect(body.code).toBe("BODY_CONTENT_INCOMPLETE");
+    expect(body.code).toBe("INVALID_REQUEST_BODY");
   });
 
   test("should return 400 and error message when request body is empty", async () => {
     const { body } = await request(app).post("/api/events").auth(adminToken, { type: "bearer" }).send({}).expect(400);
     expect(body.success).toBe(false);
-    expect(body.code).toBe("BODY_CONTENT_INCOMPLETE");
+    expect(body.code).toBe("INVALID_REQUEST_BODY");
   });
 
   test("user should not have access to this route", async () => {

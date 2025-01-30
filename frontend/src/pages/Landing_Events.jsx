@@ -5,10 +5,12 @@ import EventCardSkeleton from "../components/EventCardSkeleton";
 import { TbChevronLeft, TbChevronRight } from "react-icons/tb";
 import useErrorChecker from "../hooks/useErrorChecker";
 import PageLoader from "../components/PageLoader";
+import { useSearchParams } from "react-router-dom";
 const EventCard = lazy(() => import("../components/EventCard"));
 
 function Landing_Events() {
   const checkError = useErrorChecker();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const [originalEvents, setOriginalEvents] = useState([]);
   const [filteredEvents, setFilteredEvents] = useState([]);
@@ -36,7 +38,11 @@ function Landing_Events() {
       }
     };
 
-    runFetchEvents();
+    if (searchParams <= 0) {
+      runFetchEvents();
+    } else {
+      setIsInitialLoad(false);
+    }
   }, []);
 
   useEffect(() => {
@@ -92,7 +98,7 @@ function Landing_Events() {
   return (
     <PageLoader isLoading={isInitialLoad} message="fetching events">
       <div className="text-copy-primary">
-        <div className="max-w-screen-xl mx-auto mt-10">
+        <div className="max-w-screen-2xl mx-auto">
           <div className="p-4">
             <EventsFilter
               setFilteredEvents={setFilteredEvents}
@@ -121,7 +127,7 @@ function Landing_Events() {
                     {resultsPerPage < filteredEvents.length && (
                       <button
                         onClick={handle_LoadMore}
-                        className="p-2 px-4 bg-cta text-cta-text hover:bg-cta-active rounded-md"
+                        className="text-cta-text bg-cta hover:bg-cta-active py-3 px-4 rounded-full font-semibold flex items-center space-x-2"
                       >
                         Load More
                       </button>

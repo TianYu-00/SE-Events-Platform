@@ -53,7 +53,11 @@ function Landing_Payment() {
         const errorCode = error.response?.data?.code;
         const clientErrorCode = error.code;
         checkError(error);
-        if (errorCode === "EVENT_NOT_FOUND" || errorCode === "INVALID_PARAMS" || clientErrorCode === "OUTDATED_EVENT") {
+        if (
+          errorCode === "RESOURCE_NOT_FOUND" ||
+          errorCode === "INVALID_REQUEST" ||
+          clientErrorCode === "OUTDATED_EVENT"
+        ) {
           navigate(`/`);
         }
       } finally {

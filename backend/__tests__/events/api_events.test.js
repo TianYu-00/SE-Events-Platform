@@ -60,7 +60,7 @@ describe("GET /api/events", () => {
   test("should return a status code 400 and error if order query was not asc or desc", async () => {
     const { body } = await request(app).get("/api/events?order_created_at=invalidOrder").expect(400);
     expect(body.success).toBe(false);
-    expect(body.code).toBe("INVALID_QUERY");
+    expect(body.code).toBe("INVALID_REQUEST");
   });
 
   test("should return events ordered in ascending order by event_start_date", async () => {
@@ -79,7 +79,7 @@ describe("GET /api/events", () => {
     const { body } = await request(app).get("/api/events?order_created_at=asc&order_start_date=desc").expect(400);
 
     expect(body.success).toBe(false);
-    expect(body.code).toBe("INVALID_QUERY");
+    expect(body.code).toBe("INVALID_REQUEST");
   });
 
   test("should return events excluding outdated ones when isAllowOutdated is false", async () => {
@@ -102,6 +102,6 @@ describe("GET /api/events", () => {
   test("should return error for invalid isAllowOutdated value", async () => {
     const { body } = await request(app).get("/api/events?is_allow_outdated=invalid").expect(400);
     expect(body.success).toBe(false);
-    expect(body.code).toBe("INVALID_QUERY");
+    expect(body.code).toBe("INVALID_REQUEST");
   });
 });

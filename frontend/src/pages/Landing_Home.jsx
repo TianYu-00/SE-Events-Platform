@@ -46,11 +46,13 @@ function Landing_Home() {
         {/* Event scroller */}
         <div className="relative">
           <ImageScroller events={events} />
-          <div className="absolute inset-0 flex flex-col items-center justify-center bg-black opacity-40"></div>
+          <div className="absolute inset-0 flex flex-col items-center justify-center bg-black opacity-80"></div>
           <div className="absolute inset-0 flex flex-col items-center justify-center">
-            <h2 className="text-white font-bold text-2xl md:text-5xl mb-4">Lorem ipsum dolor sit amet.</h2>
+            <h2 className="text-white font-bold text-2xl md:text-5xl mb-4 w-2/3 text-center">
+              Discover and grab your tickets for amazing events happening across the UK!
+            </h2>
             <button
-              className="text-cta-text bg-cta hover:bg-cta-active py-3 px-4 rounded-md font-semibold flex items-center space-x-2"
+              className="text-cta-text bg-cta hover:bg-cta-active py-3 px-4 rounded-full font-semibold flex items-center space-x-2"
               onClick={() => navigate("/events")}
             >
               <span>Explore Events</span>
@@ -60,7 +62,7 @@ function Landing_Home() {
         </div>
 
         {/* Latest created */}
-        <div className="max-w-screen-xl mx-auto mt-10 ">
+        <div className="max-w-screen-2xl mx-auto mt-10 ">
           <div className="flex items-center space-x-2 px-4">
             <h3 className="font-semibold text-lg md:text-3xl">Latest Events Created</h3>
             <TbCornerRightDown size={22} strokeWidth={3} />
@@ -76,7 +78,7 @@ function Landing_Home() {
         </div>
 
         {/* Rest of some of the events */}
-        <div className="max-w-screen-xl mx-auto mt-10">
+        <div className="max-w-screen-2xl mx-auto mt-10">
           <div className="flex items-center space-x-2 px-4">
             <h3 className="font-semibold text-lg md:text-3xl">Events</h3>
             <TbCornerRightDown size={22} strokeWidth={3} />
@@ -90,15 +92,9 @@ function Landing_Home() {
             </Suspense>
           </div>
 
-          <div className="flex justify-center items-center">
-            <p className="text-copy-secondary text-sm">
-              {showingEventsStartingFrom} - {showingEventsEnding} of {events.length} events
-            </p>
-          </div>
-
           <div className="flex flex-row items-center justify-center p-10">
             <button
-              className="text-cta-text bg-cta hover:bg-cta-active py-3 px-4 rounded-md font-semibold flex items-center space-x-2"
+              className="text-cta-text bg-cta hover:bg-cta-active py-3 px-4 rounded-full font-semibold flex items-center space-x-2"
               onClick={() => navigate("/events")}
             >
               <span>Browse More</span>

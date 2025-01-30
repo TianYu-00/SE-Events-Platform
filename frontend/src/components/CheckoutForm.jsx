@@ -13,7 +13,7 @@ const CheckoutForm = ({ eventPrice, eventName }) => {
   const [message, setMessage] = useState(null);
   const [isProcessing, setIsProcessing] = useState(false);
 
-  const handleSubmit = async (e) => {
+  const handle_Submit = async (e) => {
     e.preventDefault();
     if (!stripe || !elements) {
       return;
@@ -39,7 +39,7 @@ const CheckoutForm = ({ eventPrice, eventName }) => {
   return (
     <div className="w-full h-full flex flex justify-center items-center text-copy-primary">
       <form
-        onSubmit={handleSubmit}
+        onSubmit={handle_Submit}
         className="flex justify-center items-center flex-col space-y-10 md:border md:border-border/30 p-10 rounded-md w-full md:w-5/12 shadow-lg bg-card"
       >
         <div className="flex justify-center items-center flex-col">

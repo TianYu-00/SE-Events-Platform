@@ -13,7 +13,7 @@ exports.getAllEvents = async ({
     const queryConditions = [];
 
     if (orderCreatedAt && orderStartDate) {
-      return Promise.reject({ code: "INVALID_QUERY", message: "Only one sorting query is allowed at a time." });
+      return Promise.reject({ code: "INVALID_REQUEST", message: "Only one sorting query is allowed at a time." });
     }
 
     if (isAllowOutdated === false) {
@@ -43,7 +43,7 @@ exports.getEventById = async (eventId) => {
 
     const result = await db.query(query, [eventId]);
     if (result.rows <= 0) {
-      return Promise.reject({ code: "EVENT_NOT_FOUND", message: "Event not found" });
+      return Promise.reject({ code: "RESOURCE_NOT_FOUND", message: "Event not found" });
     }
     return result.rows[0];
   } catch (error) {
@@ -205,7 +205,7 @@ exports.increaseEventAttendee = async (eventId) => {
     const tempResult = await db.query(tempQuery, [eventId]);
 
     if (tempResult.rows.length === 0) {
-      return Promise.reject({ code: "EVENT_NOT_FOUND", message: "Event not found" });
+      return Promise.reject({ code: "RESOURCE_NOT_FOUND", message: "Event not found" });
     }
 
     const currentAttendees = tempResult.rows[0].event_attendees;
@@ -249,7 +249,7 @@ exports.checkTicketsAvailable = async (eventId) => {
     const result = await db.query(query, [eventId]);
 
     if (result.rows.length === 0) {
-      return Promise.reject({ code: "EVENT_NOT_FOUND", message: "Event not found" });
+      return Promise.reject({ code: "RESOURCE_NOT_FOUND", message: "Event not found" });
     }
 
     const { event_capacity, event_attendees } = result.rows[0];

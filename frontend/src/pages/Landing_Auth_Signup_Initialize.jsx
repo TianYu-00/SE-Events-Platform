@@ -27,7 +27,8 @@ function Landing_Auth_Signup_Initialize() {
 
     if (isLoaded) {
       if (isSignedIn) {
-        if (user && Object.keys(user.publicMetadata).length === 0) {
+        // console.log(user, !user.publicMetadata.role);
+        if (user && !user.publicMetadata.role) {
           runInitializeUser();
         } else {
           navigate("/", { replace: true });
@@ -44,7 +45,7 @@ function Landing_Auth_Signup_Initialize() {
     }
   }, [isInitializing]);
 
-  return <PageLoader isLoading={isInitializing} message="Initializing User" />;
+  return <PageLoader isLoading={isInitializing} message="Initializing User" delay={0} timer={1000} />;
 }
 
 export default Landing_Auth_Signup_Initialize;
