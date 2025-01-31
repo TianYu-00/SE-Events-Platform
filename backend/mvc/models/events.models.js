@@ -126,7 +126,7 @@ exports.removeEvents = async (eventIds) => {
           if (deleteImagesResponse.partial) {
             console.warn("Some images might not have been deleted.");
           } else {
-            console.log("All images deleted successfully.");
+            console.log("All images deleted successfully, test images are skipped.");
           }
         } else {
           console.error("Failed to delete images from Cloudinary.");
@@ -187,6 +187,8 @@ exports.patchEvent = async (eventId, eventData) => {
         const deleteImageResponse = await deleteImage(fetchedEventResponse.event_thumbnail);
         if (deleteImageResponse?.result === "ok") {
           console.log("image deleted successfully");
+        } else if (deleteImageResponse?.result === "skipped") {
+          console.log("image deletion skipped");
         } else {
           console.error("Failed to delete image");
         }

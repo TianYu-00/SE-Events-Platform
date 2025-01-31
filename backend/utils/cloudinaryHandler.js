@@ -10,9 +10,14 @@ cloudinary.config({
 
 exports.deleteImage = async (imageSecureURL) => {
   try {
-    // console.log("secure link", imageSecureURL);
     const publicId = imageSecureURL.split("/").slice(-1)[0].split(".")[0];
-    // console.log("public id", publicId);
+
+    const tagsResponse = await cloudinary.api.resource(publicId, { tags: true });
+
+    if (tagsResponse.tags.includes("test")) {
+      return { result: "skipped" };
+    }
+
     const response = await cloudinary.uploader.destroy(publicId);
     return response;
   } catch (error) {
@@ -22,14 +27,28 @@ exports.deleteImage = async (imageSecureURL) => {
 
 exports.deleteMultipleImages = async (imageSecureURLs) => {
   try {
-    // console.log("secure links", imageSecureURLs);
-    const publicIds = imageSecureURLs.map((imageSecureURL) => {
-      return imageSecureURL.split("/").slice(-1)[0].split(".")[0];
+    const imageTagsPromises = imageSecureURLs.map(async (imageSecureURL) => {
+      const publicId = imageSecureURL.split("/").slice(-1)[0].split(".")[0];
+      const tagsResponse = await cloudinary.api.resource(publicId, { tags: true });
+      return {
+        publicId,
+        isTestImage: tagsResponse.tags.includes("test"),
+      };
     });
-    // console.log("public id", publicIds);
-    const response = await cloudinary.api.delete_resources(publicIds);
-    console.log(response);
-    return response;
+
+    const imageTags = await Promise.all(imageTagsPromises);
+    // console.log("1", imageTags);
+
+    const publicIdsToDelete = imageTags.filter((image) => !image.isTestImage).map((image) => image.publicId);
+    // console.log("2", publicIdsToDelete);
+
+    if (publicIdsToDelete.length > 0) {
+      const response = await cloudinary.api.delete_resources(publicIdsToDelete);
+      console.log(response);
+      return response;
+    } else {
+      console.log("No images were deleted.");
+    }
   } catch (error) {
     console.error("Error bulk deleting images:", error);
   }

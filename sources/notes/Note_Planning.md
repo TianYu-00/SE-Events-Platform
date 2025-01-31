@@ -79,6 +79,7 @@ sudo mv stripe /usr/local/bin/
 ```
 
 # 🔴 Urgent TODO
+- Prevent default test data images from being deleted ✅
 
 # TODO
 - Accessibility

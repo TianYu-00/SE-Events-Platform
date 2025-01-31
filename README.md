@@ -262,6 +262,7 @@ npm test
 
 ## Frontend
 #### Test Clerk Accounts
+Note: These test accounts are not deletable, if you would like to test user.deleted webhook please create your own account.
 
 | **Role** | **Email**                    | **Password** |
 |----------|------------------------------|--------------|
