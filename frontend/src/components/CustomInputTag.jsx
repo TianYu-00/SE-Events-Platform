@@ -65,6 +65,7 @@ function CustomInputTag({ tags = [], setTags }) {
       )}
 
       <input
+        id="event_tag_input"
         type="text"
         value={input}
         onChange={(e) => setInput(e.target.value)}
@@ -72,6 +73,7 @@ function CustomInputTag({ tags = [], setTags }) {
         placeholder="Press enter or comma to add tag"
         className="block w-full rounded-md shadow-sm p-2 border border-border bg-card text-copy-primary focus:outline-none focus:border-border col-span-2"
         maxLength="28"
+        aria-label="enter new tag to be added"
       />
     </div>
   );

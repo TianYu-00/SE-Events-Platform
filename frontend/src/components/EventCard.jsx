@@ -31,7 +31,9 @@ function EventCard({ event }) {
         />
         <div className="p-3 flex flex-col flex-grow">
           <div className="mb-3">
-            <h3 className="truncate text-2xl font-medium mb-1">{event.event_name}</h3>
+            <h3 className="truncate text-2xl font-medium mb-1" aria-label="event name">
+              {event.event_name}
+            </h3>
             <p className="truncate text-sm text-copy-secondary flex">
               <TbMapPin className="mr-2" size={17} />
               <span>{`${event.event_street_address}, ${event.event_city_town}, ${event.event_postcode}`}</span>

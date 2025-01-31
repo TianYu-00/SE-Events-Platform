@@ -496,7 +496,12 @@ function EventForm({ initialEventData = null, isCreate = true }) {
             </div>
 
             <div className="col-span-2">
-              <label className="block text-sm font-medium text-copy-primary/80 ml-1 text-nowrap mb-1">Tags</label>
+              <label
+                className="block text-sm font-medium text-copy-primary/80 ml-1 text-nowrap mb-1"
+                htmlFor="event_tag_input"
+              >
+                Tags
+              </label>
               <CustomInputTag
                 tags={eventData.event_tags || []}
                 setTags={(newTags) => setEventData({ ...eventData, event_tags: newTags })}
