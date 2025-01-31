@@ -64,35 +64,32 @@ function LargeNav() {
           </Link>
         </li>
 
-        <div className={`${user ? "" : "hidden"} flex flex-row justify-center items-center space-x-4`}>
+        {user ? (
           <li>
             <Link to="/user/purchases" className="flex flex-row p-2">
               <span className="font-medium text-sm pl-2">Purchases</span>
             </Link>
           </li>
-        </div>
+        ) : (
+          <></>
+        )}
 
-        <div
-          className={`${
-            user?.publicMetadata?.role === "admin" ? "" : "hidden"
-          } flex flex-row justify-center items-center space-x-4`}
-        >
-          {/* <li>
-            <Link to="/playground" className="flex flex-row p-2">
-              <span className="font-medium text-sm pl-2">Playground</span>
-            </Link>
-          </li> */}
-          <li>
-            <Link to="/create-event" className="flex flex-row p-2">
-              <span className="font-medium text-sm pl-2">Create Event</span>
-            </Link>
-          </li>
-          <li>
-            <Link to="/manage-events" className="flex flex-row p-2">
-              <span className="font-medium text-sm pl-2">Manage Events</span>
-            </Link>
-          </li>
-        </div>
+        {user?.publicMetadata?.role === "admin" ? (
+          <>
+            <li>
+              <Link to="/create-event" className="flex flex-row p-2">
+                <span className="font-medium text-sm pl-2">Create Event</span>
+              </Link>
+            </li>
+            <li>
+              <Link to="/manage-events" className="flex flex-row p-2">
+                <span className="font-medium text-sm pl-2">Manage Events</span>
+              </Link>
+            </li>
+          </>
+        ) : (
+          <></>
+        )}
       </ul>
     </div>
   );
@@ -106,6 +103,7 @@ function MenuNav() {
       <button
         className="mx-2 flex items-center p-2 hover:bg-background-opp/10 rounded cursor-pointer"
         onClick={() => setIsOpen(!isOpen)}
+        aria-label="navigation menu button"
       >
         <TbMenu2 size={25} />
         <DrawerMenu isOpen={isOpen} setIsOpen={setIsOpen} direction={"left"}>
@@ -130,7 +128,7 @@ function MenuNav() {
                 </Link>
               </li>
 
-              <div className={`${user ? "" : "hidden"}`}>
+              {user ? (
                 <li>
                   <Link
                     to="/user/purchases"
@@ -140,37 +138,34 @@ function MenuNav() {
                     <span className="font-medium">Purchases</span>
                   </Link>
                 </li>
-              </div>
+              ) : (
+                <></>
+              )}
 
-              <div className={`${user?.publicMetadata?.role === "admin" ? "" : "hidden"}`}>
-                {/* <li>
-                  <Link
-                    to="/playground"
-                    className="flex flex-col items-start p-4 rounded-md hover:bg-white hover:text-black"
-                  >
-                    <span className="text-xs text-white/45">Admin</span>
-                    <span className="font-medium">Playground</span>
-                  </Link>
-                </li> */}
-                <li>
-                  <Link
-                    to="/create-event"
-                    className="flex flex-col items-start p-4 rounded-md hover:bg-white hover:text-black"
-                  >
-                    <span className="text-xs text-white/45">Admin</span>
-                    <span className="font-medium">Create Event</span>
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/manage-events"
-                    className="flex flex-col items-start p-4 rounded-md hover:bg-white hover:text-black"
-                  >
-                    <span className="text-xs text-white/45">Admin</span>
-                    <span className="font-medium">Manage Events</span>
-                  </Link>
-                </li>
-              </div>
+              {user?.publicMetadata?.role === "admin" ? (
+                <>
+                  <li>
+                    <Link
+                      to="/create-event"
+                      className="flex flex-col items-start p-4 rounded-md hover:bg-white hover:text-black"
+                    >
+                      <span className="text-xs text-white/60">Admin</span>
+                      <span className="font-medium">Create Event</span>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/manage-events"
+                      className="flex flex-col items-start p-4 rounded-md hover:bg-white hover:text-black"
+                    >
+                      <span className="text-xs text-white/60">Admin</span>
+                      <span className="font-medium">Manage Events</span>
+                    </Link>
+                  </li>
+                </>
+              ) : (
+                <></>
+              )}
             </ul>
           </div>
         </DrawerMenu>
