@@ -33,7 +33,6 @@ Decline: 4000000000000002
 - https://clerk.com/docs/references/express/overview#example-use-clerk-client-to-get-a-users-information
 - https://dev.to/mad/api-testing-with-clerk-and-express-2i56
 
-
 # NOTE Cloudinary
 - https://api.cloudinary.com/v1_1/:cloudName/upload
 - need formData with
@@ -79,7 +78,6 @@ sudo mv stripe /usr/local/bin/
     event = stripe.webhooks.constructEvent(payload, signature, endpointSecret);
 ```
 
-<<<<<<< HEAD
 # 🔴 Urgent TODO
 
 # TODO
@@ -89,9 +87,4 @@ sudo mv stripe /usr/local/bin/
     - Tested with axe DevTools ✅
 
 - Create video going over the main/key features of the project.
-<<<<<<< HEAD
-=======
-
->>>>>>> 00ce91e (docs: add todo + complete todo)
-
 
