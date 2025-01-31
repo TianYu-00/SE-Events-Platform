@@ -9,6 +9,6 @@ userRouter.get("/", requireAuth(), adminLocked, userController.fetchAllUsers); /
 userRouter.post("/update-role", requireAuth(), adminLocked, userController.updateRole); // should admin
 userRouter.get("/:user_id", requireAuth(), userController.fetchUser);
 
-userRouter.post("/initialize", userController.initializeUser); // later could convert this to accept webhook of i think user.created?
+userRouter.post("/initialize", userController.initializeUser);
 
 module.exports = userRouter;
