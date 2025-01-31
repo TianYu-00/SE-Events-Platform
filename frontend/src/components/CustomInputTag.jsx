@@ -56,7 +56,11 @@ function CustomInputTag({ tags = [], setTags }) {
               onDragOver={handle_TagDragOver}
             >
               <span>{tag}</span>
-              <button className="text-red-500 px-1 hover:text-red-400" onClick={() => handle_RemoveTag(tag)}>
+              <button
+                className="text-red-500 px-1 hover:text-red-400"
+                onClick={() => handle_RemoveTag(tag)}
+                aria-label={`remove ${tag} tag`}
+              >
                 <TbX size={17} strokeWidth={3} />
               </button>
             </div>
