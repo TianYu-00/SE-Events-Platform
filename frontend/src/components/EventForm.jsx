@@ -137,7 +137,8 @@ function EventForm({ initialEventData = null, isCreate = true }) {
           <EventCard
             event={{
               event_name: eventData.event_name,
-              event_thumbnail: imagePreview || eventData.event_thumbnail,
+              event_thumbnail:
+                imagePreview || eventData.event_thumbnail || "https://placehold.co/600x400?text=Image+Not+Selected",
               event_street_address: eventData.event_street_address,
               event_city_town: eventData.event_city_town,
               event_postcode: eventData.event_postcode,
