@@ -89,5 +89,9 @@ sudo mv stripe /usr/local/bin/
     - Tested with axe DevTools ✅
 
 - Create video going over the main/key features of the project.
+<<<<<<< HEAD
+=======
+
+>>>>>>> 00ce91e (docs: add todo + complete todo)
 
 
