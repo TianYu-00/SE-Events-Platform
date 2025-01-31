@@ -40,15 +40,19 @@ const ImageScroller = ({ events }) => {
         pauseOnHover={false}
         arrows={false}
       >
-        {events.map((event, index) => (
-          <div key={index}>
-            <img
-              src={event.event_thumbnail}
-              className="w-full h-96 object-cover"
-              alt={event.event_name ? `Thumbnail for ${event.event_name}` : "Event thumbnail"}
-            />
-          </div>
-        ))}
+        {events.length > 0 ? (
+          events.map((event, index) => (
+            <div key={index}>
+              <img
+                src={event.event_thumbnail}
+                className="w-full h-96 object-cover"
+                alt={event.event_name ? `Thumbnail for ${event.event_name}` : "Event thumbnail"}
+              />
+            </div>
+          ))
+        ) : (
+          <div className="w-full h-96" />
+        )}
       </Carousel>
     </div>
   );

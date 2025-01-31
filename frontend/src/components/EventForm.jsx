@@ -85,12 +85,12 @@ function EventForm({ initialEventData = null, isCreate = true }) {
         const token = await getToken();
         const createEventResponse = await createEvent({ eventData: eventData, token: token });
         console.log(createEventResponse);
-        setEventData(eventDataTemplate);
-        setImagePreview(null);
-        setSelectedImageFile(null);
-        if (thumbnailInputRef.current) {
-          thumbnailInputRef.current.value = "";
-        }
+        // setEventData(eventDataTemplate);
+        // setImagePreview(null);
+        // setSelectedImageFile(null);
+        // if (thumbnailInputRef.current) {
+        //   thumbnailInputRef.current.value = "";
+        // }
         toast.success(createEventResponse.msg);
       } else {
         console.log("secure url missing");

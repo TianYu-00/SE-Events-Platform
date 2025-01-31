@@ -63,32 +63,38 @@ function Landing_Home() {
 
         {/* Latest created */}
         <div className="max-w-screen-2xl mx-auto mt-10 ">
-          <div className="flex items-center space-x-2 px-4">
+          <div className="flex items-center space-x-4 px-4">
             <h3 className="font-semibold text-lg md:text-3xl">Latest Events Created</h3>
             <TbCornerRightDown size={22} strokeWidth={3} />
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 p-4 ">
             <Suspense fallback={<EventCardSkeleton events={events} minDisplay={3} maxDisplay={3} />}>
-              {events.slice(0, showingNewlyCreated).map((event) => (
-                <EventCard event={event} key={event.event_id} />
-              ))}
+              {events.length > 0 ? (
+                events.slice(0, showingNewlyCreated).map((event) => <EventCard event={event} key={event.event_id} />)
+              ) : (
+                <div>No newly created events available</div>
+              )}
             </Suspense>
           </div>
         </div>
 
         {/* Rest of some of the events */}
         <div className="max-w-screen-2xl mx-auto mt-10">
-          <div className="flex items-center space-x-2 px-4">
+          <div className="flex items-center space-x-4 px-4">
             <h3 className="font-semibold text-lg md:text-3xl">Events</h3>
             <TbCornerRightDown size={22} strokeWidth={3} />
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 p-4 ">
             <Suspense fallback={<EventCardSkeleton events={events} minDisplay={6} maxDisplay={6} />}>
-              {events.slice(showingEventsStartingFrom, showingEventsEnding).map((event) => (
-                <EventCard event={event} key={event.event_id} />
-              ))}
+              {events.length > showingEventsStartingFrom ? (
+                events
+                  .slice(showingEventsStartingFrom, showingEventsEnding)
+                  .map((event) => <EventCard event={event} key={event.event_id} />)
+              ) : (
+                <div>No more events available</div>
+              )}
             </Suspense>
           </div>
 
