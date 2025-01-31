@@ -11,7 +11,12 @@ export const eventColumns = [
     id: "selection",
     cell: ({ row }) => (
       <div className="flex space-x-2 justify-center items-center">
-        <input type="checkbox" checked={row.getIsSelected()} onChange={row.getToggleSelectedHandler()} />
+        <input
+          type="checkbox"
+          checked={row.getIsSelected()}
+          onChange={row.getToggleSelectedHandler()}
+          aria-label={`Select event ${row.original.event_name}`}
+        />
       </div>
     ),
     header: ({ table }) => (
@@ -20,7 +25,9 @@ export const eventColumns = [
           type="checkbox"
           checked={table.getIsAllRowsSelected()}
           onChange={table.getToggleAllRowsSelectedHandler()}
+          aria-label="Select all events in the table"
         />
+        <span class="sr-only">select event table header</span>
       </div>
     ),
   }),
