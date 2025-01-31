@@ -26,25 +26,13 @@ admin123
 Success: 4000008260000000
 Decline: 4000000000000002
 
-
-# Backend
-Main Tools to use:
-- Express
-- PSQL
-- Jest
-
-# Frontend
-Main Tools to use:
-- Vite.js
-- Tailwind
-- React-Icons
-
 # NOTE CLERK
 - https://clerk.com/docs/testing/postman-or-insomnia
 - `await window.Clerk.session.getToken({ template: '<template name>' })`
 - https://clerk.com/docs/references/express/overview#require-auth
 - https://clerk.com/docs/references/express/overview#example-use-clerk-client-to-get-a-users-information
 - https://dev.to/mad/api-testing-with-clerk-and-express-2i56
+
 
 # NOTE Cloudinary
 - https://api.cloudinary.com/v1_1/:cloudName/upload
@@ -91,12 +79,11 @@ sudo mv stripe /usr/local/bin/
     event = stripe.webhooks.constructEvent(payload, signature, endpointSecret);
 ```
 
-
-# NOTE
-
-# SOME TODO LIST (Optional):
-
-# TODO
-- Clean up code + refactor
+# TODO LIST (Optional):
 
 # 🔴 Urgent TODO
+
+# TODO
+
+
+
