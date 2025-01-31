@@ -46,9 +46,9 @@ function Landing_Home() {
         {/* Event scroller */}
         <div className="relative">
           <ImageScroller events={events} />
-          <div className="absolute inset-0 flex flex-col items-center justify-center bg-black opacity-80"></div>
+          <div className="absolute inset-0 flex flex-col items-center justify-center bg-black opacity-70"></div>
           <div className="absolute inset-0 flex flex-col items-center justify-center">
-            <h2 className="text-white font-bold text-2xl md:text-5xl mb-4 w-2/3 text-center">
+            <h2 className="text-white font-bold text-2xl md:text-5xl mb-4 w-2/3 text-center drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">
               Discover and grab your tickets for amazing events happening across the UK!
             </h2>
             <button

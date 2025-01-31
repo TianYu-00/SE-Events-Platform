@@ -7,6 +7,8 @@ function BackToTop() {
       <button
         onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
         className="rounded-full hover:bg-blue-600 p-2"
+        aria-label="scroll to top"
+        role="button"
       >
         <TbChevronUp size={17} strokeWidth={3} />
       </button>

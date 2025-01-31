@@ -21,7 +21,7 @@ function EventCard({ event }) {
         <img
           src={event.event_thumbnail}
           className="rounded-t-lg w-full h-64 object-cover cursor-pointer"
-          alt="Event Thumbnail"
+          alt={event.event_name ? `Thumbnail for ${event.event_name}` : "Event thumbnail"}
           onClick={() => navigate(`/event/${event.event_id}`)}
           onError={(e) => {
             e.target.onerror = null;
