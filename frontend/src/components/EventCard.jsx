@@ -18,17 +18,19 @@ function EventCard({ event }) {
   return (
     <div className="text-copy-primary">
       <div className="w-full h-full bg-card rounded-t-lg border border-border/40 shadow-lg flex flex-col transition-transform duration-300 hover:scale-105">
-        <img
-          src={event.event_thumbnail}
-          className="rounded-t-lg w-full h-64 object-cover cursor-pointer"
-          alt={event.event_name ? `Thumbnail for ${event.event_name}` : "Event thumbnail"}
-          onClick={() => navigate(`/event/${event.event_id}`)}
-          onError={(e) => {
-            e.target.onerror = null;
-            e.target.src = "https://placehold.co/600x400?text=Image+Not+Available";
-          }}
-          loading="lazy"
-        />
+        <button onClick={() => navigate(`/event/${event.event_id}`)}>
+          <img
+            src={event.event_thumbnail}
+            className="rounded-t-lg w-full h-64 object-cover cursor-pointer"
+            alt={event.event_name ? `Thumbnail for ${event.event_name}` : "Event thumbnail"}
+            onError={(e) => {
+              e.target.onerror = null;
+              e.target.src = "https://placehold.co/600x400?text=Image+Not+Available";
+            }}
+            loading="lazy"
+          />
+        </button>
+
         <div className="p-3 flex flex-col flex-grow">
           <div className="mb-3">
             <h3 className="truncate text-2xl font-medium mb-1" aria-label="event name">
