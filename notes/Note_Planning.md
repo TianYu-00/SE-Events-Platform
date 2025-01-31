@@ -84,6 +84,12 @@ sudo mv stripe /usr/local/bin/
 # 🔴 Urgent TODO
 
 # TODO
+- Accessibility
+    - Tested with WAVE ✅
+    - Tested with Lighthouse ✅
+    - Tested with axe DevTools ✅
+
+- Create video going over the main/key features of the project.
 
 
 
