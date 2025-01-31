@@ -27,7 +27,7 @@ export const eventColumns = [
           onChange={table.getToggleAllRowsSelectedHandler()}
           aria-label="Select all events in the table"
         />
-        <span class="sr-only">select event table header</span>
+        <span className="sr-only">select event table header</span>
       </div>
     ),
   }),

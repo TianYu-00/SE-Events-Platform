@@ -1,5 +1,5 @@
 import React from "react";
-import { TbCaretLeft, TbCaretLeftFilled, TbCaretRight, TbCaretRightFilled } from "react-icons/tb";
+import { TbCaretLeftFilled, TbCaretRightFilled, TbChevronRight, TbChevronLeft } from "react-icons/tb";
 
 const Pagination = ({ table }) => {
   return (
@@ -24,7 +24,7 @@ const Pagination = ({ table }) => {
 
       <div className="flex items-center space-x-2">
         <button
-          className="p-2 rounded-md bg-cta text-cta-text hover:bg-cta-active disabled:opacity-50 disabled:cursor-not-allowed"
+          className="p-2 rounded-md text-copy-primary hover:bg-cta-active hover:text-cta-text disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-transparent disabled:hover:bg-transparent disabled:hover:text-copy-primary"
           onClick={() => table.setPageIndex(0)}
           disabled={!table.getCanPreviousPage()}
           aria-label="navigate to first page"
@@ -32,13 +32,12 @@ const Pagination = ({ table }) => {
           <TbCaretLeftFilled size={17} />
         </button>
         <button
-          className="p-2 rounded-md bg-cta text-cta-text hover:bg-cta-active disabled:opacity-50 px-4 disabled:cursor-not-allowed"
+          className="p-2 rounded-md text-copy-primary hover:bg-cta-active hover:text-cta-text disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-transparent disabled:hover:bg-transparent disabled:hover:text-copy-primary"
           onClick={() => table.previousPage()}
           disabled={!table.getCanPreviousPage()}
           aria-label="previous page"
         >
-          {/* <TbCaretLeft size={17} /> */}
-          Previous
+          <TbChevronLeft size={17} strokeWidth={3} />
         </button>
         <span className="flex items-center">
           <input
@@ -56,16 +55,15 @@ const Pagination = ({ table }) => {
           <span className="ml-1 text-copy-primary/70">of {table.getPageCount()}</span>
         </span>
         <button
-          className="p-2 rounded-md bg-cta text-cta-text hover:bg-cta-active disabled:opacity-50 px-4 disabled:cursor-not-allowed"
+          className="p-2 rounded-md text-copy-primary hover:bg-cta-active hover:text-cta-text disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-transparent disabled:hover:bg-transparent disabled:hover:text-copy-primary"
           onClick={() => table.nextPage()}
           disabled={!table.getCanNextPage()}
           aria-label="next page"
         >
-          {/* <TbCaretRight size={17} /> */}
-          Next
+          <TbChevronRight size={17} strokeWidth={3} />
         </button>
         <button
-          className="p-2 rounded-md bg-cta text-cta-text hover:bg-cta-active disabled:opacity-50 disabled:cursor-not-allowed"
+          className="p-2 rounded-md text-copy-primary hover:bg-cta-active hover:text-cta-text disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-transparent disabled:hover:bg-transparent disabled:hover:text-copy-primary"
           onClick={() => table.setPageIndex(table.getPageCount() - 1)}
           disabled={!table.getCanNextPage()}
           aria-label="navigate to last page"
