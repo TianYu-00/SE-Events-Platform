@@ -143,6 +143,7 @@ function Landing_Events() {
                       className={`p-2 px-4 text-cta-text hover:bg-cta-active rounded-md ${
                         currentPage === 1 ? "hover:bg-cta/0" : ""
                       }`}
+                      aria-label="previous page"
                     >
                       <TbChevronLeft size={17} strokeWidth={3} />
                     </button>
@@ -153,6 +154,7 @@ function Landing_Events() {
                       min="1"
                       max={Math.ceil(filteredEvents.length / resultsPerPage)}
                       className="w-16 text-center border rounded text-copy-primary bg-card"
+                      aria-label="enter page number to navigate to"
                     />
                     <button
                       onClick={handle_NextPage}
@@ -160,6 +162,7 @@ function Landing_Events() {
                       className={`p-2 px-4 hover:bg-cta-active rounded-md ${
                         currentPage === Math.ceil(filteredEvents.length / resultsPerPage) ? "hover:bg-cta/0" : ""
                       }`}
+                      aria-label="next page"
                     >
                       <TbChevronRight size={17} strokeWidth={3} />
                     </button>

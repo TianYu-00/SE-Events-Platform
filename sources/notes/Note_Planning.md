@@ -26,19 +26,6 @@ admin123
 Success: 4000008260000000
 Decline: 4000000000000002
 
-
-# Backend
-Main Tools to use:
-- Express
-- PSQL
-- Jest
-
-# Frontend
-Main Tools to use:
-- Vite.js
-- Tailwind
-- React-Icons
-
 # NOTE CLERK
 - https://clerk.com/docs/testing/postman-or-insomnia
 - `await window.Clerk.session.getToken({ template: '<template name>' })`
@@ -91,12 +78,13 @@ sudo mv stripe /usr/local/bin/
     event = stripe.webhooks.constructEvent(payload, signature, endpointSecret);
 ```
 
-
-# NOTE
-
-# SOME TODO LIST (Optional):
+# 🔴 Urgent TODO
 
 # TODO
-- update docs and complete read me with video demo, instructions to run the project locally
+- Accessibility
+    - Tested with WAVE ✅
+    - Tested with Lighthouse ✅
+    - Tested with axe DevTools ✅
 
-# 🔴 Urgent TODO
+- Create video going over the main/key features of the project.
+

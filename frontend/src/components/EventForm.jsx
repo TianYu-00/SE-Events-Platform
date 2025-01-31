@@ -137,7 +137,8 @@ function EventForm({ initialEventData = null, isCreate = true }) {
           <EventCard
             event={{
               event_name: eventData.event_name,
-              event_thumbnail: imagePreview || eventData.event_thumbnail,
+              event_thumbnail:
+                imagePreview || eventData.event_thumbnail || "https://placehold.co/600x400?text=Image+Not+Selected",
               event_street_address: eventData.event_street_address,
               event_city_town: eventData.event_city_town,
               event_postcode: eventData.event_postcode,
@@ -496,7 +497,12 @@ function EventForm({ initialEventData = null, isCreate = true }) {
             </div>
 
             <div className="col-span-2">
-              <label className="block text-sm font-medium text-copy-primary/80 ml-1 text-nowrap mb-1">Tags</label>
+              <label
+                className="block text-sm font-medium text-copy-primary/80 ml-1 text-nowrap mb-1"
+                htmlFor="event_tag_input"
+              >
+                Tags
+              </label>
               <CustomInputTag
                 tags={eventData.event_tags || []}
                 setTags={(newTags) => setEventData({ ...eventData, event_tags: newTags })}

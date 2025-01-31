@@ -205,7 +205,7 @@ function EventsFilter({
         <div className="flex flex-row space-x-4">
           <button
             className={`${
-              !startDateOrder && !createdAtOrder ? "bg-cta/50 text-cta-text" : ""
+              !startDateOrder && !createdAtOrder ? "bg-cta text-cta-text" : ""
             } p-1 px-3 rounded-full whitespace-nowrap`}
             onClick={() => {
               setStartDateOrder("");
@@ -280,6 +280,7 @@ function EventsFilter({
             onChange={(e) => setSearchInputQuery(e.target.value)}
             placeholder="Search by name or tag..."
             className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-md shadow-sm bg-card"
+            aria-label="Search events by name or tag"
           />
           <TbSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
           <TbX
@@ -295,6 +296,7 @@ function EventsFilter({
           value={cityOption}
           onChange={(e) => setCityOption(e.target.value)}
           className="p-2 rounded-md flex justify-center items-center border border-border bg-card"
+          aria-label="select city to filter"
         >
           <option value="all" disabled>
             -- Filter By City --
@@ -317,7 +319,7 @@ function EventsFilter({
         </div>
       </div>
 
-      <div className="flex justify-end text-copy-secondary">
+      <div className="flex justify-end text-copy-primary/70">
         <span>
           {filteredEvents.length} Result{filteredEvents.length > 1 && "s"} in total
         </span>
@@ -331,7 +333,7 @@ export default EventsFilter;
 function FilterButton({ option, setOption, value, text }) {
   return (
     <button
-      className={`${option === value ? "bg-cta/50 px-3 text-cta-text" : ""} p-1 px-2 rounded-full whitespace-nowrap`}
+      className={`${option === value ? "bg-cta px-3 text-cta-text" : ""} p-1 px-2 rounded-full whitespace-nowrap`}
       onClick={() => setOption(value)}
     >
       {text}
