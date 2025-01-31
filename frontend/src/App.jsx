@@ -8,6 +8,7 @@ import { ThemeProvider, useTheme } from "./context/ThemeContext";
 import BackToTop from "./components/BackToTop";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import CookieBanner from "./components/CookieNotice";
 
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
@@ -48,6 +49,7 @@ const App = () => {
       <ThemeProvider>
         <BrowserRouter>
           <ThemedToastContainer />
+          <CookieBanner />
           <div className="min-h-screen">
             <Header />
             <Suspense fallback={<LazyPageLoader delay={300} />}>
