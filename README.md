@@ -63,9 +63,14 @@ npm run seed
 npm start
 ```
 
+> [!NOTE]  
+You won't be able to delete my test data images from Cloudinary (account: dv3fz3nmg). If you try, a console log error will occur, but it won't affect functionality.
+To avoid this, replace the event thumbnails in ./backend/db/test_data/events.js with your own images from your Cloudinary and seed the database again.
+
 > [!NOTE]
-You won't be able to delete my test data images from Cloudinary because they belong to my account (dv3fz3nmg). If you try to delete an event that uses my images, a console log error will occur. This does not affect functionality, but just be aware of it.
-To fix this issue, replace the event thumbnails in `./backend/db/test_data/events.js` with your own images uploaded to your Cloudinary account. This ensures you have full control over the images for your events.
+Add a `test` tag to your Cloudinary image to prevent it from being deleted when events are removed.
+![Cloudinary Tag](./sources/images//cloudinary_tag.png)
+
 
 ## Frontend
 ### To set up and run the frontend
