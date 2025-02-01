@@ -12,10 +12,10 @@ A project that allows community members to view, sign up for, and add events to 
 
 ![alt text](./sources/images/demo.gif)
 
-|                  **Frontend**                  |                     **Backend**                      |      **Database**      |
-|:----------------------------------------------:|:----------------------------------------------------:|:----------------------:|
-|              _https://vercel.com_              |                 _https://render.com_                 | _https://supabase.com_ |
-| _https://se-events-platform-tianyu.vercel.app_ | _https://se-events-platform-tianyu.onrender.com/api_ |       _Private_        |
+|                  **Frontend**                  |                     **Backend**                      |      **Database**      |               **Youtube Demo**                |
+|:----------------------------------------------:|:----------------------------------------------------:|:----------------------:|:---------------------------------------------:|
+|              _https://vercel.com_              |                 _https://render.com_                 | _https://supabase.com_ |           _https://www.youtube.com_           |
+| _https://se-events-platform-tianyu.vercel.app_ | _https://se-events-platform-tianyu.onrender.com/api_ |       _Private_        | _https://www.youtube.com/watch?v=wJTZPR6swyg_ |
 
 </div>
 
