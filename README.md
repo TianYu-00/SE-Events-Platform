@@ -35,13 +35,13 @@ A project that allows community members to view, sign up for, and add events to 
 To save you some time, I have written some [instructions](#environment-variables-guide) to hopefully help you out with installing and getting these environment variable keys.
 
 # Getting Started
-### Clone the repo
+### Clone the github repository
 ```
 git clone https://github.com/TianYu-00/SE-Events-Platform.git
 ```
 ## Backend
 ### To set up and run the backend
-1) Navigate to the backend repository:
+1) Navigate to the backend directory:
 ```
 cd backend
 ```
@@ -50,14 +50,26 @@ cd backend
 npm install
 ```
 3) Create the [environment variables](#environment-variables)
-4) Start the server:
+4) Setup the database:
+```
+npm run setup-db
+```
+5) Seed the database:
+```
+npm run seed
+```
+6) Start the server:
 ```
 npm start
 ```
 
+> [!NOTE]
+You won't be able to delete my test data images from Cloudinary because they belong to my account (dv3fz3nmg). If you try to delete an event that uses my images, a console log error will occur. This does not affect functionality, but just be aware of it.
+To fix this issue, replace the event thumbnails in `./backend/db/test_data/events.js` with your own images uploaded to your Cloudinary account. This ensures you have full control over the images for your events.
+
 ## Frontend
 ### To set up and run the frontend
-1) Navigate to the frontend repository:
+1) Navigate to the frontend directory:
 ```
 cd frontend
 ```
