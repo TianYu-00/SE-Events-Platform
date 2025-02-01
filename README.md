@@ -10,7 +10,7 @@ A project that allows community members to view, sign up for, and add events to 
 
 [![Tests](https://github.com/TianYu-00/SE-Events-Platform/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/TianYu-00/SE-Events-Platform/actions/workflows/ci.yml)
 
-![Image](https://github.com/user-attachments/assets/e2e31252-3215-4acb-adc8-5e96ab9557b5)
+![alt text](./sources/images/demo.gif)
 
 |                  **Frontend**                  |                     **Backend**                      |      **Database**      |
 |:----------------------------------------------:|:----------------------------------------------------:|:----------------------:|
