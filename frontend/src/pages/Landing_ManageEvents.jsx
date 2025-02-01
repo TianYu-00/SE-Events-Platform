@@ -34,7 +34,7 @@ function Landing_ManageEvents() {
   const runFetchEvents = async () => {
     try {
       setIsLoading(true);
-      const response = await getAllEvents({});
+      const response = await getAllEvents({ isAllowOutdated: true });
       setEvents(response.data);
     } catch (error) {
       checkError(error);

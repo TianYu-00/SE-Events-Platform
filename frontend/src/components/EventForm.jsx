@@ -85,12 +85,12 @@ function EventForm({ initialEventData = null, isCreate = true }) {
         const token = await getToken();
         const createEventResponse = await createEvent({ eventData: eventData, token: token });
         console.log(createEventResponse);
-        // setEventData(eventDataTemplate);
-        // setImagePreview(null);
-        // setSelectedImageFile(null);
-        // if (thumbnailInputRef.current) {
-        //   thumbnailInputRef.current.value = "";
-        // }
+        setEventData(eventDataTemplate);
+        setImagePreview(null);
+        setSelectedImageFile(null);
+        if (thumbnailInputRef.current) {
+          thumbnailInputRef.current.value = "";
+        }
         toast.success(createEventResponse.msg);
       } else {
         console.log("secure url missing");
@@ -132,7 +132,7 @@ function EventForm({ initialEventData = null, isCreate = true }) {
   return (
     <div className="flex justify-center">
       {/* Event live preview */}
-      <div className="hidden md:block min-w-[450px] px-4">
+      <div className="hidden md:block w-[450px] min-w-[450px] px-4">
         <div className="w-full sticky top-10 z-10">
           <EventCard
             event={{

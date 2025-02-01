@@ -29,7 +29,7 @@ function Header() {
             <SignInButton>
               <button className="mx-2 flex items-center p-2 hover:bg-background-opp/10 rounded cursor-pointer">
                 <TbUser size={25} />
-                <span className="pl-2">Sign In</span>
+                <span className="pl-2">Sign In / Sign Up</span>
               </button>
             </SignInButton>
           </SignedOut>
