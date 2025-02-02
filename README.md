@@ -40,7 +40,7 @@ To save you some time, I have written some [instructions](./sources/notes/Enviro
 git clone https://github.com/TianYu-00/SE-Events-Platform.git
 ```
 ### Create terminals
-Create 4 terminals to run our `backend`, `frontend`, `clerk webhook listener` and `ngrok webhook listener`.
+Create 4 terminals to run our `backend`, `frontend`, `stripe webhook listener` and `ngrok webhook listener`.
 ## Backend
 ### To set up and run the backend
 1) Navigate to the backend directory:
@@ -64,6 +64,7 @@ npm run seed
 ```
 npm start
 ```
+![Backend Server](./sources/images/backend.png)
 
 ## Frontend
 ### To set up and run the frontend
@@ -80,13 +81,15 @@ npm install
 ```
 npm run dev
 ```
+![Frontend Server](./sources/images/frontend.png)
 
-## Clerk Webhook Listener
-1) Make sure you have installed Clerk's CLI and have authenticated.
+## Stripe Webhook Listener
+1) Make sure you have installed Stripe's CLI and have authenticated.
 2) Listen to the backend stripe webhook route.
 ```
 stripe listen --forward-to http://localhost:9090/api/stripe/webhook
 ```
+![Stripe Webhook](./sources/images/stripe_webhook.png)
 
 ## Ngrok Webhook Listener
 1) Make sure you have installed Ngrok and have authenticated
@@ -94,6 +97,7 @@ stripe listen --forward-to http://localhost:9090/api/stripe/webhook
 ```
 ngrok http 9090
 ```
+![NGROK Webhook](./sources/images/ngrok_webhook.png)
 
 # Notes
 
@@ -107,4 +111,8 @@ To avoid this, replace the event thumbnails in `./backend/db/test_data/events.js
 > [!NOTE]
 Add a `test` tag to your Cloudinary image to prevent it from being deleted when events are removed.
 ![Cloudinary Tag](./sources/images/cloudinary_tag.png)
+
+> [!NOTE]
+Feel free to copy my cloudinary preset settings. 
+Also preset mode needs to be unsigned, please refer to my [cloudinary guide](./sources/notes/Environment_Variables_Guide.md#upload-preset-name).
 
