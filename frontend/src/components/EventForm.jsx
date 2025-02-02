@@ -38,9 +38,7 @@ function EventForm({ initialEventData = null, isCreate = true }) {
   const [imagePreview, setImagePreview] = useState(null);
   const thumbnailInputRef = useRef(null);
 
-  useEffect(() => {
-    // console.log(eventData);
-  }, [eventData]);
+  useEffect(() => {}, [eventData]);
 
   const handle_InputChange = (e) => {
     const { id, value } = e.target;
@@ -66,10 +64,9 @@ function EventForm({ initialEventData = null, isCreate = true }) {
 
   const handle_CreateEvent = async (event) => {
     event.preventDefault();
-    // console.log(eventData);
     try {
       if (!selectedImageFile) {
-        console.error("No image file selected.");
+        toast.error("No image file selected.");
         return;
       }
 
@@ -77,14 +74,11 @@ function EventForm({ initialEventData = null, isCreate = true }) {
         throw new Error("File size exceeds 10MB.");
       }
 
-      // console.log(selectedImageFile);
       const uploadImageResponse = await cloudinaryUploadImage({ file: selectedImageFile });
-      console.log("Upload response:", uploadImageResponse);
       if (uploadImageResponse.secure_url) {
         eventData.event_thumbnail = uploadImageResponse.secure_url;
         const token = await getToken();
         const createEventResponse = await createEvent({ eventData: eventData, token: token });
-        console.log(createEventResponse);
         setEventData(eventDataTemplate);
         setImagePreview(null);
         setSelectedImageFile(null);
@@ -97,7 +91,6 @@ function EventForm({ initialEventData = null, isCreate = true }) {
       }
     } catch (error) {
       checkError(error);
-      // console.error(error);
     }
   };
 
@@ -124,7 +117,6 @@ function EventForm({ initialEventData = null, isCreate = true }) {
       setEventData(editEventResponse.data);
       toast.success(editEventResponse.msg);
     } catch (error) {
-      // console.error(error);
       checkError(error);
     }
   };
@@ -132,7 +124,7 @@ function EventForm({ initialEventData = null, isCreate = true }) {
   return (
     <div className="flex justify-center">
       {/* Event live preview */}
-      <div className="hidden md:block min-w-[450px] px-4">
+      <div className="hidden md:block w-[450px] min-w-[450px] px-4">
         <div className="w-full sticky top-10 z-10">
           <EventCard
             event={{

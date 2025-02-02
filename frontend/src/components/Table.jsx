@@ -47,6 +47,11 @@ const Table = ({ table }) => {
           </table>
         </div>
       </div>
+      <div className="flex justify-end">
+        <div className="text-copy-primary p-2 text-copy-primary/70">
+          Showing {table.getRowModel().rows.length} result{table.getRowModel().rows.length > 1 ? "s" : ""}
+        </div>
+      </div>
     </div>
   );
 };

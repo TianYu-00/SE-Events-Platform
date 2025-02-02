@@ -109,7 +109,6 @@ exports.deleteEvents = async (req, res, next) => {
     }
 
     const data = await removeEvents(eventIds);
-    // console.log(data);
     const deletedEventsLength = data.deletedIds.length;
     const failedToDeleteEventLength = data.failedToDeleteIds.length;
     res.json({

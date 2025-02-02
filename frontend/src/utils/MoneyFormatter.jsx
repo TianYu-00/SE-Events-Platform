@@ -1,6 +1,6 @@
 export function moneyFormatter(pence) {
   if (pence === null || pence === undefined) {
-    console.error("Pence not provided");
+    // console.error("Pence not provided");
     return "invalid";
   }
 

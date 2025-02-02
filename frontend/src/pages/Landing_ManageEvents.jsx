@@ -34,7 +34,7 @@ function Landing_ManageEvents() {
   const runFetchEvents = async () => {
     try {
       setIsLoading(true);
-      const response = await getAllEvents({});
+      const response = await getAllEvents({ isAllowOutdated: true });
       setEvents(response.data);
     } catch (error) {
       checkError(error);
@@ -70,19 +70,18 @@ function Landing_ManageEvents() {
 
   const handle_LogSelectedRows = () => {
     const selectedRows = table.getSelectedRowModel().rows;
-    console.log(selectedRows.map((row) => row.original));
+    // console.log(selectedRows.map((row) => row.original));
   };
 
   const handle_DeleteEvents = async () => {
     try {
       const listOfEventIds = table.getSelectedRowModel().rows.map((row) => row.original.event_id);
       if (listOfEventIds.length <= 0) {
-        console.error("Delete rejected, no row selected");
+        // console.error("Delete rejected, no row selected");
         return;
       }
       const token = await getToken();
       const response = await deleteEvents({ listOfEventIds: listOfEventIds, token: token });
-      console.log(response);
       if (response.success) {
         setEvents((prevEvents) => prevEvents.filter((event) => !listOfEventIds.includes(event.event_id)));
         table.resetRowSelection();
@@ -90,7 +89,6 @@ function Landing_ManageEvents() {
       }
     } catch (error) {
       checkError(error);
-      // console.error(error);
     }
   };
 

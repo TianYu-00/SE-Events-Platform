@@ -6,7 +6,7 @@ function BackToTop() {
     <div className="text-copy-primary fixed bottom-5 right-5">
       <button
         onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-        className="rounded-full hover:bg-blue-600 p-2"
+        className="rounded-full hover:bg-blue-600 p-2 hover:text-white"
         aria-label="scroll to top"
         role="button"
       >

@@ -7,8 +7,6 @@ exports.getAllEvents = async ({
   isAllowOutdated = undefined,
 }) => {
   try {
-    // console.log(isAllowOutdated);
-
     let query = "SELECT * FROM events";
     const queryConditions = [];
 
@@ -53,7 +51,6 @@ exports.getEventById = async (eventId) => {
 
 exports.createEvent = async (eventData) => {
   try {
-    // console.log(eventData);
     const query = `
       INSERT INTO events (
         event_name, 
@@ -126,7 +123,7 @@ exports.removeEvents = async (eventIds) => {
           if (deleteImagesResponse.partial) {
             console.warn("Some images might not have been deleted.");
           } else {
-            console.log("All images deleted successfully.");
+            console.log("All images deleted successfully, test images are skipped.");
           }
         } else {
           console.error("Failed to delete images from Cloudinary.");
@@ -152,7 +149,6 @@ exports.patchEvent = async (eventId, eventData) => {
     const fetchedEventResponse = await exports.getEventById(eventId);
     const originalModifiedAtDate = new Date(eventData.event_modified_at);
     const currentModifiedAtDate = new Date(fetchedEventResponse.event_modified_at);
-    // console.log(originalModifiedAtDate, currentModifiedAtDate);
     if (originalModifiedAtDate.getTime() !== currentModifiedAtDate.getTime()) {
       return Promise.reject({ code: "DATA_OUT_OF_SYNC", message: "Provided data is out of sync with database" });
     }
@@ -187,6 +183,8 @@ exports.patchEvent = async (eventId, eventData) => {
         const deleteImageResponse = await deleteImage(fetchedEventResponse.event_thumbnail);
         if (deleteImageResponse?.result === "ok") {
           console.log("image deleted successfully");
+        } else if (deleteImageResponse?.result === "skipped") {
+          console.log("image deletion skipped");
         } else {
           console.error("Failed to delete image");
         }

@@ -30,7 +30,6 @@ function Landing_Events() {
         setOriginalEvents(response.data);
         setFilteredEvents(response.data);
       } catch (error) {
-        // console.error(error);
         checkError(error);
       } finally {
         setIsInitialLoad(false);
@@ -140,9 +139,7 @@ function Landing_Events() {
                     <button
                       onClick={handle_PreviousPage}
                       disabled={currentPage === 1}
-                      className={`p-2 px-4 text-cta-text hover:bg-cta-active rounded-md ${
-                        currentPage === 1 ? "hover:bg-cta/0" : ""
-                      }`}
+                      className="p-2 rounded-md text-copy-primary hover:bg-cta-active hover:text-cta-text disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-transparent disabled:hover:bg-transparent disabled:hover:text-copy-primary"
                       aria-label="previous page"
                     >
                       <TbChevronLeft size={17} strokeWidth={3} />
@@ -159,9 +156,7 @@ function Landing_Events() {
                     <button
                       onClick={handle_NextPage}
                       disabled={currentPage === Math.ceil(filteredEvents.length / resultsPerPage)}
-                      className={`p-2 px-4 hover:bg-cta-active rounded-md ${
-                        currentPage === Math.ceil(filteredEvents.length / resultsPerPage) ? "hover:bg-cta/0" : ""
-                      }`}
+                      className="p-2 rounded-md text-copy-primary hover:bg-cta-active hover:text-cta-text disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-transparent disabled:hover:bg-transparent disabled:hover:text-copy-primary"
                       aria-label="next page"
                     >
                       <TbChevronRight size={17} strokeWidth={3} />

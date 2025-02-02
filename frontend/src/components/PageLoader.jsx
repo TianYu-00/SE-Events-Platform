@@ -9,7 +9,7 @@ function PageLoader({ isLoading, delay = 100, timer = 300, message = "", childre
   useEffect(() => {
     const tempNote =
       process.env.NODE_ENV === "production"
-        ? "Please note The server may take 50+ seconds to spin back up and respond after periods of inactivity"
+        ? "Please note the server may take 50+ seconds to spin back up and respond after periods of inactivity"
         : "";
     setNote(`${tempNote}`);
   }, []);
@@ -38,8 +38,8 @@ function PageLoader({ isLoading, delay = 100, timer = 300, message = "", childre
     return (
       <div className="fixed top-0 left-0 h-screen w-screen z-50 flex items-center justify-center bg-background overflow-hidden flex flex-col">
         <HashLoader color="#1764FF" />
-        <p className="text-copy-secondary pt-4 animate-pulse">{message}</p>
-        <p className="text-copy-secondary pt-10">{note}</p>
+        <p className="text-copy-secondary pt-4 animate-pulse text-center px-4">{message}</p>
+        <p className="text-copy-secondary pt-10 text-center px-4">{note}</p>
       </div>
     );
   } else {
