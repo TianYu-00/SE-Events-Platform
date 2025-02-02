@@ -100,7 +100,7 @@ Please bear in mind that I have configured the hosted project to reset the datab
 
 > [!NOTE]  
 You won't be able to delete my test data images from Cloudinary (account: dv3fz3nmg). If you try, a console log error will occur, but it won't affect functionality.
-To avoid this, replace the event thumbnails in ./backend/db/test_data/events.js with your own images from your Cloudinary and seed the database again.
+To avoid this, replace the event thumbnails in `./backend/db/test_data/events.js` with your own images from your Cloudinary and seed the database again.
 
 > [!NOTE]
 Add a `test` tag to your Cloudinary image to prevent it from being deleted when events are removed.
