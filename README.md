@@ -39,6 +39,8 @@ To save you some time, I have written some [instructions](./sources/notes/Enviro
 ```
 git clone https://github.com/TianYu-00/SE-Events-Platform.git
 ```
+### Create terminals
+Create 4 terminals to run our `backend`, `frontend`, `clerk webhook listener` and `ngrok webhook listener`.
 ## Backend
 ### To set up and run the backend
 1) Navigate to the backend directory:
