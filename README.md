@@ -92,8 +92,8 @@ stripe listen --forward-to http://localhost:9090/api/stripe/webhook
 ![Stripe Webhook](./sources/images/stripe_webhook.png)
 
 ## Ngrok Webhook Listener
-1) Make sure you have installed Ngrok and have authenticated
-2) Listen to the backend port
+1) Make sure you have installed Ngrok and have authenticated.
+2) Listen to the backend port.
 ```
 ngrok http 9090
 ```
