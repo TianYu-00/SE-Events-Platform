@@ -27,7 +27,6 @@ function Landing_Auth_Signup_Initialize() {
 
     if (isLoaded) {
       if (isSignedIn) {
-        // console.log(user, !user.publicMetadata.role);
         if (user && !user.publicMetadata.role) {
           runInitializeUser();
         } else {

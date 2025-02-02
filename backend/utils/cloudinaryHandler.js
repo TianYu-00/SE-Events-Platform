@@ -37,10 +37,8 @@ exports.deleteMultipleImages = async (imageSecureURLs) => {
     });
 
     const imageTags = await Promise.all(imageTagsPromises);
-    // console.log("1", imageTags);
 
     const publicIdsToDelete = imageTags.filter((image) => !image.isTestImage).map((image) => image.publicId);
-    // console.log("2", publicIdsToDelete);
 
     if (publicIdsToDelete.length > 0) {
       const response = await cloudinary.api.delete_resources(publicIdsToDelete);

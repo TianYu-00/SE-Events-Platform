@@ -28,7 +28,6 @@ function Landing_PaymentCompletion() {
         setIsLoading(true);
         const token = await getToken();
         const response = await verifyPayment({ paymentIntentId: paymentIntentId, userId: user.id, token: token });
-        // console.log(response.data);
         setPaymentData(response.data);
         if (response.data?.status === "succeeded") {
           setPaymentMessage("Payment successful");

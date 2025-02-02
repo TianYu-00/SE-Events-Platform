@@ -23,8 +23,6 @@ export const getAllEvents = async ({
   isAllowOutdated = undefined,
 }) => {
   try {
-    // console.log(orderCreatedAt, orderStartDate);
-
     const params = new URLSearchParams();
     if (orderCreatedAt) {
       params.append("order_created_at", orderCreatedAt);
@@ -88,7 +86,6 @@ export const createEvent = async ({ eventData, token }) => {
 
   try {
     const headers = token ? { Authorization: `Bearer ${token}` } : {};
-    // console.log(token);
     const response = await api.post(`/events`, data, { headers });
     return response.data;
   } catch (error) {

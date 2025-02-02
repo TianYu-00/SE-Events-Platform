@@ -56,8 +56,6 @@ exports.addPurchase = async ({ paymentIntent, message = null, isFree = false }) 
         ) RETURNING *;
       `;
 
-    // console.log(paymentIntent);
-
     const values = [
       paymentIntent.metadata.user_id,
       isFree ? null : paymentIntent.id,

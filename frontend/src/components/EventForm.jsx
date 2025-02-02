@@ -38,9 +38,7 @@ function EventForm({ initialEventData = null, isCreate = true }) {
   const [imagePreview, setImagePreview] = useState(null);
   const thumbnailInputRef = useRef(null);
 
-  useEffect(() => {
-    // console.log(eventData);
-  }, [eventData]);
+  useEffect(() => {}, [eventData]);
 
   const handle_InputChange = (e) => {
     const { id, value } = e.target;
@@ -66,7 +64,6 @@ function EventForm({ initialEventData = null, isCreate = true }) {
 
   const handle_CreateEvent = async (event) => {
     event.preventDefault();
-    // console.log(eventData);
     try {
       if (!selectedImageFile) {
         console.error("No image file selected.");
@@ -77,14 +74,11 @@ function EventForm({ initialEventData = null, isCreate = true }) {
         throw new Error("File size exceeds 10MB.");
       }
 
-      // console.log(selectedImageFile);
       const uploadImageResponse = await cloudinaryUploadImage({ file: selectedImageFile });
-      console.log("Upload response:", uploadImageResponse);
       if (uploadImageResponse.secure_url) {
         eventData.event_thumbnail = uploadImageResponse.secure_url;
         const token = await getToken();
         const createEventResponse = await createEvent({ eventData: eventData, token: token });
-        console.log(createEventResponse);
         setEventData(eventDataTemplate);
         setImagePreview(null);
         setSelectedImageFile(null);

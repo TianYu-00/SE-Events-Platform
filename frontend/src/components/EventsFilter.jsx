@@ -79,8 +79,6 @@ function EventsFilter({
       searchParams.set("search", searchInputQuery);
     }
 
-    // console.log(startDateOrder, createdAtOrder);
-
     if (startDateOrder === "") {
       searchParams.delete("start_date_order");
     } else {

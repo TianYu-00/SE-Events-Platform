@@ -70,7 +70,7 @@ function Landing_ManageEvents() {
 
   const handle_LogSelectedRows = () => {
     const selectedRows = table.getSelectedRowModel().rows;
-    console.log(selectedRows.map((row) => row.original));
+    // console.log(selectedRows.map((row) => row.original));
   };
 
   const handle_DeleteEvents = async () => {
@@ -82,7 +82,6 @@ function Landing_ManageEvents() {
       }
       const token = await getToken();
       const response = await deleteEvents({ listOfEventIds: listOfEventIds, token: token });
-      console.log(response);
       if (response.success) {
         setEvents((prevEvents) => prevEvents.filter((event) => !listOfEventIds.includes(event.event_id)));
         table.resetRowSelection();
@@ -90,7 +89,6 @@ function Landing_ManageEvents() {
       }
     } catch (error) {
       checkError(error);
-      // console.error(error);
     }
   };
 

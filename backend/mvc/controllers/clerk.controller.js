@@ -42,12 +42,9 @@ exports.clerkWebhook = async (req, res, next) => {
 
   const { id } = evt.data;
   const eventType = evt.type;
-  //   console.log(`Received webhook with ID ${id} and event type of ${eventType}`);
-  //   console.log("Webhook payload:", evt.data);
   switch (eventType) {
     case "user.created": {
       try {
-        //   console.log(evt.data.id);
         const user = await clerkClient.users.getUser(evt.data.id);
 
         if (!user.publicMetadata.role) {
@@ -73,9 +70,7 @@ exports.clerkWebhook = async (req, res, next) => {
     case "user.deleted": {
       try {
         const response = await cleanupUser(evt.data.id);
-        // console.log(response);
       } catch (error) {
-        console.log(error);
         return res.status(500).json({
           success: false,
           message: `Failed to clean up user: ${evt.data.id}.`,

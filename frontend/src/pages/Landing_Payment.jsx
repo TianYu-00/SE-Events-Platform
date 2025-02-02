@@ -48,7 +48,6 @@ function Landing_Payment() {
           throw error;
         }
         setEvent(response.data);
-        console.log("Found event");
       } catch (error) {
         const errorCode = error.response?.data?.code;
         const clientErrorCode = error.code;
@@ -74,7 +73,6 @@ function Landing_Payment() {
         setIsLoadingPaymentIntent(true);
         const token = await getToken();
         const response = await createPayment({ eventId: eventId, userId: user.id, token: token });
-        // console.log(response);
         setClientSecret(response.data.clientSecret);
         setEventPrice(response.data.price);
       } catch (error) {

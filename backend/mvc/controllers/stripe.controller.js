@@ -69,7 +69,6 @@ exports.verifyPayment = async (req, res, next) => {
     if (paymentIntent.metadata.user_id !== userId) {
       const error = new Error("Unauthorised Access");
       error.code = "ACCESS_DENIED";
-      console.log("error");
       return next(error);
     }
 
@@ -103,8 +102,6 @@ exports.handleWebhook = async (req, res, next) => {
       return res.status(400);
     }
   }
-
-  console.log(event.type);
 
   switch (event.type) {
     case "payment_intent.amount_capturable_updated": {
