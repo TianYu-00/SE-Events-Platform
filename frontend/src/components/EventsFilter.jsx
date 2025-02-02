@@ -3,6 +3,7 @@ import { TbSearch, TbX } from "react-icons/tb";
 import { getAllEvents } from "../api";
 import UKCitiesList from "../utils/UKCitiesList";
 import { useSearchParams } from "react-router-dom";
+import useErrorChecker from "../hooks/useErrorChecker";
 
 function EventsFilter({
   originalEvents,
@@ -14,6 +15,7 @@ function EventsFilter({
   setPaginationOption,
 }) {
   const [searchParams, setSearchParams] = useSearchParams();
+  const checkError = useErrorChecker();
 
   const [priceOption, setPriceOption] = useState(searchParams.get("price_option") || "all");
   const [dayOption, setDayOption] = useState(searchParams.get("day_option") || "all");
@@ -43,10 +45,6 @@ function EventsFilter({
       setIsResetFilter(false);
     }
   }, [isResetFilter]);
-
-  // useEffect(() => {
-  //   addFilterToQuery();
-  // }, [priceOption, dayOption, cityOption, startDateOrder, createdAtOrder, searchInputQuery, isAllowOutdatedOption]);
 
   const addFilterToQuery = () => {
     if (priceOption === "all") {
@@ -119,7 +117,7 @@ function EventsFilter({
       setOriginalEvents(response.data);
       setFilteredEvents(applyFilters(response.data));
     } catch (error) {
-      console.error(error);
+      checkError(error);
     } finally {
       setIsLoadingEvents(false);
     }
@@ -138,7 +136,7 @@ function EventsFilter({
       setOriginalEvents(response.data);
       setFilteredEvents(applyFilters(response.data));
     } catch (error) {
-      console.error("Failed to fetch ordered events:", error);
+      checkError(error);
     } finally {
       setIsLoadingEvents(false);
     }
