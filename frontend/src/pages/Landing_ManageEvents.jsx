@@ -77,7 +77,7 @@ function Landing_ManageEvents() {
     try {
       const listOfEventIds = table.getSelectedRowModel().rows.map((row) => row.original.event_id);
       if (listOfEventIds.length <= 0) {
-        console.error("Delete rejected, no row selected");
+        // console.error("Delete rejected, no row selected");
         return;
       }
       const token = await getToken();

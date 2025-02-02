@@ -66,7 +66,7 @@ function EventForm({ initialEventData = null, isCreate = true }) {
     event.preventDefault();
     try {
       if (!selectedImageFile) {
-        console.error("No image file selected.");
+        toast.error("No image file selected.");
         return;
       }
 
@@ -91,7 +91,6 @@ function EventForm({ initialEventData = null, isCreate = true }) {
       }
     } catch (error) {
       checkError(error);
-      // console.error(error);
     }
   };
 
@@ -118,7 +117,6 @@ function EventForm({ initialEventData = null, isCreate = true }) {
       setEventData(editEventResponse.data);
       toast.success(editEventResponse.msg);
     } catch (error) {
-      // console.error(error);
       checkError(error);
     }
   };

@@ -37,7 +37,6 @@ export const useEventPurchase = (event) => {
         }
       } else {
         toast.warn("Event has ended, you can not purchase or sign up for this event anymore");
-        // console.error("Event has ended, you can not purchase or sign up for this event anymore");
       }
     }
   };

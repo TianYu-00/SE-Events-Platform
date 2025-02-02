@@ -80,6 +80,7 @@ sudo mv stripe /usr/local/bin/
 
 # 🔴 Urgent TODO
 - Prevent default test data images from being deleted ✅
+- Need to add checkError to event filter
 
 # TODO
 - Accessibility
@@ -87,5 +88,5 @@ sudo mv stripe /usr/local/bin/
     - Tested with Lighthouse ✅
     - Tested with axe DevTools ✅
 
-- Create video going over the main/key features of the project.
+- Create video going over the main/key features of the project. ✅
 

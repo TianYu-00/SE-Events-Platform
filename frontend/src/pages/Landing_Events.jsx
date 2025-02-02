@@ -30,7 +30,6 @@ function Landing_Events() {
         setOriginalEvents(response.data);
         setFilteredEvents(response.data);
       } catch (error) {
-        // console.error(error);
         checkError(error);
       } finally {
         setIsInitialLoad(false);
