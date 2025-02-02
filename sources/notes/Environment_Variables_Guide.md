@@ -51,6 +51,7 @@ stripe login
 ```
 stripe listen --forward-to localhost:9090/api/stripe/webhook
 ```
+![Stripes Webhook Listener](../images/stripe_webhook.png)
 
 
 ## Cloudinary
@@ -74,7 +75,7 @@ CREATE DATABASE se_events_platform_test;
 ```
 
 #### Database URL
-You don't need this unless you are deploying this project. It usually looks like this:
+You won't need this unless if you are deploying this project. It usually looks like this:
 ```
 postgresql://<username>:<password>@<host>:<port>/<database>
 ```
