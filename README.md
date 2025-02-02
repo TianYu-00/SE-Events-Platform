@@ -102,17 +102,29 @@ ngrok http 9090
 # Notes
 
 > [!NOTE]
-Please bear in mind that I have configured the hosted project to reset the database on every restart. This means that if the Express server shuts down due to inactivity and then restarts, the database will be seeded again.
+Please bear in mind that I have configured the hosted project to reset the database on every restart. 
+<br>
+This means that if the Express server shuts down due to inactivity and then restarts, the database will be seeded again.
 
 > [!NOTE]  
 You won't be able to delete my test data images from Cloudinary (account: dv3fz3nmg). If you try, a console log error will occur, but it won't affect functionality.
+<br>
 To avoid this, replace the event thumbnails in `./backend/db/test_data/events.js` with your own images from your Cloudinary and seed the database again.
 
 > [!NOTE]
 Add a `test` tag to your Cloudinary image to prevent it from being deleted when events are removed.
+<br>
+<br>
 ![Cloudinary Tag](./sources/images/cloudinary_tag.png)
 
 > [!NOTE]
 Feel free to copy my cloudinary preset settings. 
-Also preset mode needs to be unsigned, please refer to my [cloudinary guide](./sources/notes/Environment_Variables_Guide.md#upload-preset-name).
+Also preset mode needs to be unsigned.
+<br>
+![alt text](./sources/images/cloudinary_upload_preset.png)
 
+> [!NOTE]
+Since Ngrok assigns a new forwarding domain on each restart, remember to update Clerk's webhook endpoint with the new Ngrok URL to ensure webhooks function correctly.
+<br>
+<br>
+![alt text](./sources/images/clerk_endpoint.png)
