@@ -24,9 +24,9 @@ If you'd like to create a fake account for testing, please follow the instructio
 
 #### Test Stripe Cards
 
-| **Card Status** | **Card Number**  |
-|-----------------|------------------|
-| Success         | 4000008260000000 |
-| Decline         | 4000000000000002 |
+| **Card Status** | **Card Number**  | **Expiry Date**   | **Security Code**   | **Postal Code**    |
+|-----------------|------------------|-------------------|---------------------|--------------------|
+| Success         | 4000008260000000 | valid future date | any three-digit CVC | Any valid Postcode |
+| Decline         | 4000000000000002 | valid future date | any three-digit CVC | Any valid Postcode |
 
 Please refer to this [documentation](https://docs.stripe.com/testing?testing-method=card-numbers#visa) for more card options.
