@@ -3,6 +3,9 @@ Need help with finding some of the environment variables? [Click Me](./Environme
 
 ### Backend `.env.development`
 ``` 
+# Normally "http://127.0.0.1:5173" or "http://localhost:5173"
+FRONTEND_URL=
+
 # Express
 PORT=9090
 
@@ -45,9 +48,11 @@ STRIPE_SECRET_KEY=
 
 ### Backend (Optional) `.env.production` 
 ``` 
+#
+FRONTEND_URL=
+
 # Express
 PORT=
-FRONTEND_URL=
 
 # Database
 DATABASE_URL=
@@ -70,6 +75,9 @@ STRIPE_WEBHOOK_SECRET=
 
 ### Frontend `.env.local`
 ```
+# Normally "http://localhost:9090/api"
+VITE_BACKEND_URL=
+
 #Clerk
 VITE_CLERK_PUBLISHABLE_KEY=
 
