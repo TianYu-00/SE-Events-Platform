@@ -19,6 +19,7 @@ Note: These test accounts are not deletable, if you would like to test user.dele
 | Admin    | admin+clerk_test@example.com | admin123     |
 
 If you'd like to create a fake account for testing, please follow the instructions below to set up test accounts.
+
 ![Clerk Test Mode](../images/clerk_testmode.png)
 
 
