@@ -1,16 +1,15 @@
 <div align="center">
 <h1> SE - Events Platform</h1> 
-A project that allows community members to view, sign up for, and add events to their own personal calendar. Staff members have additional functionality to create and manage events.
+SE - Events Platform is a comprehensive event management system designed for community engagement. It allows community members to browse, sign up for, and add events to their personal calendars. Additionally, staff members have enhanced capabilities to create, manage, and oversee events, ensuring smooth operation and organization. The platform integrates with various services like Stripe for payments, Cloudinary for image hosting, and Clerk for authentication, providing a seamless and efficient user experience.
 <br><br>
 
-[![madewithlove](https://img.shields.io/badge/made_with-❤-red?style=for-the-badge&labelColor=orange
-)](https://github.com/Tianyu-00)
+[![madewithlove](https://img.shields.io/badge/made_with-❤-red?style=for-the-badge&labelColor=orange)](https://github.com/Tianyu-00)
 
 [Prerequisites](#prerequisites) | [Getting Started](#getting-started) | [Environment Variables](./sources/notes/Template_Env.md) | [Testing](./sources/notes/Testing.md) | [Notes](#notes)
 
 [![Tests](https://github.com/TianYu-00/SE-Events-Platform/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/TianYu-00/SE-Events-Platform/actions/workflows/ci.yml)
 
-![alt text](./sources/images/demo.gif)
+![Demo of SE - Events Platform](./sources/images/demo.gif)
 
 |                  **Frontend**                  |                     **Backend**                      |      **Database**      |               **Youtube Demo**                |
 |:----------------------------------------------:|:----------------------------------------------------:|:----------------------:|:---------------------------------------------:|
