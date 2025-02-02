@@ -115,9 +115,9 @@ ngrok http 9090
 
 > **Note**  
 > Feel free to copy my cloudinary preset settings. 
-> Also preset mode needs to be unsigned.
+> Also, the preset mode needs to be unsigned.
 > ![alt text](./sources/images/cloudinary_upload_preset.png)
 
 > **Note**  
-> Since Ngrok assigns a new forwarding domain on each restart, remember to update Clerk's webhook endpoint with the new Ngrok URL to ensure webhooks function correctly.  
+> Since Ngrok assigns a new forwarding domain on each restart, remember to update Clerk's webhook endpoint with the new Ngrok URL from your terminal to ensure webhooks function correctly.  
 > ![alt text](./sources/images/clerk_endpoint.png)
