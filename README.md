@@ -17,6 +17,9 @@ A project that allows community members to view, sign up for, and add events to 
 |              _https://vercel.com_              |                 _https://render.com_                 | _https://supabase.com_ |           _https://www.youtube.com_           |
 | _https://se-events-platform-tianyu.vercel.app_ | _https://se-events-platform-tianyu.onrender.com/api_ |       _Private_        | _https://www.youtube.com/watch?v=wJTZPR6swyg_ |
 
+![NOTE]
+Please bear in mind that I have configured the hosted project to reset the database on every restart. This means that if the Express server shuts down due to inactivity and then restarts, the database will be seeded again.
+
 </div>
 
 # Prerequisites
@@ -168,6 +171,7 @@ VITE_CLOUDINARY_API_KEY=
 VITE_STRIPE_PUBLISHABLE_KEY=
 ```
 
+<!-- 
 ### Frontend (Optional) `.env.production`
 ```
 #
@@ -183,7 +187,8 @@ VITE_CLOUDINARY_API_KEY=
 
 #Stripe
 VITE_STRIPE_PUBLISHABLE_KEY=
-```
+``` 
+-->
 
 # Environment Variables Guide
 Please refer to the documentation instead if any of these instructions are outdated in the future.
@@ -285,6 +290,9 @@ Note: These test accounts are not deletable, if you would like to test user.dele
 |----------|------------------------------|--------------|
 | User     | user+clerk_test@example.com  | user123      |
 | Admin    | admin+clerk_test@example.com | admin123     |
+
+If you'd like to create a fake account for testing, please follow the instructions below to set up test accounts.
+![Clerk Test Mode](./sources/images/clerk_testmode.png)
 
 
 #### Test Stripe Cards
