@@ -17,10 +17,12 @@ function Header() {
   return (
     <header className="text-copy-primary h-20">
       <div className="flex flex-row h-full w-full p-4">
-        <div className="hidden md:flex">{LargeNav()}</div>
-        <div className="flex md:hidden">{MenuNav()}</div>
+        <div className="flex flex-row p-4">
+          <div className="hidden md:flex">{LargeNav()}</div>
+          <div className="flex md:hidden">{MenuNav()}</div>
+        </div>
 
-        <div className="flex flex-grow justify-end">
+        <div className="flex justify-end flex-grow">
           <div className="mx-2 hover:bg-background-opp/10 rounded flex">
             <ThemeSwitcher isToggled={theme === "light"} toggleSwitch={toggleTheme} />
           </div>
@@ -29,7 +31,7 @@ function Header() {
             <SignInButton>
               <button className="mx-2 flex items-center p-2 hover:bg-background-opp/10 rounded cursor-pointer">
                 <TbUser size={25} />
-                <span className="pl-2">Sign In / Sign Up</span>
+                <span className="pl-2">Sign In</span>
               </button>
             </SignInButton>
           </SignedOut>
@@ -99,7 +101,7 @@ function MenuNav() {
   const { user } = useUser();
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center items-center">
       <button
         className="mx-2 flex items-center p-2 hover:bg-background-opp/10 rounded cursor-pointer"
         onClick={() => setIsOpen(!isOpen)}
@@ -109,6 +111,13 @@ function MenuNav() {
         <DrawerMenu isOpen={isOpen} setIsOpen={setIsOpen} direction={"left"}>
           <div className="w-full h-full bg-black">
             <ul className="flex flex-col justify-start text-white space-y-2 p-4">
+              <li className="border-b pb-4">
+                <div className="flex justify-start items-center flex-grow gap-3">
+                  <img src={`/logo.png`} alt="logo" className=" h-8" />
+                  <span className="font-bold text-xl">United Events</span>
+                </div>
+              </li>
+
               <li>
                 <Link
                   to="/"

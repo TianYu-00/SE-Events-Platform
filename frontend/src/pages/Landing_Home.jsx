@@ -49,14 +49,17 @@ function Landing_Home() {
           <div className="absolute inset-0 flex flex-col items-center justify-center bg-black opacity-70"></div>
           <div className="absolute inset-0 flex flex-col items-center justify-center">
             <h2 className="text-white font-bold text-2xl md:text-5xl mb-4 w-2/3 text-center drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">
-              Discover and grab your tickets for amazing events happening across the UK!
+              Discover and book tickets for incredible events happening across the UK with{" "}
+              <span className="bg-gradient-to-r from-red-700 via-white to-blue-700 bg-clip-text text-transparent text-nowrap">
+                United Events
+              </span>
             </h2>
             <button
               className="text-cta-text bg-cta hover:bg-cta-active py-3 px-4 rounded-full font-semibold flex items-center space-x-2"
               onClick={() => navigate("/events")}
             >
               <span>Explore Events</span>
-              <TbArrowNarrowRight size={20} strokeWidth={3} />
+              <TbArrowNarrowRight size={20} strokeWidth={3} className="" />
             </button>
           </div>
         </div>
