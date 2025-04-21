@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-const { clerkMiddleware } = require("@clerk/express");
+// const { clerkMiddleware } = require("@clerk/express");
 const { rateLimit } = require("express-rate-limit");
 const apiRouter = require("./routes/api-router");
 const errorHandler = require("./utils/middleware/errorHandler");
@@ -29,7 +29,7 @@ app.use(
     },
   })
 );
-app.use(clerkMiddleware());
+// app.use(clerkMiddleware());
 app.use(globalLimiter);
 
 app.use("/api", apiRouter);

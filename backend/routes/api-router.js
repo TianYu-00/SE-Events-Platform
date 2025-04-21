@@ -7,6 +7,8 @@ const purchaseRouter = require("./purchase-router");
 const clerkRouter = require("./clerk-router");
 const healthCheckRouter = require("./health-check-router");
 
+const clerkMiddleware = require("@clerk/express").clerkMiddleware;
+
 //
 apisRouter.get("/", controller_apis.getApis);
 apisRouter.get("/test", controller_apis.test);
@@ -15,7 +17,7 @@ apisRouter.use("/users", userRouter);
 apisRouter.use("/events", eventRouter);
 apisRouter.use("/stripe", paymentRouter);
 apisRouter.use("/purchases", purchaseRouter);
-apisRouter.use("/clerk", clerkRouter);
+apisRouter.use("/clerk", clerkMiddleware(), clerkRouter);
 
 // health check
 apisRouter.use("/health-check", healthCheckRouter);
