@@ -14,6 +14,7 @@ const corsConfigOptions = {
 const globalLimiter = rateLimit({
   windowMs: 1 * 60 * 1000,
   limit: 100,
+  skip: (req) => req.originalUrl.startsWith("/api/health-check"),
 });
 
 app.set("trust proxy", 1);
